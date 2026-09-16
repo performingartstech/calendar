@@ -1,40 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Events | Performing Arts and Technology</title>
 
-  <!-- NC State-style typography + Material Symbols Sharp -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@400;500;700&family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0"
     rel="stylesheet"
   >
 
-
   <style>
-
-    /* =====================================================
-       BASE
-       ===================================================== */
-
     * {
       box-sizing: border-box;
     }
@@ -58,11 +38,6 @@
       font: inherit;
     }
 
-
-    /* =====================================================
-       ACCESSIBILITY
-       ===================================================== */
-
     .sr-only {
       position: absolute;
       width: 1px;
@@ -75,11 +50,6 @@
       border: 0;
     }
 
-
-    /* =====================================================
-       PAGE
-       ===================================================== */
-
     .calendar-page {
       width: 100%;
       max-width: 1200px;
@@ -88,9 +58,7 @@
     }
 
 
-    /* =====================================================
-       SEARCH
-       ===================================================== */
+    /* SEARCH */
 
     #calendar-search-form {
       display: flex;
@@ -100,8 +68,6 @@
 
     #calendar-search {
       flex: 1 1 auto;
-
-      width: 100%;
       min-width: 0;
       height: 54px;
 
@@ -116,8 +82,6 @@
       color: #000;
 
       font-size: 18px;
-
-      outline: none;
 
       appearance: none;
       -webkit-appearance: none;
@@ -160,6 +124,11 @@
       outline-offset: 3px;
     }
 
+    #calendar-search:focus,
+    #calendar-search-form > button:focus {
+      outline: none;
+    }
+
     .material-symbols-sharp {
       font-size: 26px;
 
@@ -171,9 +140,7 @@
     }
 
 
-    /* =====================================================
-       FILTER BAR
-       ===================================================== */
+    /* FILTERS */
 
     #calendar-filters {
       display: flex;
@@ -203,9 +170,8 @@
       background: transparent;
       color: #333;
 
-      font-family: "Roboto", Arial, sans-serif;
-      font-size: 15px;
       font-weight: 500;
+      font-size: 15px;
 
       cursor: pointer;
       white-space: nowrap;
@@ -229,9 +195,7 @@
     }
 
 
-    /* =====================================================
-       MORE
-       ===================================================== */
+    /* MORE */
 
     #more-wrap {
       position: relative;
@@ -248,15 +212,9 @@
       font-size: 19px;
     }
 
-    #more-button[aria-expanded="true"]
-    .material-symbols-sharp {
+    #more-button[aria-expanded="true"] .material-symbols-sharp {
       transform: rotate(180deg);
     }
-
-
-    /* =====================================================
-       MORE MENU
-       ===================================================== */
 
     #more-menu {
       position: absolute;
@@ -273,7 +231,6 @@
       border: 1px solid #aaa;
 
       background: #fff;
-      color: #000;
 
       box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
     }
@@ -285,7 +242,6 @@
     #more-menu label {
       display: flex;
       align-items: center;
-
       gap: 9px;
 
       width: 100%;
@@ -294,7 +250,6 @@
       padding: 9px 12px;
 
       font-size: 15px;
-      line-height: 1.3;
 
       cursor: pointer;
       white-space: nowrap;
@@ -307,17 +262,15 @@
     #more-menu input {
       width: 16px;
       height: 16px;
-
       margin: 0;
 
       accent-color: #cc0000;
+
       cursor: pointer;
     }
 
 
-    /* =====================================================
-       COPY URL
-       ===================================================== */
+    /* COPY */
 
     #copy-url {
       margin-left: auto !important;
@@ -330,9 +283,7 @@
     }
 
 
-    /* =====================================================
-       STATUS
-       ===================================================== */
+    /* STATUS */
 
     #calendar-status {
       margin: -10px 0 18px;
@@ -345,9 +296,7 @@
     }
 
 
-    /* =====================================================
-       LOCALIST
-       ===================================================== */
+    /* LOCALIST */
 
     #localist-widget-dpat {
       width: 100%;
@@ -356,12 +305,9 @@
     }
 
 
-    /* =====================================================
-       MOBILE
-       ===================================================== */
+    /* MOBILE */
 
     @media (max-width: 700px) {
-
       .calendar-page {
         padding: 20px 16px 36px;
       }
@@ -376,8 +322,8 @@
       }
 
       #calendar-search-form > button {
-        flex-basis: 50px;
         width: 50px;
+        flex-basis: 50px;
       }
 
       #calendar-filters {
@@ -387,9 +333,7 @@
       #copy-url {
         margin-left: 0 !important;
       }
-
     }
-
   </style>
 </head>
 
@@ -398,20 +342,9 @@
 
 <main class="calendar-page">
 
+  <form id="calendar-search-form" role="search">
 
-  <!-- =====================================================
-       SEARCH
-       ===================================================== -->
-
-  <form
-    id="calendar-search-form"
-    role="search"
-  >
-
-    <label
-      class="sr-only"
-      for="calendar-search"
-    >
+    <label class="sr-only" for="calendar-search">
       Search events
     </label>
 
@@ -422,14 +355,8 @@
       autocomplete="off"
     >
 
-    <button
-      type="submit"
-      aria-label="Search events"
-    >
-      <span
-        class="material-symbols-sharp"
-        aria-hidden="true"
-      >
+    <button type="submit" aria-label="Search events">
+      <span class="material-symbols-sharp" aria-hidden="true">
         search
       </span>
     </button>
@@ -437,14 +364,7 @@
   </form>
 
 
-  <!-- =====================================================
-       FILTERS
-       ===================================================== -->
-
-  <div
-    id="calendar-filters"
-    aria-label="Filter events"
-  >
+  <div id="calendar-filters" aria-label="Filter events">
 
     <button
       type="button"
@@ -454,35 +374,19 @@
       All
     </button>
 
-
-    <button
-      type="button"
-      data-area="music"
-    >
+    <button type="button" data-area="music">
       Music
     </button>
 
-
-    <button
-      type="button"
-      data-area="dance"
-    >
+    <button type="button" data-area="dance">
       Dance
     </button>
 
-
-    <button
-      type="button"
-      data-area="arts"
-    >
+    <button type="button" data-area="arts">
       Arts Entrepreneurship
     </button>
 
-
-    <button
-      type="button"
-      data-area="tech"
-    >
+    <button type="button" data-area="tech">
       Music Technology
     </button>
 
@@ -497,19 +401,13 @@
       >
         More
 
-        <span
-          class="material-symbols-sharp"
-          aria-hidden="true"
-        >
+        <span class="material-symbols-sharp" aria-hidden="true">
           expand_more
         </span>
       </button>
 
 
-      <span
-        id="more-menu"
-        hidden
-      >
+      <span id="more-menu" hidden>
 
         <label>
           <input
@@ -565,180 +463,97 @@
   ></div>
 
 
-  <!-- =====================================================
-       LOCALIST
-       ===================================================== -->
-
   <div
     id="localist-widget-dpat"
     class="localist-widget"
   ></div>
 
-
 </main>
 
 
 <script>
-
 (function () {
 
-
-  /* =======================================================
-     ELEMENTS
-     ======================================================= */
-
   const container =
-    document.getElementById(
-      "localist-widget-dpat"
-    );
+    document.getElementById("localist-widget-dpat");
 
   const searchForm =
-    document.getElementById(
-      "calendar-search-form"
-    );
+    document.getElementById("calendar-search-form");
 
   const searchInput =
-    document.getElementById(
-      "calendar-search"
-    );
+    document.getElementById("calendar-search");
 
   const status =
-    document.getElementById(
-      "calendar-status"
-    );
+    document.getElementById("calendar-status");
 
   const allButton =
-    document.getElementById(
-      "filter-all"
-    );
+    document.getElementById("filter-all");
 
   const areaButtons =
     Array.from(
-      document.querySelectorAll(
-        "[data-area]"
-      )
+      document.querySelectorAll("[data-area]")
     );
 
   const typeBoxes =
     Array.from(
-      document.querySelectorAll(
-        "input[data-type]"
-      )
+      document.querySelectorAll("input[data-type]")
     );
 
   const moreWrap =
-    document.getElementById(
-      "more-wrap"
-    );
+    document.getElementById("more-wrap");
 
   const moreButton =
-    document.getElementById(
-      "more-button"
-    );
+    document.getElementById("more-button");
 
   const moreMenu =
-    document.getElementById(
-      "more-menu"
-    );
+    document.getElementById("more-menu");
 
   const copyButton =
-    document.getElementById(
-      "copy-url"
-    );
+    document.getElementById("copy-url");
 
 
-  /* =======================================================
-     CLASSIFICATIONS
-
-     VERIFIED LOCALIST IDS:
-
-     Dance
-     6673
-
-     Master Class Series
-     43598230166255
-
-     Other mappings are still provisional.
-     ======================================================= */
+  /*
+   * DPAT FILTERS
+   *
+   * These are Localist tags.
+   *
+   * Dance and Master Class Series are confirmed on
+   * current NC State events.
+   */
 
   const AREAS = {
-
-    music: {
-      tags: ["music"]
-    },
-
-    dance: {
-      types: ["6673"]
-    },
-
-    arts: {
-      tags: [
-        "arts entrepreneurship"
-      ]
-    },
-
-    tech: {
-      tags: [
-        "music technology"
-      ]
-    }
-
+    music: "music",
+    dance: "dance",
+    arts: "arts entrepreneurship",
+    tech: "music technology"
   };
-
 
   const EVENT_TYPES = {
-
-    performance: {
-      tags: ["performance"]
-    },
-
-    masterclass: {
-      types: [
-        "43598230166255"
-      ]
-    },
-
-    audition: {
-      tags: ["audition"]
-    },
-
-    workshop: {
-      tags: ["workshop"]
-    }
-
+    performance: "performance",
+    masterclass: "Master Class Series",
+    audition: "audition",
+    workshop: "workshop"
   };
 
 
-  /* =======================================================
-     STATE
-     ======================================================= */
-
-  let selectedAreas =
-    new Set();
-
-  let selectedEventTypes =
-    new Set();
-
+  let selectedAreas = new Set();
+  let selectedEventTypes = new Set();
   let searchQuery = "";
 
 
-  /* =======================================================
-     URL STATE
-     ======================================================= */
+  /* =====================================================
+     URL
+     ===================================================== */
 
   function readPageURL() {
 
     const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
+      new URLSearchParams(window.location.search);
 
     const areas =
       (params.get("area") || "")
         .split(",")
         .filter(Boolean);
-
 
     const eventTypes =
       (params.get("type") || "")
@@ -748,23 +563,18 @@
 
     selectedAreas =
       new Set(
-        areas.filter(
-          key => AREAS[key]
-        )
+        areas.filter(key => AREAS[key])
       );
 
 
     selectedEventTypes =
       new Set(
-        eventTypes.filter(
-          key => EVENT_TYPES[key]
-        )
+        eventTypes.filter(key => EVENT_TYPES[key])
       );
 
 
     searchQuery =
       params.get("q") || "";
-
 
     searchInput.value =
       searchQuery;
@@ -775,59 +585,38 @@
   function updatePageURL() {
 
     const url =
-      new URL(
-        window.location.href
-      );
+      new URL(window.location.href);
 
-
-    url.searchParams.delete(
-      "area"
-    );
-
-    url.searchParams.delete(
-      "type"
-    );
-
-    url.searchParams.delete(
-      "q"
-    );
+    url.searchParams.delete("area");
+    url.searchParams.delete("type");
+    url.searchParams.delete("q");
 
 
     if (selectedAreas.size) {
-
       url.searchParams.set(
         "area",
-        Array.from(
-          selectedAreas
-        ).join(",")
+        Array.from(selectedAreas).join(",")
       );
-
     }
 
 
     if (selectedEventTypes.size) {
-
       url.searchParams.set(
         "type",
-        Array.from(
-          selectedEventTypes
-        ).join(",")
+        Array.from(selectedEventTypes).join(",")
       );
-
     }
 
 
     if (searchQuery) {
-
       url.searchParams.set(
         "q",
         searchQuery
       );
-
     }
 
 
-    window.history.replaceState(
+    history.replaceState(
       null,
       "",
       url
@@ -836,36 +625,32 @@
   }
 
 
-  /* =======================================================
-     CONTROL APPEARANCE
-     ======================================================= */
+  /* =====================================================
+     BUTTON STATE
+     ===================================================== */
 
   function updateControls() {
 
-    areaButtons.forEach(
-      button => {
+    areaButtons.forEach(button => {
 
-        button.classList.toggle(
-          "active",
-          selectedAreas.has(
-            button.dataset.area
-          )
+      button.classList.toggle(
+        "active",
+        selectedAreas.has(
+          button.dataset.area
+        )
+      );
+
+    });
+
+
+    typeBoxes.forEach(box => {
+
+      box.checked =
+        selectedEventTypes.has(
+          box.dataset.type
         );
 
-      }
-    );
-
-
-    typeBoxes.forEach(
-      box => {
-
-        box.checked =
-          selectedEventTypes.has(
-            box.dataset.type
-          );
-
-      }
-    );
+    });
 
 
     allButton.classList.toggle(
@@ -883,91 +668,9 @@
   }
 
 
-  /* =======================================================
-     COLLECT FILTER VALUES
-     ======================================================= */
-
-  function collectFilters(
-    selections,
-    definitions
-  ) {
-
-    let types = [];
-    let tags = [];
-
-
-    selections.forEach(
-      key => {
-
-        const filter =
-          definitions[key];
-
-
-        if (!filter) {
-          return;
-        }
-
-
-        if (filter.types) {
-
-          types.push(
-            ...filter.types
-          );
-
-        }
-
-
-        if (filter.tags) {
-
-          tags.push(
-            ...filter.tags
-          );
-
-        }
-
-      }
-    );
-
-
-    return {
-
-      types:
-        Array.from(
-          new Set(types)
-        ),
-
-      tags:
-        Array.from(
-          new Set(tags)
-        )
-
-    };
-
-  }
-
-
-  /* =======================================================
+  /* =====================================================
      BUILD LOCALIST URL
-
-     IMPORTANT:
-
-     Area and event-type selections are kept conceptually
-     separate.
-
-     If both an area AND an event type are selected,
-     Localist is instructed to match all classifications.
-
-     Example:
-
-     Dance + Master Classes
-
-     types=
-       6673,
-       43598230166255
-
-     match_all=all
-
-     ======================================================= */
+     ===================================================== */
 
   function buildWidgetURL() {
 
@@ -975,30 +678,16 @@
       new URLSearchParams();
 
 
-    params.set(
-      "schools",
-      "ncsu"
-    );
+    params.set("schools", "ncsu");
 
     params.set(
       "groups",
       "department_of_performing_arts_and_technology"
     );
 
-    params.set(
-      "days",
-      "365"
-    );
-
-    params.set(
-      "num",
-      "50"
-    );
-
-    params.set(
-      "experience",
-      "inperson"
-    );
+    params.set("days", "365");
+    params.set("num", "50");
+    params.set("experience", "inperson");
 
     params.set(
       "container",
@@ -1011,81 +700,52 @@
     );
 
 
-    const areaFilters =
-      collectFilters(
-        selectedAreas,
-        AREAS
-      );
+    const areaTags =
+      Array.from(selectedAreas)
+        .map(key => AREAS[key])
+        .filter(Boolean);
 
 
-    const eventFilters =
-      collectFilters(
-        selectedEventTypes,
-        EVENT_TYPES
-      );
+    const eventTags =
+      Array.from(selectedEventTypes)
+        .map(key => EVENT_TYPES[key])
+        .filter(Boolean);
 
 
-    const allTypes =
+    const tags =
       Array.from(
         new Set([
-          ...areaFilters.types,
-          ...eventFilters.types
+          ...areaTags,
+          ...eventTags
         ])
       );
 
 
-    const allTags =
-      Array.from(
-        new Set([
-          ...areaFilters.tags,
-          ...eventFilters.tags
-        ])
-      );
-
-
-    if (allTypes.length) {
-
-      params.set(
-        "types",
-        allTypes.join(",")
-      );
-
-    }
-
-
-    if (allTags.length) {
+    if (tags.length) {
 
       params.set(
         "tags",
-        allTags.join(",")
+        tags.join(",")
       );
 
     }
 
 
     /*
-     * If the visitor has selected something from BOTH
-     * dimensions, require the classifications to intersect.
+     * IMPORTANT:
      *
-     * Dance + Master Class therefore means:
+     * If both an area and an event classification
+     * are selected, require both tags.
      *
-     * Dance AND Master Class
+     * Dance + Master Classes becomes:
      *
-     * rather than:
-     *
-     * Dance OR Master Class
+     * tags=dance,Master Class Series
+     * match_all=all
      */
 
-    const hasArea =
-      selectedAreas.size > 0;
-
-    const hasEventType =
-      selectedEventTypes.size > 0;
-
-
     if (
-      hasArea &&
-      hasEventType
+      selectedAreas.size > 0 &&
+      selectedEventTypes.size > 0
     ) {
 
       params.set(
@@ -1104,9 +764,9 @@
   }
 
 
-  /* =======================================================
-     LOAD LOCALIST
-     ======================================================= */
+  /* =====================================================
+     LOAD WIDGET
+     ===================================================== */
 
   function loadWidget() {
 
@@ -1126,9 +786,7 @@
 
 
     const script =
-      document.createElement(
-        "script"
-      );
+      document.createElement("script");
 
 
     script.type =
@@ -1151,82 +809,47 @@
     );
 
 
-    /*
-     * Localist inserts its HTML asynchronously.
-     */
-
-    window.setTimeout(
-      applySearch,
-      800
-    );
-
-    window.setTimeout(
-      applySearch,
-      1600
-    );
-
-    window.setTimeout(
-      applySearch,
-      2800
-    );
+    setTimeout(applySearch, 800);
+    setTimeout(applySearch, 1600);
+    setTimeout(applySearch, 2800);
 
   }
 
 
-  /* =======================================================
-     SEARCH LOCALIST RESULTS
-     ======================================================= */
+  /* =====================================================
+     EVENT ITEMS
+     ===================================================== */
 
   function getEventItems() {
 
-    /*
-     * Localist widget templates normally output event
-     * list items. Prefer those when available.
-     */
-
-    const obviousItems =
+    const items =
       Array.from(
         container.querySelectorAll(
-          "li.lw_event_item, li"
+          "li.lw_event_item"
         )
-      ).filter(
-        item =>
-          item.querySelector(
-            'a[href*="/event/"]'
-          )
       );
 
 
-    if (obviousItems.length) {
-      return obviousItems;
+    if (items.length) {
+      return items;
     }
 
 
-    /*
-     * Fallback if template markup changes.
-     */
-
-    const eventLinks =
-      Array.from(
-        container.querySelectorAll(
+    return Array.from(
+      container.querySelectorAll("li")
+    ).filter(
+      item =>
+        item.querySelector(
           'a[href*="/event/"]'
         )
-      );
-
-
-    return eventLinks
-      .map(
-        link =>
-          link.closest("li")
-      )
-      .filter(
-        (item, index, array) =>
-          item &&
-          array.indexOf(item) === index
-      );
+    );
 
   }
 
+
+  /* =====================================================
+     SEARCH
+     ===================================================== */
 
   function applySearch() {
 
@@ -1243,10 +866,8 @@
     if (!events.length) {
 
       if (query) {
-
         status.textContent =
           "Searching events…";
-
       }
 
       return;
@@ -1257,41 +878,35 @@
     let visible = 0;
 
 
-    events.forEach(
-      event => {
+    events.forEach(event => {
 
-        const text =
-          event.textContent
-            .toLowerCase()
-            .replace(
-              /\s+/g,
-              " "
-            );
+      const text =
+        event.textContent
+          .toLowerCase()
+          .replace(/\s+/g, " ");
 
 
-        const matches =
-          !query ||
-          text.includes(query);
+      const matches =
+        !query ||
+        text.includes(query);
 
 
-        event.style.display =
-          matches
-            ? ""
-            : "none";
+      event.style.display =
+        matches
+          ? ""
+          : "none";
 
 
-        if (matches) {
-          visible++;
-        }
-
+      if (matches) {
+        visible++;
       }
-    );
+
+    });
 
 
     if (!query) {
 
       status.textContent = "";
-
       return;
 
     }
@@ -1305,46 +920,31 @@
   }
 
 
-  /* =======================================================
-     SEARCH EVENTS
-     ======================================================= */
-
   searchForm.addEventListener(
     "submit",
     function (event) {
 
       event.preventDefault();
 
-
       searchQuery =
         searchInput.value.trim();
 
-
       updatePageURL();
-
       applySearch();
 
     }
   );
 
 
-  /*
-   * If the visitor clears the search field using the
-   * browser's X button, immediately restore the results.
-   */
-
   searchInput.addEventListener(
     "input",
     function () {
 
-      if (
-        searchInput.value === ""
-      ) {
+      if (searchInput.value === "") {
 
         searchQuery = "";
 
         updatePageURL();
-
         applySearch();
 
       }
@@ -1353,120 +953,98 @@
   );
 
 
-  /* =======================================================
-     AREA BUTTONS
-     ======================================================= */
+  /* =====================================================
+     AREA FILTERS
+     ===================================================== */
 
-  areaButtons.forEach(
-    button => {
+  areaButtons.forEach(button => {
 
-      button.addEventListener(
-        "click",
-        function () {
+    button.addEventListener(
+      "click",
+      function () {
 
-          const key =
-            button.dataset.area;
-
-
-          if (
-            selectedAreas.has(key)
-          ) {
-
-            selectedAreas.delete(
-              key
-            );
-
-          } else {
-
-            selectedAreas.add(
-              key
-            );
-
-          }
+        const key =
+          button.dataset.area;
 
 
-          updateControls();
+        if (selectedAreas.has(key)) {
 
-          updatePageURL();
+          selectedAreas.delete(key);
 
-          loadWidget();
+        } else {
+
+          selectedAreas.add(key);
 
         }
-      );
-
-    }
-  );
 
 
-  /* =======================================================
-     EVENT TYPES
-     ======================================================= */
+        updateControls();
+        updatePageURL();
+        loadWidget();
 
-  typeBoxes.forEach(
-    box => {
+      }
+    );
 
-      box.addEventListener(
-        "change",
-        function () {
-
-          const key =
-            box.dataset.type;
+  });
 
 
-          if (box.checked) {
+  /* =====================================================
+     EVENT FILTERS
+     ===================================================== */
 
-            selectedEventTypes.add(
-              key
-            );
+  typeBoxes.forEach(box => {
 
-          } else {
+    box.addEventListener(
+      "change",
+      function () {
 
-            selectedEventTypes.delete(
-              key
-            );
-
-          }
+        const key =
+          box.dataset.type;
 
 
-          updateControls();
+        if (box.checked) {
 
-          updatePageURL();
+          selectedEventTypes.add(key);
 
-          loadWidget();
+        } else {
+
+          selectedEventTypes.delete(key);
 
         }
-      );
-
-    }
-  );
 
 
-  /* =======================================================
+        updateControls();
+        updatePageURL();
+        loadWidget();
+
+      }
+    );
+
+  });
+
+
+  /* =====================================================
      ALL
-     ======================================================= */
+     ===================================================== */
 
   allButton.addEventListener(
     "click",
     function () {
 
       selectedAreas.clear();
-
       selectedEventTypes.clear();
 
-
       updateControls();
-
       updatePageURL();
-
       loadWidget();
 
     }
   );
 
 
-  /* =======================================================
+  /* =====================================================
      MORE MENU
-     ======================================================= */
+     ===================================================== */
 
   moreButton.addEventListener(
     "click",
@@ -1475,10 +1053,8 @@
       const opening =
         moreMenu.hidden;
 
-
       moreMenu.hidden =
         !opening;
-
 
       moreButton.setAttribute(
         "aria-expanded",
@@ -1501,9 +1077,7 @@
         )
       ) {
 
-        moreMenu.hidden =
-          true;
-
+        moreMenu.hidden = true;
 
         moreButton.setAttribute(
           "aria-expanded",
@@ -1516,9 +1090,9 @@
   );
 
 
-  /* =======================================================
+  /* =====================================================
      COPY URL
-     ======================================================= */
+     ===================================================== */
 
   copyButton.addEventListener(
     "click",
@@ -1526,7 +1100,6 @@
 
       searchQuery =
         searchInput.value.trim();
-
 
       updatePageURL();
 
@@ -1537,9 +1110,6 @@
           window.location.href
         );
 
-
-        showCopied();
-
       } catch (error) {
 
         const textarea =
@@ -1547,14 +1117,8 @@
             "textarea"
           );
 
-
         textarea.value =
           window.location.href;
-
-        textarea.setAttribute(
-          "readonly",
-          ""
-        );
 
         textarea.style.position =
           "fixed";
@@ -1562,63 +1126,49 @@
         textarea.style.opacity =
           "0";
 
-
         document.body.appendChild(
           textarea
         );
 
-
         textarea.select();
-
 
         document.execCommand(
           "copy"
         );
 
-
         textarea.remove();
 
-
-        showCopied();
-
       }
+
+
+      copyButton.textContent =
+        "Copied!";
+
+
+      setTimeout(
+        function () {
+
+          copyButton.textContent =
+            "Copy URL";
+
+        },
+        1500
+      );
 
     }
   );
 
 
-  function showCopied() {
-
-    copyButton.textContent =
-      "Copied!";
-
-
-    window.setTimeout(
-      function () {
-
-        copyButton.textContent =
-          "Copy URL";
-
-      },
-      1500
-    );
-
-  }
-
-
-  /* =======================================================
+  /* =====================================================
      INITIALIZE
-     ======================================================= */
+     ===================================================== */
 
   readPageURL();
-
   updateControls();
-
   loadWidget();
 
 
 })();
-
 </script>
 
 </body>
