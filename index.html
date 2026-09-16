@@ -57,7 +57,6 @@
       padding: 32px 24px 48px;
     }
 
-
     /* SEARCH */
 
     #calendar-search-form {
@@ -70,8 +69,6 @@
       flex: 1 1 auto;
       min-width: 0;
       height: 54px;
-
-      margin: 0;
       padding: 0 16px;
 
       border: 1px solid #000;
@@ -94,7 +91,6 @@
 
     #calendar-search-form > button {
       flex: 0 0 54px;
-
       width: 54px;
       height: 54px;
 
@@ -102,7 +98,6 @@
       align-items: center;
       justify-content: center;
 
-      margin: 0;
       padding: 0;
 
       border: 1px solid #cc0000;
@@ -139,8 +134,7 @@
         "opsz" 24;
     }
 
-
-    /* FILTERS */
+    /* FILTER BAR */
 
     #calendar-filters {
       display: flex;
@@ -170,8 +164,8 @@
       background: transparent;
       color: #333;
 
-      font-weight: 500;
       font-size: 15px;
+      font-weight: 500;
 
       cursor: pointer;
       white-space: nowrap;
@@ -179,11 +173,6 @@
 
     #calendar-filters button:hover {
       color: #cc0000;
-    }
-
-    #calendar-filters button:focus-visible {
-      outline: 3px solid #6f7d1c;
-      outline-offset: 3px;
     }
 
     #calendar-filters button.active {
@@ -194,6 +183,10 @@
       text-underline-offset: 5px;
     }
 
+    #calendar-filters button:focus-visible {
+      outline: 3px solid #6f7d1c;
+      outline-offset: 3px;
+    }
 
     /* MORE */
 
@@ -225,50 +218,43 @@
 
       min-width: 220px;
 
-      margin: 0;
       padding: 6px 0;
 
       border: 1px solid #aaa;
 
       background: #fff;
 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
     }
 
     #more-menu[hidden] {
       display: none;
     }
 
-    #more-menu label {
-      display: flex;
-      align-items: center;
-      gap: 9px;
+    #more-menu button {
+      display: block;
 
       width: 100%;
 
-      margin: 0;
       padding: 9px 12px;
 
-      font-size: 15px;
+      text-align: left;
 
-      cursor: pointer;
-      white-space: nowrap;
+      color: #333;
+
+      font-weight: 400;
     }
 
-    #more-menu label:hover {
+    #more-menu button:hover {
       background: #f2f2f2;
     }
 
-    #more-menu input {
-      width: 16px;
-      height: 16px;
-      margin: 0;
+    #more-menu button.active {
+      background: #f2f2f2;
+      color: #cc0000;
 
-      accent-color: #cc0000;
-
-      cursor: pointer;
+      text-decoration: none;
     }
-
 
     /* COPY */
 
@@ -282,20 +268,6 @@
       color: #cc0000 !important;
     }
 
-
-    /* STATUS */
-
-    #calendar-status {
-      margin: -10px 0 18px;
-      color: #555;
-      font-size: 14px;
-    }
-
-    #calendar-status:empty {
-      display: none;
-    }
-
-
     /* LOCALIST */
 
     #localist-widget-dpat {
@@ -303,9 +275,6 @@
       margin: 0;
       padding: 0;
     }
-
-
-    /* MOBILE */
 
     @media (max-width: 700px) {
       .calendar-page {
@@ -337,10 +306,11 @@
   </style>
 </head>
 
-
 <body>
 
 <main class="calendar-page">
+
+  <!-- SEARCH -->
 
   <form id="calendar-search-form" role="search">
 
@@ -364,7 +334,9 @@
   </form>
 
 
-  <div id="calendar-filters" aria-label="Filter events">
+  <!-- FILTERS -->
+
+  <div id="calendar-filters">
 
     <button
       type="button"
@@ -397,7 +369,6 @@
         type="button"
         id="more-button"
         aria-expanded="false"
-        aria-controls="more-menu"
       >
         More
 
@@ -409,37 +380,21 @@
 
       <span id="more-menu" hidden>
 
-        <label>
-          <input
-            type="checkbox"
-            data-type="performance"
-          >
+        <button type="button" data-event-type="performance">
           Performances
-        </label>
+        </button>
 
-        <label>
-          <input
-            type="checkbox"
-            data-type="masterclass"
-          >
+        <button type="button" data-event-type="masterclass">
           Master Classes
-        </label>
+        </button>
 
-        <label>
-          <input
-            type="checkbox"
-            data-type="audition"
-          >
+        <button type="button" data-event-type="audition">
           Auditions
-        </label>
+        </button>
 
-        <label>
-          <input
-            type="checkbox"
-            data-type="workshop"
-          >
+        <button type="button" data-event-type="workshop">
           Workshops &amp; Talks
-        </label>
+        </button>
 
       </span>
 
@@ -449,7 +404,6 @@
     <button
       type="button"
       id="copy-url"
-      title="Copy a link to the current search and filters"
     >
       Copy URL
     </button>
@@ -457,11 +411,7 @@
   </div>
 
 
-  <div
-    id="calendar-status"
-    aria-live="polite"
-  ></div>
-
+  <!-- LOCALIST -->
 
   <div
     id="localist-widget-dpat"
@@ -474,107 +424,174 @@
 <script>
 (function () {
 
-  const container =
-    document.getElementById("localist-widget-dpat");
+  /* =====================================================
+     CONFIG
+     ===================================================== */
 
-  const searchForm =
-    document.getElementById("calendar-search-form");
-
-  const searchInput =
-    document.getElementById("calendar-search");
-
-  const status =
-    document.getElementById("calendar-status");
-
-  const allButton =
-    document.getElementById("filter-all");
-
-  const areaButtons =
-    Array.from(
-      document.querySelectorAll("[data-area]")
-    );
-
-  const typeBoxes =
-    Array.from(
-      document.querySelectorAll("input[data-type]")
-    );
-
-  const moreWrap =
-    document.getElementById("more-wrap");
-
-  const moreButton =
-    document.getElementById("more-button");
-
-  const moreMenu =
-    document.getElementById("more-menu");
-
-  const copyButton =
-    document.getElementById("copy-url");
+  const BASE =
+    "https://calendar.ncsu.edu/widget/view";
 
 
   /*
-   * DPAT FILTERS
+   * AREA CLASSIFICATIONS
    *
-   * These are Localist tags.
+   * Dance is a confirmed Localist filter item.
    *
-   * Dance and Master Class Series are confirmed on
-   * current NC State events.
+   * The others are currently using their Localist tags.
    */
 
   const AREAS = {
-    music: "music",
-    dance: "dance",
-    arts: "arts entrepreneurship",
-    tech: "music technology"
+
+    music: {
+      tags: ["music"]
+    },
+
+    dance: {
+      types: ["6673"]
+    },
+
+    arts: {
+      tags: ["arts entrepreneurship"]
+    },
+
+    tech: {
+      tags: ["music technology"]
+    }
+
   };
+
+
+  /*
+   * EVENT CLASSIFICATIONS
+   *
+   * Master Class Series is a confirmed Localist
+   * filter item.
+   */
 
   const EVENT_TYPES = {
-    performance: "performance",
-    masterclass: "Master Class Series",
-    audition: "audition",
-    workshop: "workshop"
+
+    performance: {
+      tags: ["performance"]
+    },
+
+    masterclass: {
+      types: ["43598230166255"]
+    },
+
+    audition: {
+      tags: ["audition"]
+    },
+
+    workshop: {
+      tags: ["workshop"]
+    }
+
   };
 
 
-  let selectedAreas = new Set();
-  let selectedEventTypes = new Set();
+  /* =====================================================
+     ELEMENTS
+     ===================================================== */
+
+  const container =
+    document.getElementById(
+      "localist-widget-dpat"
+    );
+
+  const allButton =
+    document.getElementById(
+      "filter-all"
+    );
+
+  const areaButtons =
+    Array.from(
+      document.querySelectorAll(
+        "[data-area]"
+      )
+    );
+
+  const eventButtons =
+    Array.from(
+      document.querySelectorAll(
+        "[data-event-type]"
+      )
+    );
+
+  const moreWrap =
+    document.getElementById(
+      "more-wrap"
+    );
+
+  const moreButton =
+    document.getElementById(
+      "more-button"
+    );
+
+  const moreMenu =
+    document.getElementById(
+      "more-menu"
+    );
+
+  const copyButton =
+    document.getElementById(
+      "copy-url"
+    );
+
+  const searchForm =
+    document.getElementById(
+      "calendar-search-form"
+    );
+
+  const searchInput =
+    document.getElementById(
+      "calendar-search"
+    );
+
+
+  /* =====================================================
+     STATE
+     ===================================================== */
+
+  let activeArea = null;
+
+  let activeEventType = null;
+
   let searchQuery = "";
 
 
   /* =====================================================
-     URL
+     URL STATE
      ===================================================== */
 
-  function readPageURL() {
+  function readURL() {
 
     const params =
-      new URLSearchParams(window.location.search);
-
-    const areas =
-      (params.get("area") || "")
-        .split(",")
-        .filter(Boolean);
-
-    const eventTypes =
-      (params.get("type") || "")
-        .split(",")
-        .filter(Boolean);
-
-
-    selectedAreas =
-      new Set(
-        areas.filter(key => AREAS[key])
+      new URLSearchParams(
+        window.location.search
       );
 
 
-    selectedEventTypes =
-      new Set(
-        eventTypes.filter(key => EVENT_TYPES[key])
-      );
+    const area =
+      params.get("area");
+
+
+    const type =
+      params.get("type");
+
+
+    if (area && AREAS[area]) {
+      activeArea = area;
+    }
+
+
+    if (type && EVENT_TYPES[type]) {
+      activeEventType = type;
+    }
 
 
     searchQuery =
       params.get("q") || "";
+
 
     searchInput.value =
       searchQuery;
@@ -582,28 +599,31 @@
   }
 
 
-  function updatePageURL() {
+  function updateURL() {
 
     const url =
-      new URL(window.location.href);
+      new URL(
+        window.location.href
+      );
+
 
     url.searchParams.delete("area");
     url.searchParams.delete("type");
     url.searchParams.delete("q");
 
 
-    if (selectedAreas.size) {
+    if (activeArea) {
       url.searchParams.set(
         "area",
-        Array.from(selectedAreas).join(",")
+        activeArea
       );
     }
 
 
-    if (selectedEventTypes.size) {
+    if (activeEventType) {
       url.searchParams.set(
         "type",
-        Array.from(selectedEventTypes).join(",")
+        activeEventType
       );
     }
 
@@ -626,50 +646,53 @@
 
 
   /* =====================================================
-     BUTTON STATE
+     UI STATE
      ===================================================== */
 
   function updateControls() {
 
-    areaButtons.forEach(button => {
+    areaButtons.forEach(
+      button => {
 
-      button.classList.toggle(
-        "active",
-        selectedAreas.has(
-          button.dataset.area
-        )
-      );
-
-    });
-
-
-    typeBoxes.forEach(box => {
-
-      box.checked =
-        selectedEventTypes.has(
-          box.dataset.type
+        button.classList.toggle(
+          "active",
+          button.dataset.area === activeArea
         );
 
-    });
+      }
+    );
 
 
-    allButton.classList.toggle(
-      "active",
-      selectedAreas.size === 0 &&
-      selectedEventTypes.size === 0
+    eventButtons.forEach(
+      button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.eventType ===
+            activeEventType
+        );
+
+      }
     );
 
 
     moreButton.classList.toggle(
       "active",
-      selectedEventTypes.size > 0
+      !!activeEventType
+    );
+
+
+    allButton.classList.toggle(
+      "active",
+      !activeArea &&
+      !activeEventType
     );
 
   }
 
 
   /* =====================================================
-     BUILD LOCALIST URL
+     BUILD LOCALIST QUERY
      ===================================================== */
 
   function buildWidgetURL() {
@@ -678,21 +701,41 @@
       new URLSearchParams();
 
 
-    params.set("schools", "ncsu");
+    params.set(
+      "schools",
+      "ncsu"
+    );
+
 
     params.set(
       "groups",
       "department_of_performing_arts_and_technology"
     );
 
-    params.set("days", "365");
-    params.set("num", "50");
-    params.set("experience", "inperson");
+
+    params.set(
+      "days",
+      "365"
+    );
+
+
+    params.set(
+      "num",
+      "50"
+    );
+
+
+    params.set(
+      "experience",
+      "inperson"
+    );
+
 
     params.set(
       "container",
       "localist-widget-dpat"
     );
+
 
     params.set(
       "template",
@@ -700,25 +743,72 @@
     );
 
 
-    const areaTags =
-      Array.from(selectedAreas)
-        .map(key => AREAS[key])
-        .filter(Boolean);
+    let types = [];
+    let tags = [];
 
 
-    const eventTags =
-      Array.from(selectedEventTypes)
-        .map(key => EVENT_TYPES[key])
-        .filter(Boolean);
+    /*
+     * AREA
+     */
+
+    if (activeArea) {
+
+      const area =
+        AREAS[activeArea];
 
 
-    const tags =
-      Array.from(
-        new Set([
-          ...areaTags,
-          ...eventTags
-        ])
+      if (area.types) {
+        types.push(
+          ...area.types
+        );
+      }
+
+
+      if (area.tags) {
+        tags.push(
+          ...area.tags
+        );
+      }
+
+    }
+
+
+    /*
+     * EVENT TYPE
+     */
+
+    if (activeEventType) {
+
+      const eventType =
+        EVENT_TYPES[
+          activeEventType
+        ];
+
+
+      if (eventType.types) {
+        types.push(
+          ...eventType.types
+        );
+      }
+
+
+      if (eventType.tags) {
+        tags.push(
+          ...eventType.tags
+        );
+      }
+
+    }
+
+
+    if (types.length) {
+
+      params.set(
+        "types",
+        types.join(",")
       );
+
+    }
 
 
     if (tags.length) {
@@ -732,32 +822,37 @@
 
 
     /*
-     * IMPORTANT:
+     * THIS IS THE IMPORTANT PART.
      *
-     * If both an area and an event classification
-     * are selected, require both tags.
+     * Your Localist builder screenshot tells us that
+     * Localist has a mode requiring:
      *
-     * Dance + Master Classes becomes:
+     * - at least one place/group/keyword/tag
+     * - AND one filter item
      *
-     * tags=dance,Master Class Series
-     * match_all=all
+     * The widget parameter corresponding to the stricter
+     * matching behavior is match_all.
+     *
+     * We only turn it on when two different
+     * classifications are actually being combined.
      */
 
     if (
-      selectedAreas.size > 0 &&
-      selectedEventTypes.size > 0
+      activeArea &&
+      activeEventType
     ) {
 
       params.set(
         "match_all",
-        "all"
+        "true"
       );
 
     }
 
 
     return (
-      "https://calendar.ncsu.edu/widget/view?" +
+      BASE +
+      "?" +
       params.toString()
     );
 
@@ -765,17 +860,14 @@
 
 
   /* =====================================================
-     LOAD WIDGET
+     LOAD LOCALIST
      ===================================================== */
 
   function loadWidget() {
 
-    status.textContent = "";
-
-
     document
       .querySelectorAll(
-        "script[data-dpat-localist]"
+        "script[data-dpat-widget]"
       )
       .forEach(
         script => script.remove()
@@ -786,18 +878,19 @@
 
 
     const script =
-      document.createElement("script");
+      document.createElement(
+        "script"
+      );
 
-
-    script.type =
-      "text/javascript";
 
     script.defer = true;
 
+
     script.setAttribute(
-      "data-dpat-localist",
+      "data-dpat-widget",
       "true"
     );
+
 
     script.src =
       buildWidgetURL();
@@ -809,218 +902,107 @@
     );
 
 
-    setTimeout(applySearch, 800);
-    setTimeout(applySearch, 1600);
-    setTimeout(applySearch, 2800);
+    setTimeout(
+      applySearch,
+      1000
+    );
+
+
+    setTimeout(
+      applySearch,
+      2000
+    );
 
   }
 
 
   /* =====================================================
-     EVENT ITEMS
+     AREA BUTTONS
      ===================================================== */
 
-  function getEventItems() {
+  areaButtons.forEach(
+    button => {
 
-    const items =
-      Array.from(
-        container.querySelectorAll(
-          "li.lw_event_item"
-        )
+      button.addEventListener(
+        "click",
+        function () {
+
+          const value =
+            button.dataset.area;
+
+
+          if (activeArea === value) {
+
+            activeArea = null;
+
+          } else {
+
+            activeArea = value;
+
+          }
+
+
+          updateControls();
+
+          updateURL();
+
+          loadWidget();
+
+        }
       );
 
-
-    if (items.length) {
-      return items;
-    }
-
-
-    return Array.from(
-      container.querySelectorAll("li")
-    ).filter(
-      item =>
-        item.querySelector(
-          'a[href*="/event/"]'
-        )
-    );
-
-  }
-
-
-  /* =====================================================
-     SEARCH
-     ===================================================== */
-
-  function applySearch() {
-
-    const query =
-      searchQuery
-        .trim()
-        .toLowerCase();
-
-
-    const events =
-      getEventItems();
-
-
-    if (!events.length) {
-
-      if (query) {
-        status.textContent =
-          "Searching events…";
-      }
-
-      return;
-
-    }
-
-
-    let visible = 0;
-
-
-    events.forEach(event => {
-
-      const text =
-        event.textContent
-          .toLowerCase()
-          .replace(/\s+/g, " ");
-
-
-      const matches =
-        !query ||
-        text.includes(query);
-
-
-      event.style.display =
-        matches
-          ? ""
-          : "none";
-
-
-      if (matches) {
-        visible++;
-      }
-
-    });
-
-
-    if (!query) {
-
-      status.textContent = "";
-      return;
-
-    }
-
-
-    status.textContent =
-      visible === 1
-        ? "1 event found"
-        : visible + " events found";
-
-  }
-
-
-  searchForm.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
-
-      searchQuery =
-        searchInput.value.trim();
-
-      updatePageURL();
-      applySearch();
-
-    }
-  );
-
-
-  searchInput.addEventListener(
-    "input",
-    function () {
-
-      if (searchInput.value === "") {
-
-        searchQuery = "";
-
-        updatePageURL();
-        applySearch();
-
-      }
-
     }
   );
 
 
   /* =====================================================
-     AREA FILTERS
+     EVENT TYPE BUTTONS
      ===================================================== */
 
-  areaButtons.forEach(button => {
+  eventButtons.forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      function () {
+      button.addEventListener(
+        "click",
+        function () {
 
-        const key =
-          button.dataset.area;
-
-
-        if (selectedAreas.has(key)) {
-
-          selectedAreas.delete(key);
-
-        } else {
-
-          selectedAreas.add(key);
-
-        }
+          const value =
+            button.dataset.eventType;
 
 
-        updateControls();
-        updatePageURL();
-        loadWidget();
+          if (
+            activeEventType === value
+          ) {
 
-      }
-    );
+            activeEventType = null;
 
-  });
+          } else {
 
+            activeEventType = value;
 
-  /* =====================================================
-     EVENT FILTERS
-     ===================================================== */
-
-  typeBoxes.forEach(box => {
-
-    box.addEventListener(
-      "change",
-      function () {
-
-        const key =
-          box.dataset.type;
+          }
 
 
-        if (box.checked) {
+          moreMenu.hidden = true;
 
-          selectedEventTypes.add(key);
 
-        } else {
+          moreButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
 
-          selectedEventTypes.delete(key);
+
+          updateControls();
+
+          updateURL();
+
+          loadWidget();
 
         }
+      );
 
-
-        updateControls();
-        updatePageURL();
-        loadWidget();
-
-      }
-    );
-
-  });
+    }
+  );
 
 
   /* =====================================================
@@ -1031,11 +1013,15 @@
     "click",
     function () {
 
-      selectedAreas.clear();
-      selectedEventTypes.clear();
+      activeArea = null;
+
+      activeEventType = null;
+
 
       updateControls();
-      updatePageURL();
+
+      updateURL();
+
       loadWidget();
 
     }
@@ -1043,7 +1029,7 @@
 
 
   /* =====================================================
-     MORE MENU
+     MORE
      ===================================================== */
 
   moreButton.addEventListener(
@@ -1053,8 +1039,10 @@
       const opening =
         moreMenu.hidden;
 
+
       moreMenu.hidden =
         !opening;
+
 
       moreButton.setAttribute(
         "aria-expanded",
@@ -1079,10 +1067,120 @@
 
         moreMenu.hidden = true;
 
+
         moreButton.setAttribute(
           "aria-expanded",
           "false"
         );
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
+     SEARCH
+     ===================================================== */
+
+  function getEventItems() {
+
+    const obvious =
+      Array.from(
+        container.querySelectorAll(
+          "li.lw_event_item"
+        )
+      );
+
+
+    if (obvious.length) {
+      return obvious;
+    }
+
+
+    return Array.from(
+      container.querySelectorAll(
+        "li"
+      )
+    ).filter(
+      item =>
+        item.querySelector(
+          'a[href*="/event/"]'
+        )
+    );
+
+  }
+
+
+  function applySearch() {
+
+    const query =
+      searchQuery
+        .trim()
+        .toLowerCase();
+
+
+    const events =
+      getEventItems();
+
+
+    events.forEach(
+      event => {
+
+        const text =
+          event.textContent
+            .toLowerCase()
+            .replace(
+              /\s+/g,
+              " "
+            );
+
+
+        event.style.display =
+          !query ||
+          text.includes(query)
+            ? ""
+            : "none";
+
+      }
+    );
+
+  }
+
+
+  searchForm.addEventListener(
+    "submit",
+    function (event) {
+
+      event.preventDefault();
+
+
+      searchQuery =
+        searchInput.value.trim();
+
+
+      updateURL();
+
+      applySearch();
+
+    }
+  );
+
+
+  searchInput.addEventListener(
+    "input",
+    function () {
+
+      if (
+        searchInput.value === ""
+      ) {
+
+        searchQuery = "";
+
+
+        updateURL();
+
+        applySearch();
 
       }
 
@@ -1101,42 +1199,44 @@
       searchQuery =
         searchInput.value.trim();
 
-      updatePageURL();
+
+      updateURL();
 
 
       try {
 
-        await navigator.clipboard.writeText(
-          window.location.href
-        );
+        await navigator
+          .clipboard
+          .writeText(
+            window.location.href
+          );
 
       } catch (error) {
 
-        const textarea =
+        const field =
           document.createElement(
             "textarea"
           );
 
-        textarea.value =
+
+        field.value =
           window.location.href;
 
-        textarea.style.position =
-          "fixed";
-
-        textarea.style.opacity =
-          "0";
 
         document.body.appendChild(
-          textarea
+          field
         );
 
-        textarea.select();
+
+        field.select();
+
 
         document.execCommand(
           "copy"
         );
 
-        textarea.remove();
+
+        field.remove();
 
       }
 
@@ -1160,11 +1260,13 @@
 
 
   /* =====================================================
-     INITIALIZE
+     START
      ===================================================== */
 
-  readPageURL();
+  readURL();
+
   updateControls();
+
   loadWidget();
 
 
