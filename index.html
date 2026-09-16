@@ -2,150 +2,1603 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>DPAT Events</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Events | Performing Arts and Technology</title>
+
+  <!-- Google fonts -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Roboto+Condensed:wght@400;500;700&family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0"
+    rel="stylesheet"
+  >
+
 
   <style>
+
+    /* =====================================================
+       BASE
+       ===================================================== */
+
     * {
       box-sizing: border-box;
     }
 
-    html,
+    html {
+      background: #fff;
+    }
+
     body {
       margin: 0;
       padding: 0;
+
       background: #fff;
       color: #000;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
-    .calendar {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .calendar-tools {
-      margin-bottom: 20px;
-    }
-
-    .calendar-search {
-      width: 100%;
-      min-height: 44px;
-      padding: 9px 12px;
-      margin: 0 0 14px;
-
-      border: 1px solid #999;
-      background: #fff;
-
+    button,
+    input {
       font: inherit;
     }
 
-    .calendar-filters {
+
+    /* =====================================================
+       ACCESSIBILITY
+       ===================================================== */
+
+    .sr-only {
+      position: absolute;
+
+      width: 1px;
+      height: 1px;
+
+      padding: 0;
+      margin: -1px;
+
+      overflow: hidden;
+
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+
+      border: 0;
+    }
+
+
+    /* =====================================================
+       PAGE
+       ===================================================== */
+
+    .calendar-page {
+      width: 100%;
+      max-width: 1200px;
+
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    #calendar-search-form {
+      display: flex;
+
+      width: 100%;
+      margin: 0 0 16px;
+    }
+
+    #calendar-search {
+      flex: 1 1 auto;
+
+      width: 100%;
+      min-width: 0;
+      height: 54px;
+
+      margin: 0;
+      padding: 0 16px;
+
+      border: 1px solid #000;
+      border-right: 0;
+      border-radius: 0;
+
+      background: #fff;
+      color: #000;
+
+      font-size: 18px;
+
+      outline: none;
+
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    #calendar-search::placeholder {
+      color: #666;
+      opacity: 1;
+    }
+
+    #calendar-search::-webkit-search-cancel-button {
+      cursor: pointer;
+    }
+
+    #calendar-search-form button {
+      flex: 0 0 54px;
+
+      width: 54px;
+      height: 54px;
+
+      margin: 0;
+      padding: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid #cc0000;
+      border-radius: 0;
+
+      background: #cc0000;
+      color: #fff;
+
+      cursor: pointer;
+    }
+
+    #calendar-search-form button:hover {
+      background: #990000;
+      border-color: #990000;
+    }
+
+    #calendar-search-form:focus-within {
+      outline: 3px solid #6f7d1c;
+      outline-offset: 3px;
+    }
+
+    #calendar-search-form:focus-within input,
+    #calendar-search-form:focus-within button {
+      outline: none;
+    }
+
+    .material-symbols-sharp {
+      font-size: 28px;
+
+      font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+    }
+
+
+    /* =====================================================
+       FILTER BAR
+       ===================================================== */
+
+    #calendar-filters {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px 22px;
 
-      padding-bottom: 14px;
-      border-bottom: 1px solid #ddd;
+      gap: 9px 22px;
+
+      width: 100%;
+
+      margin: 0 0 22px;
+      padding: 0 0 14px;
+
+      border-bottom: 1px solid #ccc;
     }
 
-    .calendar-filters button {
+    #calendar-filters button {
       appearance: none;
+      -webkit-appearance: none;
+
+      margin: 0;
+      padding: 3px 0;
+
       border: 0;
-      padding: 2px 0;
+      border-radius: 0;
 
       background: transparent;
       color: #333;
 
-      font: inherit;
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #calendar-filters button:hover {
+      color: #cc0000;
+    }
+
+    #calendar-filters button:focus-visible {
+      outline: 3px solid #6f7d1c;
+      outline-offset: 3px;
+    }
+
+    #calendar-filters button.active {
+      color: #cc0000;
+
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+    }
+
+
+    /* =====================================================
+       MORE
+       ===================================================== */
+
+    #more-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    #more-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    #more-button .material-symbols-sharp {
+      font-size: 19px;
+      transition: transform 0.15s ease;
+    }
+
+    #more-button[aria-expanded="true"]
+    .material-symbols-sharp {
+      transform: rotate(180deg);
+    }
+
+
+    /* =====================================================
+       MORE MENU
+       ===================================================== */
+
+    #more-menu {
+      position: absolute;
+      z-index: 1000;
+
+      top: calc(100% + 9px);
+      left: 0;
+
+      min-width: 220px;
+
+      margin: 0;
+      padding: 6px 0;
+
+      border: 1px solid #aaa;
+
+      background: #fff;
+      color: #000;
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #more-menu[hidden] {
+      display: none;
+    }
+
+    #more-menu label {
+      display: flex;
+      align-items: center;
+
+      gap: 9px;
+
+      width: 100%;
+
+      margin: 0;
+      padding: 9px 12px;
+
+      font-size: 15px;
+      line-height: 1.3;
+
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #more-menu label:hover {
+      background: #f2f2f2;
+    }
+
+    #more-menu input {
+      width: 16px;
+      height: 16px;
+
+      margin: 0;
+
+      accent-color: #cc0000;
+
       cursor: pointer;
     }
 
-    .calendar-filters button:hover,
-    .calendar-filters button.active {
-      color: #cc0000;
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 4px;
+
+    /* =====================================================
+       COPY URL
+       ===================================================== */
+
+    #copy-url {
+      margin-left: auto !important;
+
+      color: #555 !important;
+
+      font-weight: 400 !important;
     }
 
-    #localist-widget-71703993 {
+    #copy-url:hover {
+      color: #cc0000 !important;
+    }
+
+
+    /* =====================================================
+       LOCALIST
+       ===================================================== */
+
+    #localist-widget-dpat {
       width: 100%;
+
+      margin: 0;
+      padding: 0;
     }
 
-    #lclst_widget_footer {
-      margin-top: 10px;
+
+    /* =====================================================
+       SEARCH STATUS
+       ===================================================== */
+
+    #search-status {
+      margin: -10px 0 18px;
+
+      color: #555;
+
+      font-size: 14px;
     }
+
+    #search-status:empty {
+      display: none;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
 
     @media (max-width: 700px) {
-      .calendar {
-        padding: 16px;
+
+      .calendar-page {
+        padding: 20px 16px 36px;
       }
 
-      .calendar-filters {
-        gap: 9px 16px;
+      #calendar-search,
+      #calendar-search-form button {
+        height: 50px;
       }
+
+      #calendar-search {
+        font-size: 16px;
+      }
+
+      #calendar-search-form button {
+        flex-basis: 50px;
+        width: 50px;
+      }
+
+      #calendar-filters {
+        gap: 10px 17px;
+      }
+
+      #copy-url {
+        margin-left: 0 !important;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <main class="calendar">
+  <main class="calendar-page">
 
-    <div class="calendar-tools">
+
+    <!-- ===================================================
+         SEARCH
+         =================================================== -->
+
+    <form
+      id="calendar-search-form"
+      role="search"
+    >
+
+      <label
+        class="sr-only"
+        for="calendar-search"
+      >
+        Search events
+      </label>
 
       <input
-        class="calendar-search"
+        id="calendar-search"
         type="search"
-        placeholder="Search events…"
-        aria-label="Search events"
+        placeholder="Search"
+        autocomplete="off"
       >
 
-      <div class="calendar-filters">
-        <button type="button" class="active">All</button>
-        <button type="button">Music</button>
-        <button type="button">Dance</button>
-        <button type="button">Arts Entrepreneurship</button>
-        <button type="button">Music Technology</button>
-        <button type="button">More</button>
-      </div>
+      <button
+        type="submit"
+        aria-label="Search events"
+      >
+        <span
+          class="material-symbols-sharp"
+          aria-hidden="true"
+        >
+          search
+        </span>
+      </button>
+
+    </form>
+
+
+    <!-- ===================================================
+         FILTERS
+         =================================================== -->
+
+    <div
+      id="calendar-filters"
+      aria-label="Filter events"
+    >
+
+      <button
+        type="button"
+        id="filter-all"
+        class="active"
+      >
+        All
+      </button>
+
+
+      <button
+        type="button"
+        data-area="music"
+      >
+        Music
+      </button>
+
+
+      <button
+        type="button"
+        data-area="dance"
+      >
+        Dance
+      </button>
+
+
+      <button
+        type="button"
+        data-area="arts"
+      >
+        Arts Entrepreneurship
+      </button>
+
+
+      <button
+        type="button"
+        data-area="tech"
+      >
+        Music Technology
+      </button>
+
+
+      <span id="more-wrap">
+
+        <button
+          type="button"
+          id="more-button"
+          aria-expanded="false"
+          aria-controls="more-menu"
+        >
+          More
+
+          <span
+            class="material-symbols-sharp"
+            aria-hidden="true"
+          >
+            expand_more
+          </span>
+        </button>
+
+
+        <span
+          id="more-menu"
+          hidden
+        >
+
+          <label>
+            <input
+              type="checkbox"
+              data-type="performance"
+            >
+            Performances
+          </label>
+
+
+          <label>
+            <input
+              type="checkbox"
+              data-type="masterclass"
+            >
+            Master Classes
+          </label>
+
+
+          <label>
+            <input
+              type="checkbox"
+              data-type="audition"
+            >
+            Auditions
+          </label>
+
+
+          <label>
+            <input
+              type="checkbox"
+              data-type="workshop"
+            >
+            Workshops &amp; Talks
+          </label>
+
+        </span>
+
+      </span>
+
+
+      <button
+        type="button"
+        id="copy-url"
+        title="Copy a link to the current search and filters"
+      >
+        Copy URL
+      </button>
 
     </div>
 
 
     <div
-      id="localist-widget-71703993"
-      class="localist-widget">
-    </div>
+      id="search-status"
+      aria-live="polite"
+    ></div>
 
-    <script
-      defer
-      type="text/javascript"
-      src="https://calendar.ncsu.edu/widget/view?schools=ncsu&groups=department_of_performing_arts_and_technology&days=365&num=50&experience=inperson&container=localist-widget-71703993&template=widget-template-7">
-    </script>
 
-    <div id="lclst_widget_footer">
-      <a
-        style="margin-left:auto;margin-right:auto;display:block;width:81px;margin-top:10px;"
-        title="Widget powered by Concept3D Event Calendar Software"
-        href="https://www.localist.com?utm_source=widget&utm_campaign=widget_footer&utm_medium=branded%20link">
+    <!-- ===================================================
+         LOCALIST
+         =================================================== -->
 
-        <img
-          src="//d3e1o4bcbhmj8g.cloudfront.net/assets/platforms/default/about/widget_footer.png"
-          alt="Localist Online Calendar Software"
-          style="vertical-align:middle;"
-          width="81"
-          height="23">
+    <div
+      id="localist-widget-dpat"
+      class="localist-widget"
+    ></div>
 
-      </a>
-    </div>
 
   </main>
+
+
+  <script>
+
+    (function () {
+
+      /* ===================================================
+         ELEMENTS
+         =================================================== */
+
+      const container =
+        document.getElementById(
+          "localist-widget-dpat"
+        );
+
+      const searchForm =
+        document.getElementById(
+          "calendar-search-form"
+        );
+
+      const searchInput =
+        document.getElementById(
+          "calendar-search"
+        );
+
+      const searchStatus =
+        document.getElementById(
+          "search-status"
+        );
+
+      const allButton =
+        document.getElementById(
+          "filter-all"
+        );
+
+      const areaButtons =
+        Array.from(
+          document.querySelectorAll(
+            "[data-area]"
+          )
+        );
+
+      const typeBoxes =
+        Array.from(
+          document.querySelectorAll(
+            "input[data-type]"
+          )
+        );
+
+      const moreButton =
+        document.getElementById(
+          "more-button"
+        );
+
+      const moreMenu =
+        document.getElementById(
+          "more-menu"
+        );
+
+      const moreWrap =
+        document.getElementById(
+          "more-wrap"
+        );
+
+      const copyButton =
+        document.getElementById(
+          "copy-url"
+        );
+
+
+      /* ===================================================
+         LOCALIST FILTER DEFINITIONS
+
+         VERIFIED:
+         Dance = 6673
+         Master Class Series = 43598230166255
+
+         The remaining tag mappings are provisional until
+         we verify the exact NC State Localist taxonomy.
+         =================================================== */
+
+      const AREAS = {
+
+        music: {
+          tags: ["music"]
+        },
+
+        dance: {
+          types: ["6673"]
+        },
+
+        arts: {
+          tags: ["arts entrepreneurship"]
+        },
+
+        tech: {
+          tags: ["music technology"]
+        }
+
+      };
+
+
+      const EVENT_TYPES = {
+
+        performance: {
+          tags: ["performance"]
+        },
+
+        masterclass: {
+          types: ["43598230166255"]
+        },
+
+        audition: {
+          tags: ["audition"]
+        },
+
+        workshop: {
+          tags: ["workshop"]
+        }
+
+      };
+
+
+      /* ===================================================
+         STATE
+         =================================================== */
+
+      let selectedAreas =
+        new Set();
+
+      let selectedTypes =
+        new Set();
+
+      let searchQuery = "";
+
+
+      /* ===================================================
+         READ STATE FROM URL
+         =================================================== */
+
+      function readURL() {
+
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+
+        const areas =
+          (params.get("area") || "")
+            .split(",")
+            .filter(Boolean);
+
+
+        const types =
+          (params.get("type") || "")
+            .split(",")
+            .filter(Boolean);
+
+
+        selectedAreas =
+          new Set(
+            areas.filter(
+              key => AREAS[key]
+            )
+          );
+
+
+        selectedTypes =
+          new Set(
+            types.filter(
+              key => EVENT_TYPES[key]
+            )
+          );
+
+
+        searchQuery =
+          params.get("q") || "";
+
+
+        searchInput.value =
+          searchQuery;
+
+      }
+
+
+      /* ===================================================
+         UPDATE PAGE URL
+         =================================================== */
+
+      function updateURL() {
+
+        const url =
+          new URL(
+            window.location.href
+          );
+
+
+        url.searchParams.delete(
+          "area"
+        );
+
+        url.searchParams.delete(
+          "type"
+        );
+
+        url.searchParams.delete(
+          "q"
+        );
+
+
+        if (selectedAreas.size) {
+
+          url.searchParams.set(
+            "area",
+            Array.from(
+              selectedAreas
+            ).join(",")
+          );
+
+        }
+
+
+        if (selectedTypes.size) {
+
+          url.searchParams.set(
+            "type",
+            Array.from(
+              selectedTypes
+            ).join(",")
+          );
+
+        }
+
+
+        if (searchQuery) {
+
+          url.searchParams.set(
+            "q",
+            searchQuery
+          );
+
+        }
+
+
+        window.history.replaceState(
+          null,
+          "",
+          url
+        );
+
+      }
+
+
+      /* ===================================================
+         UPDATE FILTER APPEARANCE
+         =================================================== */
+
+      function updateControls() {
+
+        areaButtons.forEach(
+          button => {
+
+            button.classList.toggle(
+              "active",
+              selectedAreas.has(
+                button.dataset.area
+              )
+            );
+
+          }
+        );
+
+
+        typeBoxes.forEach(
+          box => {
+
+            box.checked =
+              selectedTypes.has(
+                box.dataset.type
+              );
+
+          }
+        );
+
+
+        allButton.classList.toggle(
+          "active",
+          selectedAreas.size === 0 &&
+          selectedTypes.size === 0
+        );
+
+
+        moreButton.classList.toggle(
+          "active",
+          selectedTypes.size > 0
+        );
+
+      }
+
+
+      /* ===================================================
+         BUILD LOCALIST URL
+         =================================================== */
+
+      function buildWidgetURL() {
+
+        const params =
+          new URLSearchParams();
+
+
+        params.set(
+          "schools",
+          "ncsu"
+        );
+
+        params.set(
+          "groups",
+          "department_of_performing_arts_and_technology"
+        );
+
+        params.set(
+          "days",
+          "365"
+        );
+
+        params.set(
+          "num",
+          "50"
+        );
+
+        params.set(
+          "experience",
+          "inperson"
+        );
+
+        params.set(
+          "container",
+          "localist-widget-dpat"
+        );
+
+        params.set(
+          "template",
+          "widget-template-7"
+        );
+
+
+        let types = [];
+        let tags = [];
+
+
+        selectedAreas.forEach(
+          key => {
+
+            const filter =
+              AREAS[key];
+
+            if (filter.types) {
+              types.push(
+                ...filter.types
+              );
+            }
+
+            if (filter.tags) {
+              tags.push(
+                ...filter.tags
+              );
+            }
+
+          }
+        );
+
+
+        selectedTypes.forEach(
+          key => {
+
+            const filter =
+              EVENT_TYPES[key];
+
+            if (filter.types) {
+              types.push(
+                ...filter.types
+              );
+            }
+
+            if (filter.tags) {
+              tags.push(
+                ...filter.tags
+              );
+            }
+
+          }
+        );
+
+
+        types =
+          Array.from(
+            new Set(types)
+          );
+
+        tags =
+          Array.from(
+            new Set(tags)
+          );
+
+
+        if (types.length) {
+
+          params.set(
+            "types",
+            types.join(",")
+          );
+
+        }
+
+
+        if (tags.length) {
+
+          params.set(
+            "tags",
+            tags.join(",")
+          );
+
+        }
+
+
+        return (
+          "https://calendar.ncsu.edu/widget/view?" +
+          params.toString()
+        );
+
+      }
+
+
+      /* ===================================================
+         LOAD LOCALIST
+         =================================================== */
+
+      function loadWidget() {
+
+        document
+          .querySelectorAll(
+            "script[data-dpat-localist]"
+          )
+          .forEach(
+            script =>
+              script.remove()
+          );
+
+
+        container.innerHTML = "";
+
+
+        const script =
+          document.createElement(
+            "script"
+          );
+
+
+        script.type =
+          "text/javascript";
+
+        script.defer = true;
+
+        script.setAttribute(
+          "data-dpat-localist",
+          "true"
+        );
+
+        script.src =
+          buildWidgetURL();
+
+
+        container.parentNode.insertBefore(
+          script,
+          container.nextSibling
+        );
+
+
+        /*
+         * Localist loads asynchronously.
+         * Run search after the widget has had time to render.
+         */
+
+        window.setTimeout(
+          applySearch,
+          800
+        );
+
+        window.setTimeout(
+          applySearch,
+          1600
+        );
+
+        window.setTimeout(
+          applySearch,
+          2800
+        );
+
+      }
+
+
+      /* ===================================================
+         FIND LOCALIST EVENT ITEMS
+         =================================================== */
+
+      function getEventItems() {
+
+        /*
+         * Template 7 may change its internal markup.
+         * Start with event links and walk upward until
+         * we find repeated event-level containers.
+         */
+
+        const eventLinks =
+          Array.from(
+            container.querySelectorAll(
+              'a[href*="/event/"]'
+            )
+          );
+
+
+        if (!eventLinks.length) {
+          return [];
+        }
+
+
+        let elements =
+          eventLinks.map(
+            link =>
+              link.parentElement
+          );
+
+
+        for (
+          let level = 0;
+          level < 8;
+          level++
+        ) {
+
+          const unique =
+            Array.from(
+              new Set(
+                elements.filter(
+                  Boolean
+                )
+              )
+            );
+
+
+          /*
+           * A useful event level should still have
+           * multiple independent elements.
+           */
+
+          if (
+            unique.length > 1 &&
+            unique.length <=
+              eventLinks.length
+          ) {
+
+            const substantial =
+              unique.filter(
+                element =>
+                  element.textContent
+                    .trim()
+                    .length > 30
+              );
+
+
+            if (
+              substantial.length > 1
+            ) {
+
+              return substantial;
+
+            }
+
+          }
+
+
+          elements =
+            elements.map(
+              element =>
+                element &&
+                element.parentElement
+                  ? element.parentElement
+                  : null
+            );
+
+        }
+
+
+        return [];
+
+      }
+
+
+      /* ===================================================
+         SEARCH
+         =================================================== */
+
+      function applySearch() {
+
+        const query =
+          searchQuery
+            .trim()
+            .toLowerCase();
+
+
+        const events =
+          getEventItems();
+
+
+        if (!events.length) {
+
+          searchStatus.textContent =
+            query
+              ? "Searching events…"
+              : "";
+
+          return;
+
+        }
+
+
+        let visible = 0;
+
+
+        events.forEach(
+          event => {
+
+            const text =
+              event.textContent
+                .toLowerCase()
+                .replace(
+                  /\s+/g,
+                  " "
+                );
+
+
+            const match =
+              !query ||
+              text.includes(
+                query
+              );
+
+
+            event.style.display =
+              match
+                ? ""
+                : "none";
+
+
+            if (match) {
+              visible++;
+            }
+
+          }
+        );
+
+
+        if (query) {
+
+          searchStatus.textContent =
+            visible === 1
+              ? "1 event found"
+              : visible +
+                " events found";
+
+        } else {
+
+          searchStatus.textContent =
+            "";
+
+        }
+
+      }
+
+
+      function runSearch() {
+
+        searchQuery =
+          searchInput.value
+            .trim();
+
+        updateURL();
+        applySearch();
+
+      }
+
+
+      searchForm.addEventListener(
+        "submit",
+        function (event) {
+
+          event.preventDefault();
+
+          runSearch();
+
+        }
+      );
+
+
+      /*
+       * Clearing the native search field's X
+       * immediately restores all events.
+       */
+
+      searchInput.addEventListener(
+        "input",
+        function () {
+
+          if (
+            searchInput.value === ""
+          ) {
+
+            searchQuery = "";
+
+            updateURL();
+            applySearch();
+
+          }
+
+        }
+      );
+
+
+      /* ===================================================
+         AREA FILTERS
+         =================================================== */
+
+      areaButtons.forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const key =
+                button.dataset.area;
+
+
+              if (
+                selectedAreas.has(
+                  key
+                )
+              ) {
+
+                selectedAreas.delete(
+                  key
+                );
+
+              } else {
+
+                selectedAreas.add(
+                  key
+                );
+
+              }
+
+
+              updateControls();
+              updateURL();
+              loadWidget();
+
+            }
+          );
+
+        }
+      );
+
+
+      /* ===================================================
+         EVENT TYPE FILTERS
+         =================================================== */
+
+      typeBoxes.forEach(
+        box => {
+
+          box.addEventListener(
+            "change",
+            function () {
+
+              const key =
+                box.dataset.type;
+
+
+              if (box.checked) {
+
+                selectedTypes.add(
+                  key
+                );
+
+              } else {
+
+                selectedTypes.delete(
+                  key
+                );
+
+              }
+
+
+              updateControls();
+              updateURL();
+              loadWidget();
+
+            }
+          );
+
+        }
+      );
+
+
+      /* ===================================================
+         ALL
+         =================================================== */
+
+      allButton.addEventListener(
+        "click",
+        function () {
+
+          selectedAreas.clear();
+          selectedTypes.clear();
+
+          updateControls();
+          updateURL();
+          loadWidget();
+
+        }
+      );
+
+
+      /* ===================================================
+         MORE MENU
+         =================================================== */
+
+      moreButton.addEventListener(
+        "click",
+        function () {
+
+          const opening =
+            moreMenu.hidden;
+
+
+          moreMenu.hidden =
+            !opening;
+
+
+          moreButton.setAttribute(
+            "aria-expanded",
+            opening
+              ? "true"
+              : "false"
+          );
+
+        }
+      );
+
+
+      document.addEventListener(
+        "click",
+        function (event) {
+
+          if (
+            !moreWrap.contains(
+              event.target
+            )
+          ) {
+
+            moreMenu.hidden =
+              true;
+
+
+            moreButton.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+          }
+
+        }
+      );
+
+
+      /* ===================================================
+         COPY URL
+         =================================================== */
+
+      copyButton.addEventListener(
+        "click",
+        async function () {
+
+          searchQuery =
+            searchInput.value
+              .trim();
+
+          updateURL();
+
+
+          try {
+
+            await navigator
+              .clipboard
+              .writeText(
+                window.location.href
+              );
+
+
+            copyButton.textContent =
+              "Copied!";
+
+
+            window.setTimeout(
+              function () {
+
+                copyButton.textContent =
+                  "Copy URL";
+
+              },
+              1500
+            );
+
+          } catch (error) {
+
+            /*
+             * Clipboard fallback
+             */
+
+            const textarea =
+              document.createElement(
+                "textarea"
+              );
+
+            textarea.value =
+              window.location.href;
+
+            textarea.setAttribute(
+              "readonly",
+              ""
+            );
+
+            textarea.style.position =
+              "fixed";
+
+            textarea.style.opacity =
+              "0";
+
+
+            document.body.appendChild(
+              textarea
+            );
+
+            textarea.select();
+
+            document.execCommand(
+              "copy"
+            );
+
+            textarea.remove();
+
+
+            copyButton.textContent =
+              "Copied!";
+
+
+            window.setTimeout(
+              function () {
+
+                copyButton.textContent =
+                  "Copy URL";
+
+              },
+              1500
+            );
+
+          }
+
+        }
+      );
+
+
+      /* ===================================================
+         START
+         =================================================== */
+
+      readURL();
+
+      updateControls();
+
+      loadWidget();
+
+    })();
+
+  </script>
 
 </body>
 </html>
