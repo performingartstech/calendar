@@ -1,583 +1,1653 @@
-<style>
-  :root {
-    --brand-primary: #cc0000;
-    --brand-primary-dark: #990000;
-    --brand-primary-extra-dark: #5e0000;
-
-    --white: #ffffff;
-    --black: #000000;
-
-    --very-light-gray: #f2f2f2;
-    --light-gray: #cccccc;
-    --mid-gray: #666666;
-    --dark-gray: #333333;
-    --gray-100: #e5e5e5;
-    --gray-300: #b2b2b2;
-
-    --max-width: 1200px;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    background: var(--white);
-    color: var(--black);
-  }
-
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  button,
-  input {
-    font: inherit;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-
-  /* Header */
-
-  .brand-header {
-    width: 100%;
-    background: var(--brand-primary);
-  }
-
-  .brand-header-inner {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 10px;
-  }
-
-  .brand-header-logo {
-    display: block;
-    width: min(100%, 400px);
-    height: auto;
-  }
-
-
-  /* Page */
-
-  .calendar-page {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 24px 24px 48px;
-  }
-
-
-  /* Toolbar */
-
-  #calendar-filters {
-    display: flex;
-    align-items: center;
-    gap: 12px 22px;
-    width: 100%;
-    margin: 0 0 28px;
-  }
-
-
-  /* Search */
-
-  #calendar-search-form {
-    display: flex;
-    flex: 0 1 300px;
-    width: 300px;
-    min-width: 220px;
-    height: 42px;
-    margin: 0;
-  }
-
-  #calendar-search {
-    display: block;
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-    height: 42px;
-    margin: 0;
-    padding: 0 12px;
-
-    border: 1px solid var(--gray-300);
-    border-right: 0;
-    border-radius: 0;
-
-    background: var(--white);
-    color: var(--black);
-
-    font-size: 16px;
-    line-height: 1;
-
-    appearance: none;
-    -webkit-appearance: none;
-  }
-
-  #calendar-search::placeholder {
-    color: var(--mid-gray);
-    opacity: 1;
-  }
-
-  #calendar-search::-webkit-search-cancel-button {
-    cursor: pointer;
-  }
-
-  #calendar-search:focus {
-    position: relative;
-    z-index: 2;
-    outline: 2px solid var(--brand-primary);
-    outline-offset: -2px;
-  }
-
-  #calendar-search-form > button {
-    display: flex;
-    flex: 0 0 42px;
-    align-items: center;
-    justify-content: center;
-
-    width: 42px;
-    height: 42px;
-    margin: 0;
-    padding: 0;
-
-    border: 1px solid var(--brand-primary);
-    border-radius: 0;
-
-    background: var(--brand-primary);
-    color: var(--white);
-  }
-
-  #calendar-search-form > button:hover,
-  #calendar-search-form > button:focus {
-    border-color: var(--brand-primary-dark);
-    background: var(--brand-primary-dark);
-    color: var(--white);
-  }
-
-  #calendar-search-form > button:focus-visible {
-    outline: 2px solid var(--black);
-    outline-offset: 2px;
-  }
-
-  .search-icon {
-    display: block;
-    width: 18px;
-    height: 18px;
-  }
-
-
-  /* Filters */
-
-  .primary-filters {
-    display: flex;
-    flex: 1 1 auto;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 22px;
-    min-width: 0;
-  }
-
-  #calendar-filters .filter-button,
-  #more-button,
-  #copy-url {
-    appearance: none;
-    -webkit-appearance: none;
-
-    width: auto;
-    min-width: 0;
-    height: auto;
-    min-height: 0;
-
-    margin: 0;
-    padding: 4px 0 5px;
-
-    border: 0;
-    border-bottom: 3px solid transparent;
-    border-radius: 0;
-
-    background: transparent;
-    box-shadow: none;
-
-    color: var(--dark-gray);
-
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.35;
-
-    text-align: left;
-    text-transform: none;
-    text-decoration: none;
-
-    white-space: nowrap;
-  }
-
-  #calendar-filters .filter-button:hover,
-  #calendar-filters .filter-button:focus,
-  #more-button:hover,
-  #more-button:focus,
-  #copy-url:hover,
-  #copy-url:focus {
-    background: transparent;
-    color: var(--brand-primary);
-  }
-
-  #calendar-filters .filter-button:focus-visible,
-  #more-button:focus-visible,
-  #copy-url:focus-visible {
-    outline: 2px solid var(--black);
-    outline-offset: 3px;
-  }
-
-  #calendar-filters .filter-button.active {
-    border-bottom-color: var(--brand-primary);
-    color: var(--brand-primary);
-    font-weight: 400;
-  }
-
-
-  /* More */
-
-  #more-wrap {
-    position: relative;
-    display: inline-block;
-    flex: 0 0 auto;
-  }
-
-  #more-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  #more-button.active {
-    border-bottom-color: var(--brand-primary);
-    color: var(--brand-primary);
-    font-weight: 400;
-  }
-
-  .more-caret {
-    display: block;
-    width: 7px;
-    height: 7px;
-    margin-top: -4px;
-
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-
-    transform: rotate(45deg);
-    transition: transform 0.15s ease;
-  }
-
-  #more-button[aria-expanded="true"] .more-caret {
-    margin-top: 4px;
-    transform: rotate(225deg);
-  }
-
-
-  /* More menu */
-
-  #more-menu {
-    position: absolute;
-    z-index: 1000;
-
-    top: calc(100% + 9px);
-    left: -16px;
-
-    width: max-content;
-    min-width: 225px;
-
-    margin: 0;
-    padding: 8px 0;
-
-    border: 0;
-
-    background: var(--brand-primary-dark);
-    box-shadow: none;
-  }
-
-  #more-menu[hidden] {
-    display: none;
-  }
-
-  #more-menu::before {
-    content: "";
-    position: absolute;
-
-    top: -8px;
-    left: 18px;
-
-    width: 0;
-    height: 0;
-
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--brand-primary-dark);
-    border-left: 8px solid transparent;
-  }
-
-  #more-menu button {
-    appearance: none;
-    -webkit-appearance: none;
-
-    display: block;
-
-    width: 100%;
-    min-width: 0;
-    height: auto;
-    min-height: 0;
-
-    margin: 0;
-    padding: 9px 18px;
-
-    border: 0;
-    border-radius: 0;
-
-    background: transparent;
-    box-shadow: none;
-
-    color: var(--white);
-
-    font: inherit;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.35;
-
-    text-align: left;
-    text-transform: none;
-    text-decoration: none;
-
-    white-space: nowrap;
-  }
-
-  #more-menu button:hover,
-  #more-menu button:focus {
-    background: transparent;
-    color: var(--light-gray);
-  }
-
-  #more-menu button:focus-visible {
-    outline: 2px solid var(--white);
-    outline-offset: -4px;
-  }
-
-  #more-menu button.active {
-    background: transparent;
-    color: var(--white);
-    font-weight: 400;
-
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-
-
-  /* Copy URL */
-
-  #copy-url {
-    flex: 0 0 auto;
-    margin-left: auto;
-
-    border-bottom: 0;
-
-    color: var(--mid-gray);
-    font-size: 15px;
-    font-weight: 400;
-  }
-
-
-  /* Status */
-
-  #calendar-status {
-    margin: -14px 0 20px;
-    color: var(--mid-gray);
-    font-size: 14px;
-  }
-
-  #calendar-status:empty {
-    display: none;
-  }
-
-
-  /* Localist */
-
-  #localist-widget-dpat {
-    clear: both;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-
-  /* Medium screens */
-
-  @media (max-width: 1050px) {
-    #calendar-filters {
-      flex-wrap: wrap;
-      align-items: flex-start;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Events | Performing Arts and Technology</title>
+
+  <style>
+    :root {
+      --brand-primary: #cc0000;
+      --brand-primary-dark: #990000;
+      --brand-primary-extra-dark: #5e0000;
+
+      --white: #ffffff;
+      --black: #000000;
+
+      --very-light-gray: #f2f2f2;
+      --light-gray: #cccccc;
+      --mid-gray: #666666;
+      --dark-gray: #333333;
+      --gray-100: #e5e5e5;
+      --gray-300: #b2b2b2;
+
+      --max-width: 1200px;
     }
 
-    #calendar-search-form {
-      flex: 0 0 300px;
+    * {
+      box-sizing: border-box;
     }
 
-    .primary-filters {
-      flex: 1 1 500px;
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--white);
+      color: var(--black);
     }
 
-    #copy-url {
-      margin-left: 0;
-    }
-  }
-
-
-  /* Tablet */
-
-  @media (max-width: 850px) {
-    #calendar-filters {
-      display: block;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
-    #calendar-search-form {
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+
+    /* Header */
+
+    .brand-header {
       width: 100%;
-      max-width: 420px;
-      margin-bottom: 18px;
+      background: var(--brand-primary);
     }
 
-    .primary-filters {
-      display: flex;
-      width: 100%;
-    }
-
-    #copy-url {
-      margin-top: 14px;
-    }
-  }
-
-
-  /* Mobile */
-
-  @media (max-width: 700px) {
     .brand-header-inner {
-      padding: 10px 16px;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 10px;
     }
 
     .brand-header-logo {
-      width: min(100%, 350px);
+      display: block;
+      width: min(100%, 400px);
+      height: auto;
     }
+
+
+    /* Page */
 
     .calendar-page {
-      padding: 20px 16px 36px;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 24px 48px;
     }
+
+
+    /* Toolbar */
 
     #calendar-filters {
-      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px 22px;
+      width: 100%;
+      margin-bottom: 18px;
     }
 
+
+    /* Search */
+
     #calendar-search-form {
-      max-width: none;
-      height: 44px;
+      display: flex;
+      flex: 0 0 300px;
+      width: 300px;
+      height: 42px;
+      margin: 0;
     }
 
     #calendar-search {
-      height: 44px;
+      flex: 1 1 auto;
+      width: 100%;
+      min-width: 0;
+      height: 42px;
+      margin: 0;
+      padding: 0 12px;
+
+      border: 1px solid var(--gray-300);
+      border-right: 0;
+      border-radius: 0;
+
+      background: var(--white);
+      color: var(--black);
+
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    #calendar-search::placeholder {
+      color: var(--mid-gray);
+      opacity: 1;
+    }
+
+    #calendar-search:focus {
+      position: relative;
+      z-index: 2;
+      outline: 2px solid var(--brand-primary);
+      outline-offset: -2px;
     }
 
     #calendar-search-form > button {
-      flex-basis: 44px;
-      width: 44px;
-      height: 44px;
+      display: flex;
+      flex: 0 0 42px;
+      align-items: center;
+      justify-content: center;
+
+      width: 42px;
+      height: 42px;
+      margin: 0;
+      padding: 0;
+
+      border: 1px solid var(--brand-primary);
+      border-radius: 0;
+
+      background: var(--brand-primary);
+      color: var(--white);
     }
+
+    #calendar-search-form > button:hover,
+    #calendar-search-form > button:focus {
+      border-color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
+    }
+
+    #calendar-search-form > button:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+    }
+
+    .search-icon {
+      display: block;
+      width: 18px;
+      height: 18px;
+    }
+
+
+    /* Top filters */
 
     .primary-filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0;
-    }
+      position: relative;
 
-    #calendar-filters .filter-button,
-    #more-button {
       display: flex;
+      flex: 1 1 auto;
+      flex-wrap: nowrap;
       align-items: center;
+      gap: 22px;
 
-      width: 100%;
-      min-height: 44px;
-
-      padding: 10px 0;
-
-      border-bottom: 1px solid var(--light-gray);
-
-      white-space: normal;
+      min-width: 0;
     }
 
-    #calendar-filters .filter-button.active {
-      border-bottom: 3px solid var(--brand-primary);
+    .filter-button {
+      position: relative;
+
+      appearance: none;
+      -webkit-appearance: none;
+
+      flex: 0 0 auto;
+
+      margin: 0;
+      padding: 7px 0 9px;
+
+      border: 0;
+      border-radius: 0;
+
+      background: transparent;
+      color: var(--dark-gray);
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.35;
+
+      white-space: nowrap;
+
+      transition: color 180ms ease;
     }
 
-    #more-wrap {
-      display: block;
-      width: 100%;
+    .filter-button:hover,
+    .filter-button:focus {
+      background: transparent;
+      color: var(--brand-primary);
     }
 
-    #more-button {
-      justify-content: space-between;
+    .filter-button.active {
+      color: var(--brand-primary);
     }
 
-    #more-button.active {
-      border-bottom: 3px solid var(--brand-primary);
+    .filter-button:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
     }
 
-    #more-menu {
-      top: 100%;
-      right: auto;
+
+    /* Sliding underline */
+
+    #filter-indicator {
+      position: absolute;
+      z-index: 1;
+
+      bottom: 3px;
       left: 0;
 
-      width: min(280px, calc(100vw - 32px));
-      min-width: 0;
+      width: 0;
+      height: 3px;
+
+      background: var(--brand-primary);
+
+      transform: translateX(0);
+      transform-origin: left center;
+
+      pointer-events: none;
+
+      transition:
+        transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        width 280ms cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+
+    /* Filter panel button */
+
+    #more-button {
+      appearance: none;
+      -webkit-appearance: none;
+
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 8px;
+
+      margin: 0;
+      padding: 7px 0 9px;
+
+      border: 0;
+      border-radius: 0;
+
+      background: transparent;
+      color: var(--dark-gray);
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.35;
+
+      white-space: nowrap;
+
+      transition: color 180ms ease;
+    }
+
+    #more-button:hover,
+    #more-button:focus,
+    #more-button.active {
+      color: var(--brand-primary);
+    }
+
+    #more-button:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
+    }
+
+    .more-caret {
+      display: block;
+
+      width: 7px;
+      height: 7px;
+      margin-top: -4px;
+
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+
+      transform: rotate(45deg);
+
+      transition:
+        transform 200ms ease,
+        margin 200ms ease;
+    }
+
+    #more-button[aria-expanded="true"] .more-caret {
+      margin-top: 4px;
+      transform: rotate(225deg);
+    }
+
+
+    /* Copy URL */
 
     #copy-url {
-      margin-top: 16px;
+      appearance: none;
+      -webkit-appearance: none;
+
+      flex: 0 0 auto;
+
+      margin: 0 0 0 auto;
+      padding: 7px 0 9px;
+
+      border: 0;
+      border-radius: 0;
+
+      background: transparent;
+      color: var(--mid-gray);
+
+      font-size: 15px;
+      font-weight: 400;
+
+      white-space: nowrap;
     }
-  }
 
-
-  /* Small mobile */
-
-  @media (max-width: 480px) {
-    .primary-filters {
-      grid-template-columns: 1fr;
+    #copy-url:hover,
+    #copy-url:focus {
+      color: var(--brand-primary);
     }
 
-    #more-menu {
-      position: static;
-
-      width: 100%;
-      min-width: 0;
-
-      margin-top: 0;
+    #copy-url:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
     }
 
-    #more-menu::before {
+
+    /* Expanded filters */
+
+    #expanded-filters {
+      display: grid;
+      grid-template-rows: 0fr;
+
+      margin: 0;
+
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+
+      transition:
+        grid-template-rows 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        margin 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 260ms ease;
+    }
+
+    #expanded-filters.open {
+      grid-template-rows: 1fr;
+
+      margin: 0 0 28px;
+
+      border-top-color: var(--light-gray);
+      border-bottom-color: var(--light-gray);
+    }
+
+    .expanded-filters-inner {
+      overflow: hidden;
+    }
+
+    .expanded-filters-content {
+      padding: 0;
+
+      opacity: 0;
+      transform: translateY(-6px);
+
+      transition:
+        opacity 180ms ease,
+        transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        padding 260ms ease;
+    }
+
+    #expanded-filters.open .expanded-filters-content {
+      padding: 22px 0 24px;
+
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .filter-group-title {
+      flex: 0 0 120px;
+
+      margin: 0;
+      padding: 7px 0;
+
+      color: var(--black);
+
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .event-type-filters {
+      display: flex;
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+    }
+
+    .event-type-button {
+      appearance: none;
+      -webkit-appearance: none;
+
+      margin: 0;
+      padding: 7px 12px;
+
+      border: 1px solid var(--gray-300);
+      border-radius: 0;
+
+      background: var(--white);
+      color: var(--dark-gray);
+
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.35;
+
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+    }
+
+    .event-type-button:hover,
+    .event-type-button:focus {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
+    }
+
+    .event-type-button.active {
+      border-color: var(--brand-primary);
+      background: var(--brand-primary);
+      color: var(--white);
+    }
+
+    .event-type-button:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+    }
+
+
+    /* Status */
+
+    #calendar-status {
+      margin: 0 0 20px;
+
+      color: var(--mid-gray);
+
+      font-size: 14px;
+    }
+
+    #calendar-status:empty {
       display: none;
     }
-  }
-</style>
+
+
+    /* Localist */
+
+    #localist-widget-dpat {
+      clear: both;
+
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    /* Responsive */
+
+    @media (max-width: 1100px) {
+      #calendar-filters {
+        flex-wrap: wrap;
+      }
+
+      #calendar-search-form {
+        flex-basis: 300px;
+      }
+
+      .primary-filters {
+        order: 3;
+        flex: 1 0 100%;
+        width: 100%;
+      }
+
+      #copy-url {
+        margin-left: auto;
+      }
+    }
+
+
+    @media (max-width: 700px) {
+      .brand-header-inner {
+        padding: 10px 16px;
+      }
+
+      .brand-header-logo {
+        width: min(100%, 350px);
+      }
+
+      .calendar-page {
+        padding: 20px 16px 36px;
+      }
+
+      #calendar-filters {
+        display: flex;
+        gap: 14px;
+      }
+
+      #calendar-search-form {
+        flex: 1 0 100%;
+        width: 100%;
+        height: 44px;
+      }
+
+      #calendar-search {
+        height: 44px;
+      }
+
+      #calendar-search-form > button {
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
+      }
+
+      #copy-url {
+        order: 2;
+        margin-left: 0;
+      }
+
+      #more-button {
+        order: 2;
+      }
+
+      .primary-filters {
+        order: 3;
+
+        width: 100%;
+
+        gap: 18px;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        scrollbar-width: none;
+
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .primary-filters::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-button {
+        padding-bottom: 10px;
+      }
+
+      .filter-group {
+        display: block;
+      }
+
+      .filter-group-title {
+        margin-bottom: 8px;
+        padding: 0;
+      }
+
+      .event-type-filters {
+        gap: 8px;
+      }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      .filter-button,
+      #filter-indicator,
+      #more-button,
+      .more-caret,
+      #expanded-filters,
+      .expanded-filters-content,
+      .event-type-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <header class="brand-header">
+    <div class="brand-header-inner">
+      <img
+        src="D_pat_identifier_RGB_mono_white.svg"
+        alt="NC State Department of Performing Arts and Technology"
+        class="brand-header-logo"
+      >
+    </div>
+  </header>
+
+
+  <main class="calendar-page">
+
+    <div
+      id="calendar-filters"
+      aria-label="Search and filter events"
+    >
+
+      <form
+        id="calendar-search-form"
+        role="search"
+      >
+        <label
+          class="sr-only"
+          for="calendar-search"
+        >
+          Search events
+        </label>
+
+        <input
+          id="calendar-search"
+          type="search"
+          placeholder="Search events"
+          autocomplete="off"
+        >
+
+        <button
+          type="submit"
+          aria-label="Search events"
+        >
+          <svg
+            class="search-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle
+              cx="10.5"
+              cy="10.5"
+              r="6.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+            ></circle>
+
+            <path
+              d="M15.5 15.5L21 21"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="square"
+            ></path>
+          </svg>
+        </button>
+      </form>
+
+
+      <div
+        class="primary-filters"
+        id="primary-filters"
+      >
+
+        <button
+          type="button"
+          id="filter-all"
+          class="filter-button active"
+        >
+          All
+        </button>
+
+        <button
+          type="button"
+          class="filter-button"
+          data-area="music"
+        >
+          Music
+        </button>
+
+        <button
+          type="button"
+          class="filter-button"
+          data-area="dance"
+        >
+          Dance
+        </button>
+
+        <button
+          type="button"
+          class="filter-button"
+          data-area="arts"
+        >
+          Arts Entrepreneurship
+        </button>
+
+        <button
+          type="button"
+          class="filter-button"
+          data-area="tech"
+        >
+          Music Technology
+        </button>
+
+        <span
+          id="filter-indicator"
+          aria-hidden="true"
+        ></span>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="more-button"
+        aria-expanded="false"
+        aria-controls="expanded-filters"
+      >
+        Filters
+
+        <span
+          class="more-caret"
+          aria-hidden="true"
+        ></span>
+      </button>
+
+
+      <button
+        type="button"
+        id="copy-url"
+      >
+        Copy URL
+      </button>
+
+    </div>
+
+
+    <div id="expanded-filters">
+
+      <div class="expanded-filters-inner">
+
+        <div class="expanded-filters-content">
+
+          <div class="filter-group">
+
+            <p class="filter-group-title">
+              Event Type
+            </p>
+
+            <div class="event-type-filters">
+
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="performance"
+              >
+                Performances
+              </button>
+
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="masterclass"
+              >
+                Master Classes
+              </button>
+
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="audition"
+              >
+                Auditions
+              </button>
+
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="workshop"
+              >
+                Workshops &amp; Talks
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="calendar-status"
+      aria-live="polite"
+    ></div>
+
+
+    <div
+      id="localist-widget-dpat"
+      class="localist-widget"
+    ></div>
+
+  </main>
+
+
+  <script>
+    (function () {
+
+      const BASE =
+        "https://calendar.ncsu.edu/widget/view";
+
+
+      const AREAS = {
+        music: {
+          tags: ["Music"]
+        },
+
+        dance: {
+          tags: ["Dance"]
+        },
+
+        arts: {
+          tags: ["Arts Entrepreneurship"]
+        },
+
+        tech: {
+          tags: ["Music Technology"]
+        }
+      };
+
+
+      const EVENT_TYPES = {
+        performance: {
+          tags: ["Performance"]
+        },
+
+        masterclass: {
+          tags: ["Master Class Series"]
+        },
+
+        audition: {
+          tags: ["Audition"]
+        },
+
+        workshop: {
+          tags: ["Workshop"]
+        }
+      };
+
+
+      const container =
+        document.getElementById("localist-widget-dpat");
+
+      const allButton =
+        document.getElementById("filter-all");
+
+      const primaryFilters =
+        document.getElementById("primary-filters");
+
+      const indicator =
+        document.getElementById("filter-indicator");
+
+      const areaButtons =
+        Array.from(
+          document.querySelectorAll("[data-area]")
+        );
+
+      const eventButtons =
+        Array.from(
+          document.querySelectorAll("[data-event-type]")
+        );
+
+      const moreButton =
+        document.getElementById("more-button");
+
+      const expandedFilters =
+        document.getElementById("expanded-filters");
+
+      const copyButton =
+        document.getElementById("copy-url");
+
+      const searchForm =
+        document.getElementById("calendar-search-form");
+
+      const searchInput =
+        document.getElementById("calendar-search");
+
+      const status =
+        document.getElementById("calendar-status");
+
+
+      let activeArea = null;
+      let activeEventType = null;
+      let searchQuery = "";
+      let searchTimers = [];
+
+
+      function normalize(value) {
+        return String(value || "")
+          .trim()
+          .toLocaleLowerCase();
+      }
+
+
+      function findKey(value, config) {
+        if (!value) {
+          return null;
+        }
+
+        const normalized =
+          normalize(value);
+
+        return (
+          Object.keys(config).find(
+            key => normalize(key) === normalized
+          ) || null
+        );
+      }
+
+
+      function unique(values) {
+        const found =
+          new Map();
+
+        values.forEach(value => {
+          const key =
+            normalize(value);
+
+          if (key && !found.has(key)) {
+            found.set(key, value);
+          }
+        });
+
+        return Array.from(found.values());
+      }
+
+
+      function getActiveTopButton() {
+        if (!activeArea) {
+          return allButton;
+        }
+
+        return (
+          areaButtons.find(
+            button =>
+              button.dataset.area === activeArea
+          ) || allButton
+        );
+      }
+
+
+      function moveFilterIndicator(animate = true) {
+        const button =
+          getActiveTopButton();
+
+        if (!button) {
+          return;
+        }
+
+
+        if (!animate) {
+          indicator.style.transition = "none";
+        }
+
+
+        const navRect =
+          primaryFilters.getBoundingClientRect();
+
+        const buttonRect =
+          button.getBoundingClientRect();
+
+
+        const left =
+          buttonRect.left -
+          navRect.left +
+          primaryFilters.scrollLeft;
+
+
+        indicator.style.width =
+          buttonRect.width + "px";
+
+        indicator.style.transform =
+          "translateX(" + left + "px)";
+
+
+        if (!animate) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              indicator.style.transition = "";
+            });
+          });
+        }
+      }
+
+
+      function keepActiveFilterVisible() {
+        const button =
+          getActiveTopButton();
+
+        if (
+          !button ||
+          window.innerWidth > 700
+        ) {
+          return;
+        }
+
+        button.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
+
+
+      function readURL() {
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+        activeArea =
+          findKey(
+            params.get("area"),
+            AREAS
+          );
+
+        activeEventType =
+          findKey(
+            params.get("type"),
+            EVENT_TYPES
+          );
+
+        searchQuery =
+          params.get("q") || "";
+
+        searchInput.value =
+          searchQuery;
+      }
+
+
+      function updateURL() {
+        const url =
+          new URL(window.location.href);
+
+        url.searchParams.delete("area");
+        url.searchParams.delete("type");
+        url.searchParams.delete("q");
+
+
+        if (activeArea) {
+          url.searchParams.set(
+            "area",
+            activeArea
+          );
+        }
+
+
+        if (activeEventType) {
+          url.searchParams.set(
+            "type",
+            activeEventType
+          );
+        }
+
+
+        if (searchQuery) {
+          url.searchParams.set(
+            "q",
+            searchQuery
+          );
+        }
+
+
+        history.replaceState(
+          null,
+          "",
+          url
+        );
+      }
+
+
+      function updateControls(animate = true) {
+
+        areaButtons.forEach(button => {
+          const active =
+            button.dataset.area === activeArea;
+
+          button.classList.toggle(
+            "active",
+            active
+          );
+
+          button.setAttribute(
+            "aria-pressed",
+            active ? "true" : "false"
+          );
+        });
+
+
+        eventButtons.forEach(button => {
+          const active =
+            button.dataset.eventType ===
+            activeEventType;
+
+          button.classList.toggle(
+            "active",
+            active
+          );
+
+          button.setAttribute(
+            "aria-pressed",
+            active ? "true" : "false"
+          );
+        });
+
+
+        const allActive =
+          !activeArea;
+
+        allButton.classList.toggle(
+          "active",
+          allActive
+        );
+
+        allButton.setAttribute(
+          "aria-pressed",
+          allActive ? "true" : "false"
+        );
+
+
+        moreButton.classList.toggle(
+          "active",
+          Boolean(activeEventType)
+        );
+
+
+        requestAnimationFrame(() => {
+          moveFilterIndicator(animate);
+          keepActiveFilterVisible();
+        });
+      }
+
+
+      function buildWidgetURL() {
+        const params =
+          new URLSearchParams();
+
+
+        params.set(
+          "schools",
+          "ncsu"
+        );
+
+        params.set(
+          "groups",
+          "department_of_performing_arts_and_technology"
+        );
+
+        params.set(
+          "days",
+          "365"
+        );
+
+        params.set(
+          "num",
+          "50"
+        );
+
+        params.set(
+          "match",
+          "all"
+        );
+
+        params.set(
+          "experience",
+          "inperson"
+        );
+
+        params.set(
+          "container",
+          "localist-widget-dpat"
+        );
+
+        params.set(
+          "template",
+          "widget-template-7"
+        );
+
+
+        let tags = [];
+
+
+        if (
+          activeArea &&
+          AREAS[activeArea]
+        ) {
+          tags.push(
+            ...(AREAS[activeArea].tags || [])
+          );
+        }
+
+
+        if (
+          activeEventType &&
+          EVENT_TYPES[activeEventType]
+        ) {
+          tags.push(
+            ...(EVENT_TYPES[activeEventType].tags || [])
+          );
+        }
+
+
+        tags =
+          unique(tags);
+
+
+        if (tags.length) {
+          params.set(
+            "tags",
+            tags.join(",")
+          );
+        }
+
+
+        return (
+          BASE +
+          "?" +
+          params.toString()
+        );
+      }
+
+
+      function clearSearchTimers() {
+        searchTimers.forEach(
+          timer => clearTimeout(timer)
+        );
+
+        searchTimers = [];
+      }
+
+
+      function getEventItems() {
+        const standard =
+          Array.from(
+            container.querySelectorAll(
+              "li.lw_event_item"
+            )
+          );
+
+        if (standard.length) {
+          return standard;
+        }
+
+
+        return Array.from(
+          container.querySelectorAll("li")
+        ).filter(
+          item =>
+            item.querySelector(
+              'a[href*="/event/"]'
+            )
+        );
+      }
+
+
+      function applySearch() {
+        const query =
+          normalize(searchQuery);
+
+        const events =
+          getEventItems();
+
+
+        if (!events.length) {
+          return;
+        }
+
+
+        let visible = 0;
+
+
+        events.forEach(event => {
+          const matches =
+            !query ||
+            normalize(
+              event.textContent
+            ).includes(query);
+
+
+          event.style.display =
+            matches ? "" : "none";
+
+
+          if (matches) {
+            visible++;
+          }
+        });
+
+
+        if (query) {
+          status.textContent =
+            visible === 1
+              ? "1 event found"
+              : visible + " events found";
+        }
+
+        else {
+          status.textContent = "";
+        }
+      }
+
+
+      function scheduleSearch() {
+        clearSearchTimers();
+
+
+        [500, 1000, 1800, 3000].forEach(
+          delay => {
+            searchTimers.push(
+              setTimeout(
+                applySearch,
+                delay
+              )
+            );
+          }
+        );
+      }
+
+
+      function loadWidget() {
+        status.textContent = "";
+
+        clearSearchTimers();
+
+
+        document
+          .querySelectorAll(
+            "script[data-dpat-widget]"
+          )
+          .forEach(
+            script => script.remove()
+          );
+
+
+        container.innerHTML = "";
+
+
+        const script =
+          document.createElement("script");
+
+        script.type =
+          "text/javascript";
+
+        script.async =
+          true;
+
+        script.setAttribute(
+          "data-dpat-widget",
+          "true"
+        );
+
+        script.src =
+          buildWidgetURL();
+
+
+        container.parentNode.insertBefore(
+          script,
+          container.nextSibling
+        );
+
+
+        scheduleSearch();
+      }
+
+
+      function openFilters() {
+        expandedFilters.classList.add(
+          "open"
+        );
+
+        moreButton.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+      }
+
+
+      function closeFilters() {
+        expandedFilters.classList.remove(
+          "open"
+        );
+
+        moreButton.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+      }
+
+
+      function toggleFilters() {
+        if (
+          expandedFilters.classList.contains(
+            "open"
+          )
+        ) {
+          closeFilters();
+        }
+
+        else {
+          openFilters();
+        }
+      }
+
+
+      areaButtons.forEach(button => {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const value =
+              button.dataset.area;
+
+
+            activeArea =
+              activeArea === value
+                ? null
+                : value;
+
+
+            updateControls(true);
+            updateURL();
+            loadWidget();
+          }
+        );
+
+      });
+
+
+      eventButtons.forEach(button => {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const value =
+              button.dataset.eventType;
+
+
+            activeEventType =
+              activeEventType === value
+                ? null
+                : value;
+
+
+            updateControls(true);
+            updateURL();
+            loadWidget();
+          }
+        );
+
+      });
+
+
+      allButton.addEventListener(
+        "click",
+        function () {
+
+          activeArea = null;
+
+
+          updateControls(true);
+          updateURL();
+          loadWidget();
+        }
+      );
+
+
+      moreButton.addEventListener(
+        "click",
+        toggleFilters
+      );
+
+
+      searchForm.addEventListener(
+        "submit",
+        function (event) {
+
+          event.preventDefault();
+
+          searchQuery =
+            searchInput.value.trim();
+
+          updateURL();
+          applySearch();
+        }
+      );
+
+
+      searchInput.addEventListener(
+        "input",
+        function () {
+
+          searchQuery =
+            searchInput.value.trim();
+
+          updateURL();
+          applySearch();
+        }
+      );
+
+
+      copyButton.addEventListener(
+        "click",
+        async function () {
+
+          searchQuery =
+            searchInput.value.trim();
+
+          updateURL();
+
+
+          try {
+            await navigator.clipboard.writeText(
+              window.location.href
+            );
+          }
+
+          catch (error) {
+
+            const field =
+              document.createElement(
+                "textarea"
+              );
+
+            field.value =
+              window.location.href;
+
+            field.style.position =
+              "fixed";
+
+            field.style.opacity =
+              "0";
+
+
+            document.body.appendChild(
+              field
+            );
+
+
+            field.select();
+
+            document.execCommand(
+              "copy"
+            );
+
+            field.remove();
+          }
+
+
+          copyButton.textContent =
+            "Copied!";
+
+
+          setTimeout(
+            function () {
+              copyButton.textContent =
+                "Copy URL";
+            },
+            1500
+          );
+        }
+      );
+
+
+      primaryFilters.addEventListener(
+        "scroll",
+        function () {
+          moveFilterIndicator(false);
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      window.addEventListener(
+        "resize",
+        function () {
+          moveFilterIndicator(false);
+        }
+      );
+
+
+      window.addEventListener(
+        "popstate",
+        function () {
+
+          readURL();
+          updateControls(false);
+          loadWidget();
+
+        }
+      );
+
+
+      readURL();
+      updateControls(false);
+      loadWidget();
+
+    })();
+  </script>
+
+</body>
+</html>
