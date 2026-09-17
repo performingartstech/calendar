@@ -7,6 +7,13 @@
 
   <title>Events | Performing Arts and Technology</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
     :root {
       --brand-primary: #cc0000;
@@ -39,8 +46,9 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 16px;
+      font-weight: 400;
       line-height: 1.5;
     }
 
@@ -102,9 +110,10 @@
     #calendar-filters {
       display: flex;
       align-items: center;
-      gap: 12px 22px;
+      gap: 22px;
+
       width: 100%;
-      margin-bottom: 18px;
+      margin: 0 0 18px;
     }
 
 
@@ -113,6 +122,7 @@
     #calendar-search-form {
       display: flex;
       flex: 0 0 300px;
+
       width: 300px;
       height: 42px;
       margin: 0;
@@ -120,9 +130,11 @@
 
     #calendar-search {
       flex: 1 1 auto;
+
       width: 100%;
       min-width: 0;
       height: 42px;
+
       margin: 0;
       padding: 0 12px;
 
@@ -133,6 +145,9 @@
       background: var(--white);
       color: var(--black);
 
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+
       appearance: none;
       -webkit-appearance: none;
     }
@@ -142,9 +157,14 @@
       opacity: 1;
     }
 
+    #calendar-search::-webkit-search-cancel-button {
+      cursor: pointer;
+    }
+
     #calendar-search:focus {
       position: relative;
       z-index: 2;
+
       outline: 2px solid var(--brand-primary);
       outline-offset: -2px;
     }
@@ -157,6 +177,7 @@
 
       width: 42px;
       height: 42px;
+
       margin: 0;
       padding: 0;
 
@@ -185,23 +206,21 @@
     }
 
 
-    /* Top filters */
+    /* Area filters */
 
     .primary-filters {
       position: relative;
 
       display: flex;
       flex: 1 1 auto;
-      flex-wrap: nowrap;
       align-items: center;
       gap: 22px;
 
       min-width: 0;
     }
 
-    .filter-button {
-      position: relative;
-
+    .filter-button,
+    #more-button {
       appearance: none;
       -webkit-appearance: none;
 
@@ -216,6 +235,7 @@
       background: transparent;
       color: var(--dark-gray);
 
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 1.35;
@@ -226,7 +246,9 @@
     }
 
     .filter-button:hover,
-    .filter-button:focus {
+    .filter-button:focus,
+    #more-button:hover,
+    #more-button:focus {
       background: transparent;
       color: var(--brand-primary);
     }
@@ -235,7 +257,8 @@
       color: var(--brand-primary);
     }
 
-    .filter-button:focus-visible {
+    .filter-button:focus-visible,
+    #more-button:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 3px;
     }
@@ -266,44 +289,16 @@
     }
 
 
-    /* Filter panel button */
+    /* More */
 
     #more-button {
-      appearance: none;
-      -webkit-appearance: none;
-
       display: inline-flex;
-      flex: 0 0 auto;
       align-items: center;
       gap: 8px;
-
-      margin: 0;
-      padding: 7px 0 9px;
-
-      border: 0;
-      border-radius: 0;
-
-      background: transparent;
-      color: var(--dark-gray);
-
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.35;
-
-      white-space: nowrap;
-
-      transition: color 180ms ease;
     }
 
-    #more-button:hover,
-    #more-button:focus,
     #more-button.active {
       color: var(--brand-primary);
-    }
-
-    #more-button:focus-visible {
-      outline: 2px solid var(--black);
-      outline-offset: 3px;
     }
 
     .more-caret {
@@ -329,9 +324,9 @@
     }
 
 
-    /* Copy URL */
+    /* Share */
 
-    #copy-url {
+    #share-url {
       appearance: none;
       -webkit-appearance: none;
 
@@ -346,18 +341,21 @@
       background: transparent;
       color: var(--mid-gray);
 
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 15px;
       font-weight: 400;
 
       white-space: nowrap;
+
+      transition: color 150ms ease;
     }
 
-    #copy-url:hover,
-    #copy-url:focus {
+    #share-url:hover,
+    #share-url:focus {
       color: var(--brand-primary);
     }
 
-    #copy-url:focus-visible {
+    #share-url:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 3px;
     }
@@ -369,6 +367,7 @@
       display: grid;
       grid-template-rows: 0fr;
 
+      width: 100%;
       margin: 0;
 
       border-top: 1px solid transparent;
@@ -377,7 +376,7 @@
       transition:
         grid-template-rows 260ms cubic-bezier(0.4, 0, 0.2, 1),
         margin 260ms cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 260ms ease;
+        border-color 200ms ease;
     }
 
     #expanded-filters.open {
@@ -390,6 +389,7 @@
     }
 
     .expanded-filters-inner {
+      min-height: 0;
       overflow: hidden;
     }
 
@@ -412,28 +412,29 @@
       transform: translateY(0);
     }
 
+
+    /* Filter group */
+
     .filter-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 30px;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 28px;
+      align-items: start;
     }
 
     .filter-group-title {
-      flex: 0 0 120px;
-
       margin: 0;
-      padding: 7px 0;
+      padding: 8px 0;
 
       color: var(--black);
 
       font-size: 15px;
       font-weight: 700;
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     .event-type-filters {
       display: flex;
-      flex: 1 1 auto;
       flex-wrap: wrap;
       gap: 8px 10px;
     }
@@ -451,6 +452,7 @@
       background: var(--white);
       color: var(--dark-gray);
 
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 1.35;
@@ -470,6 +472,13 @@
     .event-type-button.active {
       border-color: var(--brand-primary);
       background: var(--brand-primary);
+      color: var(--white);
+    }
+
+    .event-type-button.active:hover,
+    .event-type-button.active:focus {
+      border-color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
       color: var(--white);
     }
 
@@ -502,10 +511,12 @@
       width: 100%;
       margin: 0;
       padding: 0;
+
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
     }
 
 
-    /* Responsive */
+    /* Medium */
 
     @media (max-width: 1100px) {
       #calendar-filters {
@@ -513,7 +524,7 @@
       }
 
       #calendar-search-form {
-        flex-basis: 300px;
+        flex: 0 0 300px;
       }
 
       .primary-filters {
@@ -522,11 +533,13 @@
         width: 100%;
       }
 
-      #copy-url {
+      #share-url {
         margin-left: auto;
       }
     }
 
+
+    /* Mobile */
 
     @media (max-width: 700px) {
       .brand-header-inner {
@@ -542,7 +555,6 @@
       }
 
       #calendar-filters {
-        display: flex;
         gap: 14px;
       }
 
@@ -562,27 +574,21 @@
         height: 44px;
       }
 
-      #copy-url {
+      #share-url {
         order: 2;
         margin-left: 0;
-      }
-
-      #more-button {
-        order: 2;
       }
 
       .primary-filters {
         order: 3;
 
         width: 100%;
-
         gap: 18px;
 
         overflow-x: auto;
         overflow-y: hidden;
 
         scrollbar-width: none;
-
         -webkit-overflow-scrolling: touch;
       }
 
@@ -590,16 +596,12 @@
         display: none;
       }
 
-      .filter-button {
-        padding-bottom: 10px;
-      }
-
       .filter-group {
         display: block;
       }
 
       .filter-group-title {
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         padding: 0;
       }
 
@@ -611,8 +613,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       .filter-button,
-      #filter-indicator,
       #more-button,
+      #filter-indicator,
       .more-caret,
       #expanded-filters,
       .expanded-filters-content,
@@ -648,6 +650,7 @@
         id="calendar-search-form"
         role="search"
       >
+
         <label
           class="sr-only"
           for="calendar-search"
@@ -666,6 +669,7 @@
           type="submit"
           aria-label="Search events"
         >
+
           <svg
             class="search-icon"
             viewBox="0 0 24 24"
@@ -688,7 +692,9 @@
               stroke-linecap="square"
             ></path>
           </svg>
+
         </button>
+
       </form>
 
 
@@ -737,6 +743,22 @@
           Music Technology
         </button>
 
+
+        <button
+          type="button"
+          id="more-button"
+          aria-expanded="false"
+          aria-controls="expanded-filters"
+        >
+          More
+
+          <span
+            class="more-caret"
+            aria-hidden="true"
+          ></span>
+        </button>
+
+
         <span
           id="filter-indicator"
           aria-hidden="true"
@@ -747,30 +769,18 @@
 
       <button
         type="button"
-        id="more-button"
-        aria-expanded="false"
-        aria-controls="expanded-filters"
+        id="share-url"
       >
-        Filters
-
-        <span
-          class="more-caret"
-          aria-hidden="true"
-        ></span>
-      </button>
-
-
-      <button
-        type="button"
-        id="copy-url"
-      >
-        Copy URL
+        Share
       </button>
 
     </div>
 
 
-    <div id="expanded-filters">
+    <div
+      id="expanded-filters"
+      aria-hidden="true"
+    >
 
       <div class="expanded-filters-inner">
 
@@ -788,6 +798,7 @@
                 type="button"
                 class="event-type-button"
                 data-event-type="performance"
+                aria-pressed="false"
               >
                 Performances
               </button>
@@ -796,6 +807,7 @@
                 type="button"
                 class="event-type-button"
                 data-event-type="masterclass"
+                aria-pressed="false"
               >
                 Master Classes
               </button>
@@ -804,6 +816,7 @@
                 type="button"
                 class="event-type-button"
                 data-event-type="audition"
+                aria-pressed="false"
               >
                 Auditions
               </button>
@@ -812,6 +825,7 @@
                 type="button"
                 class="event-type-button"
                 data-event-type="workshop"
+                aria-pressed="false"
               >
                 Workshops &amp; Talks
               </button>
@@ -914,8 +928,8 @@
       const expandedFilters =
         document.getElementById("expanded-filters");
 
-      const copyButton =
-        document.getElementById("copy-url");
+      const shareButton =
+        document.getElementById("share-url");
 
       const searchForm =
         document.getElementById("calendar-search-form");
@@ -928,7 +942,7 @@
 
 
       let activeArea = null;
-      let activeEventType = null;
+      let activeEventTypes = [];
       let searchQuery = "";
       let searchTimers = [];
 
@@ -957,19 +971,9 @@
 
 
       function unique(values) {
-        const found =
-          new Map();
-
-        values.forEach(value => {
-          const key =
-            normalize(value);
-
-          if (key && !found.has(key)) {
-            found.set(key, value);
-          }
-        });
-
-        return Array.from(found.values());
+        return Array.from(
+          new Set(values)
+        );
       }
 
 
@@ -995,11 +999,9 @@
           return;
         }
 
-
         if (!animate) {
           indicator.style.transition = "none";
         }
-
 
         const navRect =
           primaryFilters.getBoundingClientRect();
@@ -1007,12 +1009,10 @@
         const buttonRect =
           button.getBoundingClientRect();
 
-
         const left =
           buttonRect.left -
           navRect.left +
           primaryFilters.scrollLeft;
-
 
         indicator.style.width =
           buttonRect.width + "px";
@@ -1020,10 +1020,9 @@
         indicator.style.transform =
           "translateX(" + left + "px)";
 
-
         if (!animate) {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
               indicator.style.transition = "";
             });
           });
@@ -1032,13 +1031,14 @@
 
 
       function keepActiveFilterVisible() {
+        if (window.innerWidth > 700) {
+          return;
+        }
+
         const button =
           getActiveTopButton();
 
-        if (
-          !button ||
-          window.innerWidth > 700
-        ) {
+        if (!button) {
           return;
         }
 
@@ -1062,10 +1062,18 @@
             AREAS
           );
 
-        activeEventType =
-          findKey(
-            params.get("type"),
-            EVENT_TYPES
+        activeEventTypes =
+          unique(
+            params
+              .getAll("type")
+              .map(
+                value =>
+                  findKey(
+                    value,
+                    EVENT_TYPES
+                  )
+              )
+              .filter(Boolean)
           );
 
         searchQuery =
@@ -1078,12 +1086,13 @@
 
       function updateURL() {
         const url =
-          new URL(window.location.href);
+          new URL(
+            window.location.href
+          );
 
         url.searchParams.delete("area");
         url.searchParams.delete("type");
         url.searchParams.delete("q");
-
 
         if (activeArea) {
           url.searchParams.set(
@@ -1092,14 +1101,14 @@
           );
         }
 
-
-        if (activeEventType) {
-          url.searchParams.set(
-            "type",
-            activeEventType
-          );
-        }
-
+        activeEventTypes.forEach(
+          type => {
+            url.searchParams.append(
+              "type",
+              type
+            );
+          }
+        );
 
         if (searchQuery) {
           url.searchParams.set(
@@ -1107,7 +1116,6 @@
             searchQuery
           );
         }
-
 
         history.replaceState(
           null,
@@ -1119,37 +1127,24 @@
 
       function updateControls(animate = true) {
 
-        areaButtons.forEach(button => {
-          const active =
-            button.dataset.area === activeArea;
+        areaButtons.forEach(
+          button => {
 
-          button.classList.toggle(
-            "active",
-            active
-          );
+            const active =
+              button.dataset.area ===
+              activeArea;
 
-          button.setAttribute(
-            "aria-pressed",
-            active ? "true" : "false"
-          );
-        });
+            button.classList.toggle(
+              "active",
+              active
+            );
 
-
-        eventButtons.forEach(button => {
-          const active =
-            button.dataset.eventType ===
-            activeEventType;
-
-          button.classList.toggle(
-            "active",
-            active
-          );
-
-          button.setAttribute(
-            "aria-pressed",
-            active ? "true" : "false"
-          );
-        });
+            button.setAttribute(
+              "aria-pressed",
+              active ? "true" : "false"
+            );
+          }
+        );
 
 
         const allActive =
@@ -1166,23 +1161,72 @@
         );
 
 
-        moreButton.classList.toggle(
-          "active",
-          Boolean(activeEventType)
+        eventButtons.forEach(
+          button => {
+
+            const active =
+              activeEventTypes.includes(
+                button.dataset.eventType
+              );
+
+            button.classList.toggle(
+              "active",
+              active
+            );
+
+            button.setAttribute(
+              "aria-pressed",
+              active ? "true" : "false"
+            );
+          }
         );
 
 
-        requestAnimationFrame(() => {
-          moveFilterIndicator(animate);
-          keepActiveFilterVisible();
-        });
+        moreButton.classList.toggle(
+          "active",
+          activeEventTypes.length > 0
+        );
+
+
+        requestAnimationFrame(
+          function () {
+            moveFilterIndicator(animate);
+            keepActiveFilterVisible();
+          }
+        );
       }
 
 
-      function buildWidgetURL() {
+      function getAreaTags() {
+        if (
+          !activeArea ||
+          !AREAS[activeArea]
+        ) {
+          return [];
+        }
+
+        return AREAS[activeArea].tags || [];
+      }
+
+
+      function getEventTypeTags(type) {
+        if (
+          !type ||
+          !EVENT_TYPES[type]
+        ) {
+          return [];
+        }
+
+        return EVENT_TYPES[type].tags || [];
+      }
+
+
+      function buildWidgetURL(
+        eventType = null,
+        containerId = "localist-widget-dpat"
+      ) {
         const params =
           new URLSearchParams();
-
 
         params.set(
           "schools",
@@ -1216,7 +1260,7 @@
 
         params.set(
           "container",
-          "localist-widget-dpat"
+          containerId
         );
 
         params.set(
@@ -1225,25 +1269,13 @@
         );
 
 
-        let tags = [];
+        let tags =
+          getAreaTags();
 
 
-        if (
-          activeArea &&
-          AREAS[activeArea]
-        ) {
-          tags.push(
-            ...(AREAS[activeArea].tags || [])
-          );
-        }
-
-
-        if (
-          activeEventType &&
-          EVENT_TYPES[activeEventType]
-        ) {
-          tags.push(
-            ...(EVENT_TYPES[activeEventType].tags || [])
+        if (eventType) {
+          tags = tags.concat(
+            getEventTypeTags(eventType)
           );
         }
 
@@ -1270,17 +1302,21 @@
 
       function clearSearchTimers() {
         searchTimers.forEach(
-          timer => clearTimeout(timer)
+          timer =>
+            clearTimeout(timer)
         );
 
         searchTimers = [];
       }
 
 
-      function getEventItems() {
+      function getEventItems(root) {
+        const scope =
+          root || container;
+
         const standard =
           Array.from(
-            container.querySelectorAll(
+            scope.querySelectorAll(
               "li.lw_event_item"
             )
           );
@@ -1289,9 +1325,8 @@
           return standard;
         }
 
-
         return Array.from(
-          container.querySelectorAll("li")
+          scope.querySelectorAll("li")
         ).filter(
           item =>
             item.querySelector(
@@ -1301,38 +1336,52 @@
       }
 
 
+      function getEventIdentity(event) {
+        const link =
+          event.querySelector(
+            'a[href*="/event/"]'
+          );
+
+        if (link) {
+          return link.href;
+        }
+
+        return normalize(
+          event.textContent
+        );
+      }
+
+
       function applySearch() {
         const query =
           normalize(searchQuery);
 
         const events =
-          getEventItems();
-
+          getEventItems(container);
 
         if (!events.length) {
           return;
         }
 
-
         let visible = 0;
 
+        events.forEach(
+          event => {
 
-        events.forEach(event => {
-          const matches =
-            !query ||
-            normalize(
-              event.textContent
-            ).includes(query);
+            const matches =
+              !query ||
+              normalize(
+                event.textContent
+              ).includes(query);
 
+            event.style.display =
+              matches ? "" : "none";
 
-          event.style.display =
-            matches ? "" : "none";
-
-
-          if (matches) {
-            visible++;
+            if (matches) {
+              visible++;
+            }
           }
-        });
+        );
 
 
         if (query) {
@@ -1351,26 +1400,22 @@
       function scheduleSearch() {
         clearSearchTimers();
 
-
         [500, 1000, 1800, 3000].forEach(
           delay => {
+
             searchTimers.push(
               setTimeout(
                 applySearch,
                 delay
               )
             );
+
           }
         );
       }
 
 
-      function loadWidget() {
-        status.textContent = "";
-
-        clearSearchTimers();
-
-
+      function clearWidgetScripts() {
         document
           .querySelectorAll(
             "script[data-dpat-widget]"
@@ -1378,10 +1423,13 @@
           .forEach(
             script => script.remove()
           );
+      }
 
+
+      function loadSingleWidget() {
+        clearWidgetScripts();
 
         container.innerHTML = "";
-
 
         const script =
           document.createElement("script");
@@ -1400,20 +1448,245 @@
         script.src =
           buildWidgetURL();
 
-
         container.parentNode.insertBefore(
           script,
           container.nextSibling
         );
 
-
         scheduleSearch();
+      }
+
+
+      function loadMultipleWidgets() {
+        clearWidgetScripts();
+
+        container.innerHTML = "";
+
+        const staging =
+          document.createElement("div");
+
+        staging.style.display = "none";
+
+        document.body.appendChild(staging);
+
+        const loads = [];
+
+
+        activeEventTypes.forEach(
+          function (type, index) {
+
+            loads.push(
+              new Promise(
+                function (resolve) {
+
+                  const id =
+                    "localist-temp-" +
+                    Date.now() +
+                    "-" +
+                    index;
+
+                  const temp =
+                    document.createElement("div");
+
+                  temp.id = id;
+
+                  staging.appendChild(temp);
+
+
+                  const script =
+                    document.createElement("script");
+
+                  script.type =
+                    "text/javascript";
+
+                  script.async =
+                    true;
+
+                  script.setAttribute(
+                    "data-dpat-widget",
+                    "true"
+                  );
+
+                  script.src =
+                    buildWidgetURL(
+                      type,
+                      id
+                    );
+
+
+                  staging.appendChild(
+                    script
+                  );
+
+
+                  let attempts = 0;
+
+
+                  const check =
+                    setInterval(
+                      function () {
+
+                        attempts++;
+
+                        const events =
+                          getEventItems(temp);
+
+
+                        if (
+                          events.length ||
+                          attempts >= 30
+                        ) {
+                          clearInterval(check);
+
+                          resolve(
+                            events.map(
+                              event =>
+                                event.cloneNode(true)
+                            )
+                          );
+                        }
+
+                      },
+                      150
+                    );
+
+                }
+              )
+            );
+
+          }
+        );
+
+
+        Promise.all(loads)
+          .then(
+            function (groups) {
+
+              const seen =
+                new Set();
+
+              const events = [];
+
+
+              groups
+                .flat()
+                .forEach(
+                  event => {
+
+                    const identity =
+                      getEventIdentity(event);
+
+                    if (
+                      !seen.has(identity)
+                    ) {
+                      seen.add(identity);
+                      events.push(event);
+                    }
+
+                  }
+                );
+
+
+              const list =
+                document.createElement("ul");
+
+              const firstSourceList =
+                staging.querySelector("ul");
+
+
+              if (firstSourceList) {
+                list.className =
+                  firstSourceList.className;
+              }
+
+
+              events.forEach(
+                event => {
+                  list.appendChild(event);
+                }
+              );
+
+
+              container.innerHTML = "";
+
+
+              if (events.length) {
+                container.appendChild(list);
+              }
+
+
+              staging.remove();
+
+              applySearch();
+            }
+          );
+      }
+
+
+      function loadWidget() {
+        status.textContent = "";
+
+        clearSearchTimers();
+
+
+        if (
+          activeEventTypes.length <= 1
+        ) {
+
+          if (
+            activeEventTypes.length === 1
+          ) {
+            clearWidgetScripts();
+
+            container.innerHTML = "";
+
+            const script =
+              document.createElement("script");
+
+            script.type =
+              "text/javascript";
+
+            script.async =
+              true;
+
+            script.setAttribute(
+              "data-dpat-widget",
+              "true"
+            );
+
+            script.src =
+              buildWidgetURL(
+                activeEventTypes[0]
+              );
+
+            container.parentNode.insertBefore(
+              script,
+              container.nextSibling
+            );
+
+            scheduleSearch();
+          }
+
+          else {
+            loadSingleWidget();
+          }
+
+          return;
+        }
+
+
+        loadMultipleWidgets();
       }
 
 
       function openFilters() {
         expandedFilters.classList.add(
           "open"
+        );
+
+        expandedFilters.setAttribute(
+          "aria-hidden",
+          "false"
         );
 
         moreButton.setAttribute(
@@ -1426,6 +1699,11 @@
       function closeFilters() {
         expandedFilters.classList.remove(
           "open"
+        );
+
+        expandedFilters.setAttribute(
+          "aria-hidden",
+          "true"
         );
 
         moreButton.setAttribute(
@@ -1450,54 +1728,29 @@
       }
 
 
-      areaButtons.forEach(button => {
+      areaButtons.forEach(
+        button => {
 
-        button.addEventListener(
-          "click",
-          function () {
+          button.addEventListener(
+            "click",
+            function () {
 
-            const value =
-              button.dataset.area;
+              const value =
+                button.dataset.area;
 
+              activeArea =
+                activeArea === value
+                  ? null
+                  : value;
 
-            activeArea =
-              activeArea === value
-                ? null
-                : value;
+              updateControls(true);
+              updateURL();
+              loadWidget();
+            }
+          );
 
-
-            updateControls(true);
-            updateURL();
-            loadWidget();
-          }
-        );
-
-      });
-
-
-      eventButtons.forEach(button => {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-            const value =
-              button.dataset.eventType;
-
-
-            activeEventType =
-              activeEventType === value
-                ? null
-                : value;
-
-
-            updateControls(true);
-            updateURL();
-            loadWidget();
-          }
-        );
-
-      });
+        }
+      );
 
 
       allButton.addEventListener(
@@ -1506,10 +1759,55 @@
 
           activeArea = null;
 
-
           updateControls(true);
           updateURL();
           loadWidget();
+
+        }
+      );
+
+
+      eventButtons.forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const value =
+                button.dataset.eventType;
+
+              if (
+                activeEventTypes.includes(
+                  value
+                )
+              ) {
+
+                activeEventTypes =
+                  activeEventTypes.filter(
+                    type =>
+                      type !== value
+                  );
+
+              }
+
+              else {
+
+                activeEventTypes =
+                  activeEventTypes.concat(
+                    value
+                  );
+
+              }
+
+
+              updateControls(true);
+              updateURL();
+              loadWidget();
+
+            }
+          );
+
         }
       );
 
@@ -1531,6 +1829,7 @@
 
           updateURL();
           applySearch();
+
         }
       );
 
@@ -1544,11 +1843,12 @@
 
           updateURL();
           applySearch();
+
         }
       );
 
 
-      copyButton.addEventListener(
+      shareButton.addEventListener(
         "click",
         async function () {
 
@@ -1557,56 +1857,96 @@
 
           updateURL();
 
+          const url =
+            window.location.href;
+
 
           try {
+
+            if (
+              navigator.share
+            ) {
+
+              await navigator.share({
+                title:
+                  "NC State Performing Arts and Technology Events",
+                url: url
+              });
+
+              return;
+            }
+
+
             await navigator.clipboard.writeText(
-              window.location.href
+              url
             );
+
           }
 
           catch (error) {
 
-            const field =
-              document.createElement(
-                "textarea"
+            if (
+              error &&
+              error.name === "AbortError"
+            ) {
+              return;
+            }
+
+
+            try {
+
+              await navigator.clipboard.writeText(
+                url
               );
 
-            field.value =
-              window.location.href;
+            }
 
-            field.style.position =
-              "fixed";
+            catch (clipboardError) {
 
-            field.style.opacity =
-              "0";
+              const field =
+                document.createElement(
+                  "textarea"
+                );
 
+              field.value = url;
 
-            document.body.appendChild(
-              field
-            );
+              field.style.position =
+                "fixed";
 
+              field.style.opacity =
+                "0";
 
-            field.select();
+              document.body.appendChild(
+                field
+              );
 
-            document.execCommand(
-              "copy"
-            );
+              field.select();
 
-            field.remove();
+              document.execCommand(
+                "copy"
+              );
+
+              field.remove();
+
+            }
+
           }
 
 
-          copyButton.textContent =
-            "Copied!";
+          shareButton.textContent =
+            "Link copied";
 
 
           setTimeout(
             function () {
-              copyButton.textContent =
-                "Copy URL";
+
+              shareButton.textContent =
+                "Share";
+
             },
             1500
           );
+
         }
       );
 
@@ -1644,6 +1984,13 @@
 
       readURL();
       updateControls(false);
+
+      if (
+        activeEventTypes.length
+      ) {
+        openFilters();
+      }
+
       loadWidget();
 
     })();
