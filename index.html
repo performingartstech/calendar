@@ -29,6 +29,37 @@
 
   <style>
 
+
+    /* BRAND HEADER */
+
+.brand-header {
+  width: 100%;
+  background: #cc0000;
+}
+
+.brand-header-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.brand-header-logo {
+  display: block;
+  width: min(100%, 430px);
+  height: auto;
+}
+
+@media (max-width: 700px) {
+  .brand-header-inner {
+    padding: 20px 16px;
+  }
+
+  .brand-header-logo {
+    width: min(100%, 360px);
+  }
+}
+
   * {
     box-sizing: border-box;
   }
@@ -406,6 +437,16 @@
 
 
 <body>
+
+  <header class="brand-header">
+  <div class="brand-header-inner">
+    <img
+      src="D_pat_identifier_RGB_mono_white.svg"
+      alt="NC State Department of Performing Arts and Technology"
+      class="brand-header-logo"
+    >
+  </div>
+</header>
 
 <main class="calendar-page">
 
