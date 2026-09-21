@@ -1352,7 +1352,28 @@
       }
 
 
+      /* Make Localist event links open in a new tab */
+
+      function makeEventLinksOpenInNewTab(root) {
+        const scope =
+          root || container;
+
+        scope
+          .querySelectorAll(
+            'a[href*="/event/"]'
+          )
+          .forEach(
+            link => {
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+            }
+          );
+      }
+
+
       function applySearch() {
+        makeEventLinksOpenInNewTab(container);
+
         const query =
           normalize(searchQuery);
 
@@ -1405,7 +1426,10 @@
 
             searchTimers.push(
               setTimeout(
-                applySearch,
+                function () {
+                  makeEventLinksOpenInNewTab(container);
+                  applySearch();
+                },
                 delay
               )
             );
@@ -1617,6 +1641,7 @@
 
               staging.remove();
 
+              makeEventLinksOpenInNewTab(container);
               applySearch();
             }
           );
@@ -1978,6 +2003,28 @@
           updateControls(false);
           loadWidget();
 
+        }
+      );
+
+
+      /*
+        Localist adds event cards asynchronously.
+        This catches links immediately when they appear,
+        rather than relying only on the timed checks.
+      */
+
+      const eventObserver =
+        new MutationObserver(
+          function () {
+            makeEventLinksOpenInNewTab(container);
+          }
+        );
+
+      eventObserver.observe(
+        container,
+        {
+          childList: true,
+          subtree: true
         }
       );
 
