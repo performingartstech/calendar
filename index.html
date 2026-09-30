@@ -9,6 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet"
@@ -18,7 +19,6 @@
     :root {
       --brand-primary: #cc0000;
       --brand-primary-dark: #990000;
-      --brand-primary-extra-dark: #5e0000;
 
       --white: #ffffff;
       --black: #000000;
@@ -27,7 +27,6 @@
       --light-gray: #cccccc;
       --mid-gray: #666666;
       --dark-gray: #333333;
-      --gray-100: #e5e5e5;
       --gray-300: #b2b2b2;
 
       --max-width: 1200px;
@@ -41,20 +40,21 @@
     body {
       margin: 0;
       padding: 0;
+
       background: var(--white);
       color: var(--black);
     }
 
-    body {
+    body,
+    button,
+    input {
       font-family: "Roboto", Arial, Helvetica, sans-serif;
+    }
+
+    body {
       font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
-    }
-
-    button,
-    input {
-      font: inherit;
     }
 
     button {
@@ -63,13 +63,19 @@
 
     .sr-only {
       position: absolute;
+
       width: 1px;
       height: 1px;
-      padding: 0;
+
       margin: -1px;
+      padding: 0;
+
       overflow: hidden;
+
       clip: rect(0, 0, 0, 0);
+
       white-space: nowrap;
+
       border: 0;
     }
 
@@ -78,20 +84,67 @@
 
     .brand-header {
       width: 100%;
+
       background: var(--brand-primary);
     }
 
     .brand-header-inner {
       width: 100%;
       max-width: var(--max-width);
+
       margin: 0 auto;
       padding: 0 10px;
     }
 
+    .brand-header-link {
+      display: inline-block;
+
+      margin: 0;
+      padding: 0;
+
+      background: transparent;
+
+      line-height: 0;
+
+      cursor: pointer;
+
+      transition: background-color 160ms ease;
+    }
+
     .brand-header-logo {
       display: block;
+
       width: min(100%, 400px);
       height: auto;
+
+      transition: filter 160ms ease;
+    }
+
+    .brand-header-link:hover,
+    .brand-header-link:focus {
+      background: var(--white);
+    }
+
+    .brand-header-link:hover .brand-header-logo,
+    .brand-header-link:focus .brand-header-logo {
+      /*
+       * Converts the white SVG to approximately NC State red.
+       * The original SVG file remains unchanged.
+       */
+      filter:
+        brightness(0)
+        saturate(100%)
+        invert(11%)
+        sepia(98%)
+        saturate(7495%)
+        hue-rotate(359deg)
+        brightness(89%)
+        contrast(113%);
+    }
+
+    .brand-header-link:focus-visible {
+      outline: 3px solid var(--black);
+      outline-offset: 2px;
     }
 
 
@@ -100,6 +153,7 @@
     .calendar-page {
       width: 100%;
       max-width: var(--max-width);
+
       margin: 0 auto;
       padding: 24px 24px 48px;
     }
@@ -110,9 +164,11 @@
     #calendar-filters {
       display: flex;
       align-items: center;
+
       gap: 22px;
 
       width: 100%;
+
       margin: 0 0 18px;
     }
 
@@ -125,6 +181,7 @@
 
       width: 300px;
       height: 42px;
+
       margin: 0;
     }
 
@@ -145,12 +202,15 @@
       background: var(--white);
       color: var(--black);
 
+      font-size: 16px;
+
       appearance: none;
       -webkit-appearance: none;
     }
 
     #calendar-search::placeholder {
       color: var(--mid-gray);
+
       opacity: 1;
     }
 
@@ -169,6 +229,7 @@
     #calendar-search-form > button {
       display: flex;
       flex: 0 0 42px;
+
       align-items: center;
       justify-content: center;
 
@@ -188,6 +249,7 @@
     #calendar-search-form > button:hover,
     #calendar-search-form > button:focus {
       border-color: var(--brand-primary-dark);
+
       background: var(--brand-primary-dark);
     }
 
@@ -198,6 +260,7 @@
 
     .search-icon {
       display: block;
+
       width: 18px;
       height: 18px;
     }
@@ -210,7 +273,9 @@
 
       display: flex;
       flex: 1 1 auto;
+
       align-items: center;
+
       gap: 22px;
 
       min-width: 0;
@@ -289,7 +354,9 @@
 
     #more-button {
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
     }
 
@@ -302,6 +369,7 @@
 
       width: 7px;
       height: 7px;
+
       margin-top: -4px;
 
       border-right: 2px solid currentColor;
@@ -316,6 +384,7 @@
 
     #more-button[aria-expanded="true"] .more-caret {
       margin-top: 4px;
+
       transform: rotate(225deg);
     }
 
@@ -326,33 +395,45 @@
       appearance: none;
       -webkit-appearance: none;
 
-      flex: 0 0 auto;
+      display: flex;
+      flex: 0 0 40px;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 40px;
+      height: 40px;
 
       margin: 0 0 0 auto;
-      padding: 7px 0 9px;
+      padding: 0;
 
       border: 0;
       border-radius: 0;
 
       background: transparent;
-      color: var(--mid-gray);
+      color: var(--dark-gray);
 
-      font-size: 15px;
-      font-weight: 400;
-
-      white-space: nowrap;
-
-      transition: color 150ms ease;
+      transition:
+        color 150ms ease,
+        background-color 150ms ease;
     }
 
     #share-url:hover,
     #share-url:focus {
+      background: var(--very-light-gray);
       color: var(--brand-primary);
     }
 
     #share-url:focus-visible {
       outline: 2px solid var(--black);
-      outline-offset: 3px;
+      outline-offset: 2px;
+    }
+
+    .share-icon {
+      display: block;
+
+      width: 24px;
+      height: 24px;
     }
 
 
@@ -360,9 +441,11 @@
 
     #expanded-filters {
       display: grid;
+
       grid-template-rows: 0fr;
 
       width: 100%;
+
       margin: 0;
 
       border-top: 1px solid transparent;
@@ -385,6 +468,7 @@
 
     .expanded-filters-inner {
       min-height: 0;
+
       overflow: hidden;
     }
 
@@ -392,6 +476,7 @@
       padding: 0;
 
       opacity: 0;
+
       transform: translateY(-6px);
 
       transition:
@@ -404,6 +489,7 @@
       padding: 22px 0 24px;
 
       opacity: 1;
+
       transform: translateY(0);
     }
 
@@ -412,8 +498,11 @@
 
     .filter-group {
       display: grid;
+
       grid-template-columns: 130px 1fr;
+
       gap: 28px;
+
       align-items: start;
     }
 
@@ -435,6 +524,7 @@
     .event-type-filters {
       display: flex;
       flex-wrap: wrap;
+
       gap: 8px 10px;
     }
 
@@ -464,11 +554,13 @@
     .event-type-button:hover,
     .event-type-button:focus {
       border-color: var(--brand-primary);
+
       color: var(--brand-primary);
     }
 
     .event-type-button.active {
       border-color: var(--brand-primary);
+
       background: var(--brand-primary);
       color: var(--white);
     }
@@ -476,6 +568,7 @@
     .event-type-button.active:hover,
     .event-type-button.active:focus {
       border-color: var(--brand-primary-dark);
+
       background: var(--brand-primary-dark);
       color: var(--white);
     }
@@ -486,11 +579,13 @@
     }
 
 
-    /* Instances option */
+    /* Square checkbox */
 
     .instance-option {
       display: inline-flex;
+
       align-items: center;
+
       gap: 9px;
 
       min-height: 36px;
@@ -504,21 +599,67 @@
     }
 
     .instance-option input {
+      position: absolute;
+
+      width: 1px;
+      height: 1px;
+
+      opacity: 0;
+
+      pointer-events: none;
+    }
+
+    .custom-checkbox {
+      position: relative;
+
+      display: inline-flex;
+      flex: 0 0 18px;
+
+      align-items: center;
+      justify-content: center;
+
       width: 18px;
       height: 18px;
 
-      margin: 0;
+      border: 2px solid var(--dark-gray);
+      border-radius: 0;
 
-      accent-color: var(--brand-primary);
+      background: var(--white);
 
-      cursor: pointer;
+      transition:
+        border-color 150ms ease,
+        background-color 150ms ease;
     }
 
     .instance-option:hover {
       color: var(--brand-primary);
     }
 
-    .instance-option input:focus-visible {
+    .instance-option:hover .custom-checkbox {
+      border-color: var(--brand-primary);
+    }
+
+    .instance-option input:checked + .custom-checkbox {
+      border-color: var(--brand-primary);
+
+      background: var(--brand-primary);
+    }
+
+    .instance-option input:checked + .custom-checkbox::after {
+      content: "";
+
+      width: 4px;
+      height: 8px;
+
+      margin-top: -2px;
+
+      border-right: 2px solid var(--white);
+      border-bottom: 2px solid var(--white);
+
+      transform: rotate(45deg);
+    }
+
+    .instance-option input:focus-visible + .custom-checkbox {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
@@ -545,6 +686,7 @@
       clear: both;
 
       width: 100%;
+
       margin: 0;
       padding: 0;
 
@@ -552,9 +694,10 @@
     }
 
 
-    /* Medium */
+    /* Tablet */
 
     @media (max-width: 1100px) {
+
       #calendar-filters {
         flex-wrap: wrap;
       }
@@ -565,19 +708,23 @@
 
       .primary-filters {
         order: 3;
+
         flex: 1 0 100%;
+
         width: 100%;
       }
 
       #share-url {
         margin-left: auto;
       }
+
     }
 
 
     /* Mobile */
 
     @media (max-width: 700px) {
+
       .brand-header-inner {
         padding: 10px 16px;
       }
@@ -595,8 +742,9 @@
       }
 
       #calendar-search-form {
-        flex: 1 0 100%;
-        width: 100%;
+        flex: 1 0 calc(100% - 54px);
+
+        width: calc(100% - 54px);
         height: 44px;
       }
 
@@ -606,25 +754,31 @@
 
       #calendar-search-form > button {
         flex-basis: 44px;
+
         width: 44px;
         height: 44px;
       }
 
       #share-url {
         order: 2;
-        margin-left: 0;
+
+        flex-basis: 40px;
+
+        margin-left: auto;
       }
 
       .primary-filters {
         order: 3;
 
         width: 100%;
+
         gap: 18px;
 
         overflow-x: auto;
         overflow-y: hidden;
 
         scrollbar-width: none;
+
         -webkit-overflow-scrolling: touch;
       }
 
@@ -648,19 +802,26 @@
       .event-type-filters {
         gap: 8px;
       }
+
     }
 
 
     @media (prefers-reduced-motion: reduce) {
+
+      .brand-header-link,
+      .brand-header-logo,
       .filter-button,
       #more-button,
       #filter-indicator,
       .more-caret,
+      #share-url,
       #expanded-filters,
       .expanded-filters-content,
-      .event-type-button {
+      .event-type-button,
+      .custom-checkbox {
         transition: none;
       }
+
     }
   </style>
 </head>
@@ -669,23 +830,45 @@
 <body>
 
   <header class="brand-header">
+
     <div class="brand-header-inner">
-      <img
-        src="D_pat_identifier_RGB_mono_white.svg"
-        alt="NC State Department of Performing Arts and Technology"
-        class="brand-header-logo"
+
+      <a
+        href="#"
+        id="brand-back-link"
+        class="brand-header-link"
+        aria-label="Return to previous page"
       >
+
+        <img
+          src="D_pat_identifier_RGB_mono_white.svg"
+          alt="NC State Department of Performing Arts and Technology"
+          class="brand-header-logo"
+        >
+
+      </a>
+
     </div>
+
   </header>
 
 
   <main class="calendar-page">
 
-    <div id="calendar-filters" aria-label="Search and filter events">
+    <div
+      id="calendar-filters"
+      aria-label="Search and filter events"
+    >
 
-      <form id="calendar-search-form" role="search">
+      <form
+        id="calendar-search-form"
+        role="search"
+      >
 
-        <label class="sr-only" for="calendar-search">
+        <label
+          class="sr-only"
+          for="calendar-search"
+        >
           Search events
         </label>
 
@@ -696,13 +879,17 @@
           autocomplete="off"
         >
 
-        <button type="submit" aria-label="Search events">
+        <button
+          type="submit"
+          aria-label="Search events"
+        >
 
           <svg
             class="search-icon"
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
+
             <circle
               cx="10.5"
               cy="10.5"
@@ -719,6 +906,7 @@
               stroke-width="2.4"
               stroke-linecap="square"
             ></path>
+
           </svg>
 
         </button>
@@ -726,7 +914,10 @@
       </form>
 
 
-      <div class="primary-filters" id="primary-filters">
+      <div
+        class="primary-filters"
+        id="primary-filters"
+      >
 
         <button
           type="button"
@@ -768,6 +959,7 @@
           Music Technology
         </button>
 
+
         <button
           type="button"
           id="more-button"
@@ -780,7 +972,9 @@
             class="more-caret"
             aria-hidden="true"
           ></span>
+
         </button>
+
 
         <span
           id="filter-indicator"
@@ -793,8 +987,21 @@
       <button
         type="button"
         id="share-url"
+        aria-label="Share calendar"
+        title="Share calendar"
       >
-        Share
+
+        <svg
+          class="share-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            d="M18 22q-1.25 0-2.125-.875T15 19q0-.175.025-.35t.075-.325L8.05 14.2q-.425.375-.95.588T6 15q-1.25 0-2.125-.875T3 12q0-1.25.875-2.125T6 9q.575 0 1.1.213t.95.587l7.05-4.125q-.05-.15-.075-.325T15 5q0-1.25.875-2.125T18 2q1.25 0 2.125.875T21 5q0 1.25-.875 2.125T18 8q-.575 0-1.1-.213T15.95 7.2L8.9 11.325q.05.15.075.325T9 12q0 .175-.025.35t-.075.325l7.05 4.125q.425-.375.95-.588T18 16q1.25 0 2.125.875T21 19q0 1.25-.875 2.125T18 22Z"
+          ></path>
+        </svg>
+
       </button>
 
     </div>
@@ -808,6 +1015,7 @@
       <div class="expanded-filters-inner">
 
         <div class="expanded-filters-content">
+
 
           <div class="filter-group">
 
@@ -844,15 +1052,6 @@
                 Auditions
               </button>
 
-              <button
-                type="button"
-                class="event-type-button"
-                data-event-type="workshop"
-                aria-pressed="false"
-              >
-                Workshops &amp; Talks
-              </button>
-
             </div>
 
           </div>
@@ -874,8 +1073,13 @@
                   checked
                 >
 
+                <span
+                  class="custom-checkbox"
+                  aria-hidden="true"
+                ></span>
+
                 <span>
-                  Show all matching instances
+                  Show all instances
                 </span>
 
               </label>
@@ -883,6 +1087,7 @@
             </div>
 
           </div>
+
 
         </div>
 
@@ -913,6 +1118,7 @@
 
 
       const AREAS = {
+
         music: {
           tags: ["Music"]
         },
@@ -928,10 +1134,17 @@
         tech: {
           tags: ["Music Technology"]
         }
+
       };
 
 
-      const EVENT_TYPES = {
+      /*
+       * These are the public-facing filters for this calendar.
+       * They do not need to mirror Localist's Event Type names.
+       */
+
+      const EVENT_FILTERS = {
+
         performance: {
           tags: ["Performance"]
         },
@@ -942,16 +1155,16 @@
 
         audition: {
           tags: ["Audition"]
-        },
-
-        workshop: {
-          tags: ["Workshop"]
         }
+
       };
 
 
       const container =
         document.getElementById("localist-widget-dpat");
+
+      const backLink =
+        document.getElementById("brand-back-link");
 
       const allButton =
         document.getElementById("filter-all");
@@ -997,7 +1210,9 @@
       let activeArea = null;
       let activeEventTypes = [];
 
-      /* All matching instances are shown by default. */
+      /*
+       * Show all matching instances by default.
+       */
       let showAllInstances = true;
 
       let searchQuery = "";
@@ -1005,39 +1220,50 @@
 
 
       function normalize(value) {
+
         return String(value || "")
           .trim()
           .toLocaleLowerCase();
+
       }
 
 
       function findKey(value, config) {
+
         if (!value) {
           return null;
         }
 
+
         const normalized =
           normalize(value);
 
+
         return (
           Object.keys(config).find(
-            key => normalize(key) === normalized
+            key =>
+              normalize(key) === normalized
           ) || null
         );
+
       }
 
 
       function unique(values) {
+
         return Array.from(
           new Set(values)
         );
+
       }
 
 
       function getActiveTopButton() {
+
         if (!activeArea) {
           return allButton;
         }
+
 
         return (
           areaButtons.find(
@@ -1045,79 +1271,108 @@
               button.dataset.area === activeArea
           ) || allButton
         );
+
       }
 
 
       function moveFilterIndicator(animate = true) {
+
         const button =
           getActiveTopButton();
+
 
         if (!button) {
           return;
         }
 
+
         if (!animate) {
           indicator.style.transition = "none";
         }
 
+
         const navRect =
           primaryFilters.getBoundingClientRect();
 
+
         const buttonRect =
           button.getBoundingClientRect();
+
 
         const left =
           buttonRect.left -
           navRect.left +
           primaryFilters.scrollLeft;
 
+
         indicator.style.width =
           buttonRect.width + "px";
+
 
         indicator.style.transform =
           "translateX(" + left + "px)";
 
+
         if (!animate) {
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              indicator.style.transition = "";
-            });
-          });
+
+          requestAnimationFrame(
+            function () {
+
+              requestAnimationFrame(
+                function () {
+
+                  indicator.style.transition = "";
+
+                }
+              );
+
+            }
+          );
+
         }
+
       }
 
 
       function keepActiveFilterVisible() {
+
         if (window.innerWidth > 700) {
           return;
         }
 
+
         const button =
           getActiveTopButton();
+
 
         if (!button) {
           return;
         }
+
 
         button.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
           inline: "nearest"
         });
+
       }
 
 
       function readURL() {
+
         const params =
           new URLSearchParams(
             window.location.search
           );
+
 
         activeArea =
           findKey(
             params.get("area"),
             AREAS
           );
+
 
         activeEventTypes =
           unique(
@@ -1127,7 +1382,7 @@
                 value =>
                   findKey(
                     value,
-                    EVENT_TYPES
+                    EVENT_FILTERS
                   )
               )
               .filter(Boolean)
@@ -1135,8 +1390,8 @@
 
 
         /*
-         * Showing all instances is the default.
-         * Only ?instances=single turns it off.
+         * All instances is the default.
+         * ?instances=single turns it off.
          */
 
         showAllInstances =
@@ -1146,19 +1401,24 @@
         searchQuery =
           params.get("q") || "";
 
+
         searchInput.value =
           searchQuery;
 
+
         showAllInstancesInput.checked =
           showAllInstances;
+
       }
 
 
       function updateURL() {
+
         const url =
           new URL(
             window.location.href
           );
+
 
         url.searchParams.delete("area");
         url.searchParams.delete("type");
@@ -1167,41 +1427,48 @@
 
 
         if (activeArea) {
+
           url.searchParams.set(
             "area",
             activeArea
           );
+
         }
 
 
         activeEventTypes.forEach(
           type => {
+
             url.searchParams.append(
               "type",
               type
             );
+
           }
         );
 
 
         /*
-         * Because all instances is the default,
-         * we only add a URL parameter when it is off.
+         * The default needs no URL parameter.
          */
 
         if (!showAllInstances) {
+
           url.searchParams.set(
             "instances",
             "single"
           );
+
         }
 
 
         if (searchQuery) {
+
           url.searchParams.set(
             "q",
             searchQuery
           );
+
         }
 
 
@@ -1210,6 +1477,7 @@
           "",
           url
         );
+
       }
 
 
@@ -1219,18 +1487,20 @@
           button => {
 
             const active =
-              button.dataset.area ===
-              activeArea;
+              button.dataset.area === activeArea;
+
 
             button.classList.toggle(
               "active",
               active
             );
 
+
             button.setAttribute(
               "aria-pressed",
               active ? "true" : "false"
             );
+
           }
         );
 
@@ -1238,10 +1508,12 @@
         const allActive =
           !activeArea;
 
+
         allButton.classList.toggle(
           "active",
           allActive
         );
+
 
         allButton.setAttribute(
           "aria-pressed",
@@ -1257,15 +1529,18 @@
                 button.dataset.eventType
               );
 
+
             button.classList.toggle(
               "active",
               active
             );
 
+
             button.setAttribute(
               "aria-pressed",
               active ? "true" : "false"
             );
+
           }
         );
 
@@ -1275,9 +1550,8 @@
 
 
         /*
-         * More is highlighted only when an additional
-         * event-type filter is selected or the default
-         * instances setting has been changed.
+         * More only appears active if the user has changed
+         * something from the default or selected a type.
          */
 
         moreButton.classList.toggle(
@@ -1289,14 +1563,22 @@
 
         requestAnimationFrame(
           function () {
-            moveFilterIndicator(animate);
+
+            moveFilterIndicator(
+              animate
+            );
+
+
             keepActiveFilterVisible();
+
           }
         );
+
       }
 
 
       function getAreaTags() {
+
         if (
           !activeArea ||
           !AREAS[activeArea]
@@ -1304,19 +1586,28 @@
           return [];
         }
 
-        return AREAS[activeArea].tags || [];
+
+        return (
+          AREAS[activeArea].tags || []
+        );
+
       }
 
 
-      function getEventTypeTags(type) {
+      function getEventFilterTags(type) {
+
         if (
           !type ||
-          !EVENT_TYPES[type]
+          !EVENT_FILTERS[type]
         ) {
           return [];
         }
 
-        return EVENT_TYPES[type].tags || [];
+
+        return (
+          EVENT_FILTERS[type].tags || []
+        );
+
       }
 
 
@@ -1324,6 +1615,7 @@
         eventType = null,
         containerId = "localist-widget-dpat"
       ) {
+
         const params =
           new URLSearchParams();
 
@@ -1353,19 +1645,17 @@
 
 
         /*
-         * DEFAULT:
-         *
-         * all_instances=1
-         *
-         * If the user turns "Show all instances" off,
-         * this parameter is omitted.
+         * Default Localist request includes all matching
+         * instances of recurring events.
          */
 
         if (showAllInstances) {
+
           params.set(
             "all_instances",
             "1"
           );
+
         }
 
 
@@ -1398,9 +1688,14 @@
 
 
         if (eventType) {
-          tags = tags.concat(
-            getEventTypeTags(eventType)
-          );
+
+          tags =
+            tags.concat(
+              getEventFilterTags(
+                eventType
+              )
+            );
+
         }
 
 
@@ -1409,10 +1704,12 @@
 
 
         if (tags.length) {
+
           params.set(
             "tags",
             tags.join(",")
           );
+
         }
 
 
@@ -1421,20 +1718,25 @@
           "?" +
           params.toString()
         );
+
       }
 
 
       function clearSearchTimers() {
+
         searchTimers.forEach(
           timer =>
             clearTimeout(timer)
         );
 
+
         searchTimers = [];
+
       }
 
 
       function getEventItems(root) {
+
         const scope =
           root || container;
 
@@ -1460,10 +1762,12 @@
               'a[href*="/event/"]'
             )
         );
+
       }
 
 
       function getEventIdentity(event) {
+
         const link =
           event.querySelector(
             'a[href*="/event/"]'
@@ -1478,14 +1782,12 @@
         return normalize(
           event.textContent
         );
+
       }
 
 
-      /*
-       * Event pages open in a new tab.
-       */
-
       function makeEventLinksOpenInNewTab(root) {
+
         const scope =
           root || container;
 
@@ -1500,15 +1802,18 @@
               link.target =
                 "_blank";
 
+
               link.rel =
                 "noopener noreferrer";
 
             }
           );
+
       }
 
 
       function applySearch() {
+
         makeEventLinksOpenInNewTab(
           container
         );
@@ -1566,10 +1871,12 @@
           status.textContent = "";
 
         }
+
       }
 
 
       function scheduleSearch() {
+
         clearSearchTimers();
 
 
@@ -1584,6 +1891,7 @@
                     container
                   );
 
+
                   applySearch();
 
                 },
@@ -1593,32 +1901,42 @@
 
           }
         );
+
       }
 
 
       function clearWidgetScripts() {
+
         document
           .querySelectorAll(
             "script[data-dpat-widget]"
           )
           .forEach(
-            script => script.remove()
+            script =>
+              script.remove()
           );
+
       }
 
 
       function loadSingleWidget() {
+
         clearWidgetScripts();
 
-        container.innerHTML = "";
+
+        container.innerHTML =
+          "";
 
 
         const script =
-          document.createElement("script");
+          document.createElement(
+            "script"
+          );
 
 
         script.type =
           "text/javascript";
+
 
         script.async =
           true;
@@ -1641,17 +1959,23 @@
 
 
         scheduleSearch();
+
       }
 
 
       function loadMultipleWidgets() {
+
         clearWidgetScripts();
 
-        container.innerHTML = "";
+
+        container.innerHTML =
+          "";
 
 
         const staging =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
 
         staging.style.display =
@@ -1704,6 +2028,7 @@
                   script.type =
                     "text/javascript";
 
+
                   script.async =
                     true;
 
@@ -1726,7 +2051,8 @@
                   );
 
 
-                  let attempts = 0;
+                  let attempts =
+                    0;
 
 
                   const check =
@@ -1783,7 +2109,8 @@
                 new Set();
 
 
-              const events = [];
+              const events =
+                [];
 
 
               groups
@@ -1806,6 +2133,7 @@
                       seen.add(
                         identity
                       );
+
 
                       events.push(
                         event
@@ -1873,11 +2201,15 @@
 
             }
           );
+
       }
 
 
       function loadWidget() {
-        status.textContent = "";
+
+        status.textContent =
+          "";
+
 
         clearSearchTimers();
 
@@ -1892,7 +2224,9 @@
 
             clearWidgetScripts();
 
-            container.innerHTML = "";
+
+            container.innerHTML =
+              "";
 
 
             const script =
@@ -1903,6 +2237,7 @@
 
             script.type =
               "text/javascript";
+
 
             script.async =
               true;
@@ -1938,14 +2273,17 @@
 
 
           return;
+
         }
 
 
         loadMultipleWidgets();
+
       }
 
 
       function openFilters() {
+
         expandedFilters.classList.add(
           "open"
         );
@@ -1961,10 +2299,12 @@
           "aria-expanded",
           "true"
         );
+
       }
 
 
       function closeFilters() {
+
         expandedFilters.classList.remove(
           "open"
         );
@@ -1980,10 +2320,12 @@
           "aria-expanded",
           "false"
         );
+
       }
 
 
       function toggleFilters() {
+
         if (
           expandedFilters.classList.contains(
             "open"
@@ -1999,7 +2341,30 @@
           openFilters();
 
         }
+
       }
+
+
+      /*
+       * Return to the page that opened the calendar.
+       * No parent-site URL is hardcoded.
+       */
+
+      backLink.addEventListener(
+        "click",
+        function (event) {
+
+          event.preventDefault();
+
+
+          if (window.history.length > 1) {
+
+            window.history.back();
+
+          }
+
+        }
+      );
 
 
       areaButtons.forEach(
@@ -2019,8 +2384,14 @@
                   : value;
 
 
-              updateControls(true);
+              updateControls(
+                true
+              );
+
+
               updateURL();
+
+
               loadWidget();
 
             }
@@ -2034,10 +2405,18 @@
         "click",
         function () {
 
-          activeArea = null;
+          activeArea =
+            null;
 
-          updateControls(true);
+
+          updateControls(
+            true
+          );
+
+
           updateURL();
+
+
           loadWidget();
 
         }
@@ -2079,8 +2458,14 @@
               }
 
 
-              updateControls(true);
+              updateControls(
+                true
+              );
+
+
               updateURL();
+
+
               loadWidget();
 
             }
@@ -2090,18 +2475,6 @@
       );
 
 
-      /*
-       * Show all instances:
-       *
-       * Checked by default.
-       *
-       * Checked:
-       * all_instances=1
-       *
-       * Unchecked:
-       * parameter omitted
-       */
-
       showAllInstancesInput.addEventListener(
         "change",
         function () {
@@ -2110,8 +2483,14 @@
             showAllInstancesInput.checked;
 
 
-          updateControls(false);
+          updateControls(
+            false
+          );
+
+
           updateURL();
+
+
           loadWidget();
 
         }
@@ -2136,6 +2515,8 @@
 
 
           updateURL();
+
+
           applySearch();
 
         }
@@ -2151,6 +2532,8 @@
 
 
           updateURL();
+
+
           applySearch();
 
         }
@@ -2181,6 +2564,7 @@
                   "NC State Performing Arts and Technology Events",
                 url: url
               });
+
 
               return;
 
@@ -2251,15 +2635,37 @@
           }
 
 
-          shareButton.textContent =
-            "Link copied";
+          const originalLabel =
+            shareButton.getAttribute(
+              "aria-label"
+            );
+
+
+          shareButton.setAttribute(
+            "aria-label",
+            "Link copied"
+          );
+
+
+          shareButton.setAttribute(
+            "title",
+            "Link copied"
+          );
 
 
           setTimeout(
             function () {
 
-              shareButton.textContent =
-                "Share";
+              shareButton.setAttribute(
+                "aria-label",
+                originalLabel
+              );
+
+
+              shareButton.setAttribute(
+                "title",
+                originalLabel
+              );
 
             },
             1500
@@ -2302,6 +2708,7 @@
 
           readURL();
 
+
           updateControls(
             false
           );
@@ -2330,8 +2737,7 @@
 
 
       /*
-       * Localist adds its cards asynchronously.
-       * Update event links as soon as they appear.
+       * Localist inserts its event cards asynchronously.
        */
 
       const eventObserver =
@@ -2361,15 +2767,11 @@
 
       readURL();
 
+
       updateControls(
         false
       );
 
-
-      /*
-       * Do NOT open More simply because "Show all instances"
-       * is checked. That is now the normal/default state.
-       */
 
       if (
         activeEventTypes.length ||
