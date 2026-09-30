@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet"
   >
 
@@ -57,27 +57,23 @@
 
     .site-header-inner {
       width: 100%;
-      max-width: var(--max-width);
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 24px;
     }
 
     .site-identifier {
       display: inline-block;
-      padding: 14px 0;
       line-height: 0;
       text-decoration: none;
     }
 
     .site-identifier img {
       display: block;
-      width: auto;
-      max-width: min(420px, 100%);
-      height: 28px;
+      width: min(100%, 430px);
+      height: auto;
 
-      transition:
-        opacity 160ms ease,
-        filter 160ms ease;
+      transition: opacity 160ms ease;
     }
 
     .site-identifier:hover img,
@@ -485,6 +481,48 @@
     }
 
 
+    /* Clear filters */
+
+    .clear-filters {
+      appearance: none;
+      -webkit-appearance: none;
+
+      flex: 0 0 auto;
+
+      margin: 0 0 0 auto;
+      padding: 8px 0;
+
+      border: 0;
+      border-radius: 0;
+
+      background: transparent;
+      color: var(--brand-primary);
+
+      font: inherit;
+      font-size: 15px;
+      font-weight: 500;
+
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      cursor: pointer;
+    }
+
+    .clear-filters:hover,
+    .clear-filters:focus {
+      color: var(--brand-primary-dark);
+    }
+
+    .clear-filters:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
+    }
+
+    .clear-filters[hidden] {
+      display: none;
+    }
+
+
     /* Localist */
 
     #localist-widget-dpat {
@@ -544,19 +582,15 @@
     }
 
 
-    @media (max-width: 650px) {
+    @media (max-width: 700px) {
 
       .site-header-inner {
-        padding: 0 18px;
-      }
-
-      .site-identifier {
-        padding: 12px 0;
+        padding: 20px 16px;
       }
 
       .site-identifier img {
-        max-width: 100%;
-        height: 24px;
+        width: min(100%, 360px);
+        height: auto;
       }
 
       .calendar-page {
@@ -569,7 +603,6 @@
 
       .calendar-search {
         flex: 1 1 calc(100% - 60px);
-
         width: auto;
       }
 
@@ -588,6 +621,14 @@
 
       .more-label {
         margin-bottom: 12px;
+      }
+
+      .event-type-filters {
+        margin-bottom: 12px;
+      }
+
+      .clear-filters {
+        margin-left: 0;
       }
 
     }
@@ -666,10 +707,7 @@
           type="submit"
           aria-label="Search events"
         >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle
               cx="10.5"
               cy="10.5"
@@ -678,7 +716,6 @@
               stroke="currentColor"
               stroke-width="2.25"
             ></circle>
-
             <path
               d="M15.25 15.25L20.5 20.5"
               fill="none"
@@ -766,10 +803,7 @@
         aria-label="Share calendar"
         title="Share calendar"
       >
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
             fill="currentColor"
             d="M18 22q-1.25 0-2.125-.875T15 19q0-.175.025-.35t.075-.325L8.05 14.2q-.425.375-.95.588T6 15q-1.25 0-2.125-.875T3 12q0-1.25.875-2.125T6 9q.575 0 1.1.213t.95.587l7.05-4.125q-.05-.15-.075-.325T15 5q0-1.25.875-2.125T18 2q1.25 0 2.125.875T21 5q0 1.25-.875 2.125T18 8q-.575 0-1.1-.213T15.95 7.2L8.9 11.325q.05.15.075.325T9 12q0 .175-.025.35t-.075.325l7.05 4.125q.425-.375.95-.588T18 16q1.25 0 2.125.875T21 19q0 1.25-.875 2.125T18 22Z"
@@ -824,6 +858,15 @@
 
           </div>
 
+          <button
+            type="button"
+            class="clear-filters"
+            id="clear-filters"
+            hidden
+          >
+            Clear filters
+          </button>
+
         </div>
 
       </div>
@@ -834,7 +877,6 @@
       id="calendar-status"
       aria-live="polite"
     ></div>
-
 
     <div
       id="localist-widget-dpat"
@@ -854,13 +896,6 @@
         "department_of_performing_arts_and_technology";
 
 
-      /*
-       * AREA FILTERS
-       *
-       * These values should correspond to the tags you are
-       * already using in Localist.
-       */
-
       const AREA_FILTERS = {
         music: "Music",
         dance: "Dance",
@@ -868,13 +903,6 @@
         tech: "Music Technology"
       };
 
-
-      /*
-       * PUBLIC EVENT-TYPE FILTERS
-       *
-       * These do not have to use the same labels that
-       * Localist displays publicly.
-       */
 
       const EVENT_FILTERS = {
         performance: "Performance",
@@ -913,6 +941,9 @@
       const morePanel =
         document.getElementById("more-panel");
 
+      const clearFiltersButton =
+        document.getElementById("clear-filters");
+
       const shareButton =
         document.getElementById("share-button");
 
@@ -926,13 +957,10 @@
       let activeArea = null;
       let activeTypes = [];
       let searchTerm = "";
-
       let loadToken = 0;
 
 
-      /*
-       * URL state
-       */
+      /* URL state */
 
       function readState() {
 
@@ -941,6 +969,7 @@
 
         const area =
           params.get("area");
+
 
         activeArea =
           Object.prototype.hasOwnProperty.call(
@@ -1017,9 +1046,7 @@
       }
 
 
-      /*
-       * Controls
-       */
+      /* Controls */
 
       function activePrimaryButton() {
 
@@ -1150,6 +1177,11 @@
         );
 
 
+        clearFiltersButton.hidden =
+          activeArea === null &&
+          activeTypes.length === 0;
+
+
         requestAnimationFrame(
           () => moveIndicator(animate)
         );
@@ -1157,9 +1189,7 @@
       }
 
 
-      /*
-       * More panel
-       */
+      /* More panel */
 
       function openMore() {
 
@@ -1212,11 +1242,27 @@
       );
 
 
+      /* Clear filters */
+
+      clearFiltersButton.addEventListener(
+        "click",
+        () => {
+
+          activeArea = null;
+          activeTypes = [];
+
+          updateControls();
+          writeState();
+          renderCalendar();
+
+        }
+      );
+
+
       /*
-       * Build a Localist widget request.
+       * Localist URL
        *
-       * IMPORTANT:
-       * all_instances=1 is permanent.
+       * all_instances=1 is always enabled.
        */
 
       function buildWidgetURL(
@@ -1226,6 +1272,7 @@
 
         const params =
           new URLSearchParams();
+
 
         params.set("schools", "ncsu");
 
@@ -1237,10 +1284,10 @@
         params.set("days", "365");
         params.set("num", "50");
 
-        /*
-         * Always show every matching instance.
-         */
-        params.set("all_instances", "1");
+        params.set(
+          "all_instances",
+          "1"
+        );
 
         params.set(
           "experience",
@@ -1277,9 +1324,6 @@
 
         if (tags.length) {
 
-          /*
-           * Both selected dimensions must match.
-           */
           params.set(
             "match",
             "all"
@@ -1302,9 +1346,7 @@
       }
 
 
-      /*
-       * Locate Localist event cards.
-       */
+      /* Localist events */
 
       function getEvents(root) {
 
@@ -1344,9 +1386,11 @@
             'a[href*="/event/"]'
           );
 
+
         if (link) {
           return link.href;
         }
+
 
         return event.textContent
           .trim()
@@ -1373,9 +1417,7 @@
       }
 
 
-      /*
-       * Search the events currently displayed.
-       */
+      /* Search */
 
       function applySearch() {
 
@@ -1430,15 +1472,15 @@
 
         }
         else {
+
           status.textContent = "";
+
         }
 
       }
 
 
-      /*
-       * Load one Localist widget.
-       */
+      /* Load Localist */
 
       function loadOneWidget(type = null) {
 
@@ -1458,7 +1500,6 @@
 
 
             holder.id = id;
-
             holder.style.display = "none";
 
             document.body.appendChild(holder);
@@ -1499,6 +1540,7 @@
 
                     clearInterval(timer);
 
+
                     const copies =
                       events.map(
                         event =>
@@ -1524,17 +1566,10 @@
 
 
       /*
-       * Render.
+       * Render
        *
-       * Multiple selected event types are treated as OR:
-       *
-       * Music + Performances + Master Classes
-       *
-       * means:
-       *
-       * (Music AND Performance)
-       * OR
-       * (Music AND Master Class)
+       * Area + event type = AND
+       * Multiple event types = OR
        */
 
       async function renderCalendar() {
@@ -1589,9 +1624,11 @@
               const key =
                 eventKey(event);
 
+
               if (seen.has(key)) {
                 return;
               }
+
 
               seen.add(key);
 
@@ -1610,11 +1647,6 @@
 
         }
 
-
-        /*
-         * Use Localist's original list classes so its
-         * widget-template-7 styling remains intact.
-         */
 
         const list =
           document.createElement("ul");
@@ -1640,9 +1672,7 @@
       }
 
 
-      /*
-       * Area controls
-       */
+      /* Area filters */
 
       allButton.addEventListener(
         "click",
@@ -1679,10 +1709,7 @@
       );
 
 
-      /*
-       * Event types:
-       * multiple selections allowed.
-       */
+      /* Event types */
 
       typeButtons.forEach(
         button => {
@@ -1724,9 +1751,7 @@
       );
 
 
-      /*
-       * Search
-       */
+      /* Search */
 
       searchForm.addEventListener(
         "submit",
@@ -1758,9 +1783,7 @@
       );
 
 
-      /*
-       * Share
-       */
+      /* Share */
 
       shareButton.addEventListener(
         "click",
@@ -1815,17 +1838,14 @@
       );
 
 
-      /*
-       * Identifier = previous page.
-       *
-       * This avoids hardcoding the department's parent site.
-       */
+      /* Identifier = previous page */
 
       backLink.addEventListener(
         "click",
         event => {
 
           event.preventDefault();
+
 
           if (history.length > 1) {
             history.back();
@@ -1835,9 +1855,7 @@
       );
 
 
-      /*
-       * Keep indicator aligned.
-       */
+      /* Keep underline aligned */
 
       primaryFilters.addEventListener(
         "scroll",
@@ -1852,9 +1870,7 @@
       );
 
 
-      /*
-       * Initial load
-       */
+      /* Initial load */
 
       readState();
 
