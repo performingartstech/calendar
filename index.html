@@ -486,7 +486,7 @@
     }
 
 
-    /* Show all instances */
+    /* Instances option */
 
     .instance-option {
       display: inline-flex;
@@ -681,20 +681,11 @@
 
   <main class="calendar-page">
 
-    <div
-      id="calendar-filters"
-      aria-label="Search and filter events"
-    >
+    <div id="calendar-filters" aria-label="Search and filter events">
 
-      <form
-        id="calendar-search-form"
-        role="search"
-      >
+      <form id="calendar-search-form" role="search">
 
-        <label
-          class="sr-only"
-          for="calendar-search"
-        >
+        <label class="sr-only" for="calendar-search">
           Search events
         </label>
 
@@ -705,10 +696,7 @@
           autocomplete="off"
         >
 
-        <button
-          type="submit"
-          aria-label="Search events"
-        >
+        <button type="submit" aria-label="Search events">
 
           <svg
             class="search-icon"
@@ -738,10 +726,7 @@
       </form>
 
 
-      <div
-        class="primary-filters"
-        id="primary-filters"
-      >
+      <div class="primary-filters" id="primary-filters">
 
         <button
           type="button"
@@ -886,6 +871,7 @@
                 <input
                   type="checkbox"
                   id="show-all-instances"
+                  checked
                 >
 
                 <span>
@@ -1010,7 +996,10 @@
 
       let activeArea = null;
       let activeEventTypes = [];
-      let showAllInstances = false;
+
+      /* All matching instances are shown by default. */
+      let showAllInstances = true;
+
       let searchQuery = "";
       let searchTimers = [];
 
@@ -1144,8 +1133,15 @@
               .filter(Boolean)
           );
 
+
+        /*
+         * Showing all instances is the default.
+         * Only ?instances=single turns it off.
+         */
+
         showAllInstances =
-          params.get("instances") === "all";
+          params.get("instances") !== "single";
+
 
         searchQuery =
           params.get("q") || "";
@@ -1169,12 +1165,14 @@
         url.searchParams.delete("instances");
         url.searchParams.delete("q");
 
+
         if (activeArea) {
           url.searchParams.set(
             "area",
             activeArea
           );
         }
+
 
         activeEventTypes.forEach(
           type => {
@@ -1185,12 +1183,19 @@
           }
         );
 
-        if (showAllInstances) {
+
+        /*
+         * Because all instances is the default,
+         * we only add a URL parameter when it is off.
+         */
+
+        if (!showAllInstances) {
           url.searchParams.set(
             "instances",
-            "all"
+            "single"
           );
         }
+
 
         if (searchQuery) {
           url.searchParams.set(
@@ -1198,6 +1203,7 @@
             searchQuery
           );
         }
+
 
         history.replaceState(
           null,
@@ -1213,7 +1219,8 @@
           button => {
 
             const active =
-              button.dataset.area === activeArea;
+              button.dataset.area ===
+              activeArea;
 
             button.classList.toggle(
               "active",
@@ -1267,10 +1274,16 @@
           showAllInstances;
 
 
+        /*
+         * More is highlighted only when an additional
+         * event-type filter is selected or the default
+         * instances setting has been changed.
+         */
+
         moreButton.classList.toggle(
           "active",
           activeEventTypes.length > 0 ||
-          showAllInstances
+          !showAllInstances
         );
 
 
@@ -1314,20 +1327,24 @@
         const params =
           new URLSearchParams();
 
+
         params.set(
           "schools",
           "ncsu"
         );
+
 
         params.set(
           "groups",
           "department_of_performing_arts_and_technology"
         );
 
+
         params.set(
           "days",
           "365"
         );
+
 
         params.set(
           "num",
@@ -1336,8 +1353,12 @@
 
 
         /*
-         * Localist's all_instances option.
-         * The parameter is omitted entirely when the option is off.
+         * DEFAULT:
+         *
+         * all_instances=1
+         *
+         * If the user turns "Show all instances" off,
+         * this parameter is omitted.
          */
 
         if (showAllInstances) {
@@ -1353,15 +1374,18 @@
           "all"
         );
 
+
         params.set(
           "experience",
           "inperson"
         );
 
+
         params.set(
           "container",
           containerId
         );
+
 
         params.set(
           "template",
@@ -1414,6 +1438,7 @@
         const scope =
           root || container;
 
+
         const standard =
           Array.from(
             scope.querySelectorAll(
@@ -1421,9 +1446,11 @@
             )
           );
 
+
         if (standard.length) {
           return standard;
         }
+
 
         return Array.from(
           scope.querySelectorAll("li")
@@ -1442,9 +1469,11 @@
             'a[href*="/event/"]'
           );
 
+
         if (link) {
           return link.href;
         }
+
 
         return normalize(
           event.textContent
@@ -1452,9 +1481,14 @@
       }
 
 
+      /*
+       * Event pages open in a new tab.
+       */
+
       function makeEventLinksOpenInNewTab(root) {
         const scope =
           root || container;
+
 
         scope
           .querySelectorAll(
@@ -1462,27 +1496,39 @@
           )
           .forEach(
             link => {
-              link.target = "_blank";
-              link.rel = "noopener noreferrer";
+
+              link.target =
+                "_blank";
+
+              link.rel =
+                "noopener noreferrer";
+
             }
           );
       }
 
 
       function applySearch() {
-        makeEventLinksOpenInNewTab(container);
+        makeEventLinksOpenInNewTab(
+          container
+        );
+
 
         const query =
           normalize(searchQuery);
 
+
         const events =
           getEventItems(container);
+
 
         if (!events.length) {
           return;
         }
 
+
         let visible = 0;
+
 
         events.forEach(
           event => {
@@ -1493,25 +1539,32 @@
                 event.textContent
               ).includes(query);
 
+
             event.style.display =
               matches ? "" : "none";
+
 
             if (matches) {
               visible++;
             }
+
           }
         );
 
 
         if (query) {
+
           status.textContent =
             visible === 1
               ? "1 event found"
               : visible + " events found";
+
         }
 
         else {
+
           status.textContent = "";
+
         }
       }
 
@@ -1519,14 +1572,20 @@
       function scheduleSearch() {
         clearSearchTimers();
 
+
         [500, 1000, 1800, 3000].forEach(
           delay => {
 
             searchTimers.push(
               setTimeout(
                 function () {
-                  makeEventLinksOpenInNewTab(container);
+
+                  makeEventLinksOpenInNewTab(
+                    container
+                  );
+
                   applySearch();
+
                 },
                 delay
               )
@@ -1553,8 +1612,10 @@
 
         container.innerHTML = "";
 
+
         const script =
           document.createElement("script");
+
 
         script.type =
           "text/javascript";
@@ -1562,18 +1623,22 @@
         script.async =
           true;
 
+
         script.setAttribute(
           "data-dpat-widget",
           "true"
         );
 
+
         script.src =
           buildWidgetURL();
+
 
         container.parentNode.insertBefore(
           script,
           container.nextSibling
         );
+
 
         scheduleSearch();
       }
@@ -1584,12 +1649,19 @@
 
         container.innerHTML = "";
 
+
         const staging =
           document.createElement("div");
 
-        staging.style.display = "none";
 
-        document.body.appendChild(staging);
+        staging.style.display =
+          "none";
+
+
+        document.body.appendChild(
+          staging
+        );
+
 
         const loads = [];
 
@@ -1607,16 +1679,27 @@
                     "-" +
                     index;
 
+
                   const temp =
-                    document.createElement("div");
+                    document.createElement(
+                      "div"
+                    );
 
-                  temp.id = id;
 
-                  staging.appendChild(temp);
+                  temp.id =
+                    id;
+
+
+                  staging.appendChild(
+                    temp
+                  );
 
 
                   const script =
-                    document.createElement("script");
+                    document.createElement(
+                      "script"
+                    );
+
 
                   script.type =
                     "text/javascript";
@@ -1624,16 +1707,19 @@
                   script.async =
                     true;
 
+
                   script.setAttribute(
                     "data-dpat-widget",
                     "true"
                   );
+
 
                   script.src =
                     buildWidgetURL(
                       type,
                       id
                     );
+
 
                   staging.appendChild(
                     script
@@ -1649,22 +1735,32 @@
 
                         attempts++;
 
+
                         const events =
-                          getEventItems(temp);
+                          getEventItems(
+                            temp
+                          );
 
 
                         if (
                           events.length ||
                           attempts >= 30
                         ) {
-                          clearInterval(check);
+
+                          clearInterval(
+                            check
+                          );
+
 
                           resolve(
                             events.map(
                               event =>
-                                event.cloneNode(true)
+                                event.cloneNode(
+                                  true
+                                )
                             )
                           );
+
                         }
 
                       },
@@ -1686,6 +1782,7 @@
               const seen =
                 new Set();
 
+
               const events = [];
 
 
@@ -1695,13 +1792,25 @@
                   event => {
 
                     const identity =
-                      getEventIdentity(event);
+                      getEventIdentity(
+                        event
+                      );
+
 
                     if (
-                      !seen.has(identity)
+                      !seen.has(
+                        identity
+                      )
                     ) {
-                      seen.add(identity);
-                      events.push(event);
+
+                      seen.add(
+                        identity
+                      );
+
+                      events.push(
+                        event
+                      );
+
                     }
 
                   }
@@ -1709,37 +1818,59 @@
 
 
               const list =
-                document.createElement("ul");
+                document.createElement(
+                  "ul"
+                );
+
 
               const firstSourceList =
-                staging.querySelector("ul");
+                staging.querySelector(
+                  "ul"
+                );
 
 
               if (firstSourceList) {
+
                 list.className =
                   firstSourceList.className;
+
               }
 
 
               events.forEach(
                 event => {
-                  list.appendChild(event);
+
+                  list.appendChild(
+                    event
+                  );
+
                 }
               );
 
 
-              container.innerHTML = "";
+              container.innerHTML =
+                "";
 
 
               if (events.length) {
-                container.appendChild(list);
+
+                container.appendChild(
+                  list
+                );
+
               }
 
 
               staging.remove();
 
-              makeEventLinksOpenInNewTab(container);
+
+              makeEventLinksOpenInNewTab(
+                container
+              );
+
+
               applySearch();
+
             }
           );
       }
@@ -1758,12 +1889,17 @@
           if (
             activeEventTypes.length === 1
           ) {
+
             clearWidgetScripts();
 
             container.innerHTML = "";
 
+
             const script =
-              document.createElement("script");
+              document.createElement(
+                "script"
+              );
+
 
             script.type =
               "text/javascript";
@@ -1771,27 +1907,35 @@
             script.async =
               true;
 
+
             script.setAttribute(
               "data-dpat-widget",
               "true"
             );
+
 
             script.src =
               buildWidgetURL(
                 activeEventTypes[0]
               );
 
+
             container.parentNode.insertBefore(
               script,
               container.nextSibling
             );
 
+
             scheduleSearch();
+
           }
 
           else {
+
             loadSingleWidget();
+
           }
+
 
           return;
         }
@@ -1806,10 +1950,12 @@
           "open"
         );
 
+
         expandedFilters.setAttribute(
           "aria-hidden",
           "false"
         );
+
 
         moreButton.setAttribute(
           "aria-expanded",
@@ -1823,10 +1969,12 @@
           "open"
         );
 
+
         expandedFilters.setAttribute(
           "aria-hidden",
           "true"
         );
+
 
         moreButton.setAttribute(
           "aria-expanded",
@@ -1841,11 +1989,15 @@
             "open"
           )
         ) {
+
           closeFilters();
+
         }
 
         else {
+
           openFilters();
+
         }
       }
 
@@ -1860,14 +2012,17 @@
               const value =
                 button.dataset.area;
 
+
               activeArea =
                 activeArea === value
                   ? null
                   : value;
 
+
               updateControls(true);
               updateURL();
               loadWidget();
+
             }
           );
 
@@ -1898,6 +2053,7 @@
 
               const value =
                 button.dataset.eventType;
+
 
               if (
                 activeEventTypes.includes(
@@ -1935,9 +2091,15 @@
 
 
       /*
-       * Show all recurring instances.
-       * ON  = Localist receives all_instances=1.
-       * OFF = the parameter is omitted.
+       * Show all instances:
+       *
+       * Checked by default.
+       *
+       * Checked:
+       * all_instances=1
+       *
+       * Unchecked:
+       * parameter omitted
        */
 
       showAllInstancesInput.addEventListener(
@@ -1946,6 +2108,7 @@
 
           showAllInstances =
             showAllInstancesInput.checked;
+
 
           updateControls(false);
           updateURL();
@@ -1967,8 +2130,10 @@
 
           event.preventDefault();
 
+
           searchQuery =
             searchInput.value.trim();
+
 
           updateURL();
           applySearch();
@@ -1984,6 +2149,7 @@
           searchQuery =
             searchInput.value.trim();
 
+
           updateURL();
           applySearch();
 
@@ -1998,7 +2164,9 @@
           searchQuery =
             searchInput.value.trim();
 
+
           updateURL();
+
 
           const url =
             window.location.href;
@@ -2015,6 +2183,7 @@
               });
 
               return;
+
             }
 
 
@@ -2049,23 +2218,31 @@
                   "textarea"
                 );
 
-              field.value = url;
+
+              field.value =
+                url;
+
 
               field.style.position =
                 "fixed";
 
+
               field.style.opacity =
                 "0";
+
 
               document.body.appendChild(
                 field
               );
 
+
               field.select();
+
 
               document.execCommand(
                 "copy"
               );
+
 
               field.remove();
 
@@ -2095,7 +2272,11 @@
       primaryFilters.addEventListener(
         "scroll",
         function () {
-          moveFilterIndicator(false);
+
+          moveFilterIndicator(
+            false
+          );
+
         },
         {
           passive: true
@@ -2106,7 +2287,11 @@
       window.addEventListener(
         "resize",
         function () {
-          moveFilterIndicator(false);
+
+          moveFilterIndicator(
+            false
+          );
+
         }
       );
 
@@ -2116,14 +2301,27 @@
         function () {
 
           readURL();
-          updateControls(false);
+
+          updateControls(
+            false
+          );
+
 
           if (
             activeEventTypes.length ||
-            showAllInstances
+            !showAllInstances
           ) {
+
             openFilters();
+
           }
+
+          else {
+
+            closeFilters();
+
+          }
+
 
           loadWidget();
 
@@ -2132,17 +2330,18 @@
 
 
       /*
-       * Localist inserts the cards asynchronously.
-       * Watch the widget so event links can be updated
-       * as soon as they appear.
+       * Localist adds its cards asynchronously.
+       * Update event links as soon as they appear.
        */
 
       const eventObserver =
         new MutationObserver(
           function () {
+
             makeEventLinksOpenInNewTab(
               container
             );
+
           }
         );
 
@@ -2156,15 +2355,29 @@
       );
 
 
-      readURL();
-      updateControls(false);
+      /*
+       * Initial page load.
+       */
 
+      readURL();
+
+      updateControls(
+        false
+      );
+
+
+      /*
+       * Do NOT open More simply because "Show all instances"
+       * is checked. That is now the normal/default state.
+       */
 
       if (
         activeEventTypes.length ||
-        showAllInstances
+        !showAllInstances
       ) {
+
         openFilters();
+
       }
 
 
