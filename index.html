@@ -5,32 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Events | Performing Arts and Technology</title>
+  <title>DPAT Calendar</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
     rel="stylesheet"
   >
 
   <style>
     :root {
       --brand-primary: #cc0000;
-      --brand-primary-dark: #990000;
-      --brand-primary-extra-dark: #5e0000;
+      --brand-primary-active: #990000;
 
-      --white: #ffffff;
       --black: #000000;
+      --white: #ffffff;
 
-      --very-light-gray: #f2f2f2;
-      --light-gray: #cccccc;
-      --mid-gray: #666666;
-      --dark-gray: #333333;
+      --gray-900: #333333;
+      --gray-700: #666666;
+      --gray-500: #999999;
+      --gray-300: #cccccc;
       --gray-100: #e5e5e5;
-      --gray-300: #b2b2b2;
+      --very-light-gray: #f2f2f2;
 
-      --max-width: 1200px;
+      --page-width: 1200px;
     }
 
     * {
@@ -41,40 +40,23 @@
     body {
       margin: 0;
       padding: 0;
-      background: var(--white);
-      color: var(--black);
+    }
+
+    body,
+    input,
+    button {
+      font-family: "Roboto", Arial, sans-serif;
     }
 
     body {
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      background: var(--white);
+      color: var(--gray-900);
     }
 
 
-    /* Header */
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
     .brand-header {
       width: 100%;
@@ -83,82 +65,121 @@
 
     .brand-header-inner {
       width: 100%;
-      max-width: var(--max-width);
+      max-width: var(--page-width);
       margin: 0 auto;
-      padding: 0 10px;
+      padding: 24px;
+    }
+
+    .logo-as-back-link {
+      display: inline-block;
+
+      margin: 0;
+      padding: 0;
+
+      line-height: 0;
+      text-decoration: none;
+
+      background: transparent;
     }
 
     .brand-header-logo {
       display: block;
+
       width: min(100%, 400px);
       height: auto;
+
+      transition: opacity 160ms ease;
+    }
+
+    .logo-as-back-link:hover .brand-header-logo,
+    .logo-as-back-link:focus .brand-header-logo {
+      opacity: 0.82;
+    }
+
+    .logo-as-back-link:focus-visible {
+      outline: 2px solid var(--white);
+      outline-offset: 5px;
     }
 
 
-    /* Page */
+    /* =====================================================
+       PAGE
+       ===================================================== */
 
     .calendar-page {
       width: 100%;
-      max-width: var(--max-width);
+      max-width: var(--page-width);
+
       margin: 0 auto;
-      padding: 24px 24px 48px;
+      padding: 30px 24px 50px;
     }
 
 
-    /* Toolbar */
+    /* =====================================================
+       TOOLBAR
+       ===================================================== */
 
-    #calendar-filters {
+    .calendar-toolbar {
       display: flex;
       align-items: center;
-      gap: 22px;
+
+      gap: 24px;
 
       width: 100%;
-      margin: 0 0 18px;
+      margin: 0 0 22px;
     }
 
 
-    /* Search */
+    /* =====================================================
+       SEARCH
+       ===================================================== */
 
-    #calendar-search-form {
+    .calendar-search {
       display: flex;
-      flex: 0 0 300px;
+      align-items: stretch;
 
-      width: 300px;
-      height: 42px;
+      flex: 0 0 330px;
+
+      width: 330px;
+      height: 46px;
+
       margin: 0;
+      padding: 0;
     }
 
-    #calendar-search {
+    .calendar-search input {
+      appearance: none;
+      -webkit-appearance: none;
+
       flex: 1 1 auto;
+
+      box-sizing: border-box;
 
       width: 100%;
       min-width: 0;
-      height: 42px;
+      height: 46px;
 
       margin: 0;
-      padding: 0 12px;
+      padding: 0 14px;
 
-      border: 1px solid var(--gray-300);
+      border: 1px solid var(--gray-500);
       border-right: 0;
       border-radius: 0;
 
       background: var(--white);
-      color: var(--black);
+      color: var(--gray-900);
 
-      appearance: none;
-      -webkit-appearance: none;
+      font: inherit;
+      font-size: 16px;
+      line-height: 1;
     }
 
-    #calendar-search::placeholder {
-      color: var(--mid-gray);
+    .calendar-search input::placeholder {
+      color: var(--gray-700);
       opacity: 1;
     }
 
-    #calendar-search::-webkit-search-cancel-button {
-      cursor: pointer;
-    }
-
-    #calendar-search:focus {
+    .calendar-search input:focus {
       position: relative;
       z-index: 2;
 
@@ -166,14 +187,18 @@
       outline-offset: -2px;
     }
 
-    #calendar-search-form > button {
-      display: flex;
-      flex: 0 0 42px;
+    .calendar-search button {
+      appearance: none;
+      -webkit-appearance: none;
+
+      display: inline-flex;
       align-items: center;
       justify-content: center;
 
-      width: 42px;
-      height: 42px;
+      flex: 0 0 46px;
+
+      width: 46px;
+      height: 46px;
 
       margin: 0;
       padding: 0;
@@ -183,78 +208,107 @@
 
       background: var(--brand-primary);
       color: var(--white);
+
+      cursor: pointer;
+
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease;
     }
 
-    #calendar-search-form > button:hover,
-    #calendar-search-form > button:focus {
-      border-color: var(--brand-primary-dark);
-      background: var(--brand-primary-dark);
+    .calendar-search button:hover,
+    .calendar-search button:focus {
+      border-color: var(--brand-primary-active);
+      background: var(--brand-primary-active);
     }
 
-    #calendar-search-form > button:focus-visible {
+    .calendar-search button:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
 
-    .search-icon {
+    .calendar-search svg {
       display: block;
-      width: 18px;
-      height: 18px;
+
+      width: 21px;
+      height: 21px;
+
+      fill: none;
+      stroke: currentColor;
     }
 
 
-    /* Area filters */
+    /* =====================================================
+       TOP FILTERS
+       ===================================================== */
 
-    .primary-filters {
+    .calendar-filters {
       position: relative;
 
       display: flex;
-      flex: 1 1 auto;
       align-items: center;
-      gap: 22px;
+
+      gap: 26px;
+
+      flex: 1 1 auto;
 
       min-width: 0;
+      margin: 0;
+      padding: 0;
     }
 
     .filter-button,
-    #more-button {
+    .more-toggle,
+    .clear-filters {
       appearance: none;
       -webkit-appearance: none;
 
+      position: relative;
+
       flex: 0 0 auto;
 
+      width: auto;
+      min-width: 0;
+      height: auto;
+
       margin: 0;
-      padding: 7px 0 9px;
+      padding: 8px 0 10px;
 
       border: 0;
       border-radius: 0;
 
       background: transparent;
-      color: var(--dark-gray);
+      color: var(--gray-900);
 
+      font: inherit;
       font-size: 16px;
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.3;
 
+      text-align: left;
+      text-transform: none;
       white-space: nowrap;
 
-      transition: color 180ms ease;
+      cursor: pointer;
+
+      transition: color 160ms ease;
     }
 
     .filter-button:hover,
     .filter-button:focus,
-    #more-button:hover,
-    #more-button:focus {
-      background: transparent;
+    .more-toggle:hover,
+    .more-toggle:focus {
       color: var(--brand-primary);
     }
 
     .filter-button.active {
       color: var(--brand-primary);
+      font-weight: 500;
     }
 
     .filter-button:focus-visible,
-    #more-button:focus-visible {
+    .more-toggle:focus-visible,
+    .clear-filters:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 3px;
     }
@@ -262,11 +316,10 @@
 
     /* Sliding underline */
 
-    #filter-indicator {
+    .filter-indicator {
       position: absolute;
-      z-index: 1;
 
-      bottom: 3px;
+      bottom: 2px;
       left: 0;
 
       width: 0;
@@ -274,34 +327,37 @@
 
       background: var(--brand-primary);
 
-      transform: translateX(0);
-      transform-origin: left center;
-
       pointer-events: none;
 
+      transform: translateX(0);
+
       transition:
-        transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
-        width 280ms cubic-bezier(0.4, 0, 0.2, 1);
+        transform 260ms cubic-bezier(.4, 0, .2, 1),
+        width 260ms cubic-bezier(.4, 0, .2, 1);
     }
 
 
-    /* More */
+    /* =====================================================
+       MORE
+       ===================================================== */
 
-    #more-button {
+    .more-toggle {
       display: inline-flex;
       align-items: center;
+
       gap: 8px;
     }
 
-    #more-button.active {
+    .more-toggle.active {
       color: var(--brand-primary);
     }
 
     .more-caret {
       display: block;
 
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
+
       margin-top: -4px;
 
       border-right: 2px solid currentColor;
@@ -310,226 +366,248 @@
       transform: rotate(45deg);
 
       transition:
-        transform 200ms ease,
-        margin 200ms ease;
+        transform 180ms ease,
+        margin-top 180ms ease;
     }
 
-    #more-button[aria-expanded="true"] .more-caret {
+    .more-toggle[aria-expanded="true"] .more-caret {
       margin-top: 4px;
+
       transform: rotate(225deg);
     }
 
 
-    /* Share */
+    /* =====================================================
+       CLEAR FILTERS
+       ===================================================== */
 
-    #share-url {
+    .clear-filters {
+      padding-left: 4px;
+
+      color: var(--brand-primary);
+
+      font-size: 14px;
+      font-weight: 500;
+
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .clear-filters:hover,
+    .clear-filters:focus {
+      color: var(--brand-primary-active);
+    }
+
+    .clear-filters[hidden] {
+      display: none;
+    }
+
+
+    /* =====================================================
+       SHARE
+       ===================================================== */
+
+    .share-button {
       appearance: none;
       -webkit-appearance: none;
 
-      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      flex: 0 0 42px;
+
+      width: 42px;
+      height: 42px;
 
       margin: 0 0 0 auto;
-      padding: 7px 0 9px;
+      padding: 0;
 
       border: 0;
       border-radius: 0;
 
       background: transparent;
-      color: var(--mid-gray);
+      color: var(--gray-900);
 
-      font-size: 15px;
-      font-weight: 400;
+      cursor: pointer;
 
-      white-space: nowrap;
-
-      transition: color 150ms ease;
+      transition:
+        color 150ms ease,
+        background-color 150ms ease;
     }
 
-    #share-url:hover,
-    #share-url:focus {
+    .share-button:hover,
+    .share-button:focus {
+      background: var(--very-light-gray);
       color: var(--brand-primary);
     }
 
-    #share-url:focus-visible {
+    .share-button:focus-visible {
       outline: 2px solid var(--black);
-      outline-offset: 3px;
+      outline-offset: 2px;
+    }
+
+    .share-button svg {
+      display: block;
+
+      width: 24px;
+      height: 24px;
+
+      fill: currentColor;
     }
 
 
-    /* Expanded filters */
+    /* =====================================================
+       MORE FILTER PANEL
+       ===================================================== */
 
-    #expanded-filters {
+    .more-panel {
       display: grid;
+
       grid-template-rows: 0fr;
 
       width: 100%;
-      margin: 0;
+
+      margin: -8px 0 0;
 
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
 
       transition:
-        grid-template-rows 260ms cubic-bezier(0.4, 0, 0.2, 1),
-        margin 260ms cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 200ms ease;
+        grid-template-rows 220ms ease,
+        margin 220ms ease,
+        border-color 220ms ease;
     }
 
-    #expanded-filters.open {
+    .more-panel.open {
       grid-template-rows: 1fr;
 
-      margin: 0 0 28px;
+      margin: -8px 0 28px;
 
-      border-top-color: var(--light-gray);
-      border-bottom-color: var(--light-gray);
+      border-top-color: var(--gray-300);
+      border-bottom-color: var(--gray-300);
     }
 
-    .expanded-filters-inner {
+    .more-panel-inner {
       min-height: 0;
       overflow: hidden;
     }
 
-    .expanded-filters-content {
+    .more-panel-content {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 14px 22px;
+
       padding: 0;
 
       opacity: 0;
-      transform: translateY(-6px);
+
+      transform: translateY(-4px);
 
       transition:
         opacity 180ms ease,
-        transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
-        padding 260ms ease;
+        transform 220ms ease,
+        padding 220ms ease;
     }
 
-    #expanded-filters.open .expanded-filters-content {
-      padding: 22px 0 24px;
+    .more-panel.open .more-panel-content {
+      padding: 18px 0;
 
       opacity: 1;
+
       transform: translateY(0);
     }
 
+    .more-label {
+      flex: 0 0 auto;
 
-    /* Filter groups */
-
-    .filter-group {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .filter-group + .filter-group {
-      margin-top: 18px;
-    }
-
-    .filter-group-title {
       margin: 0;
-      padding: 8px 0;
 
-      color: var(--black);
+      color: var(--gray-900);
 
       font-size: 15px;
       font-weight: 700;
-      line-height: 1.35;
     }
 
     .event-type-filters {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 8px 10px;
+
+      gap: 10px;
+
+      margin: 0;
+      padding: 0;
     }
 
-    .event-type-button {
+    .event-type-filter {
       appearance: none;
       -webkit-appearance: none;
 
-      margin: 0;
-      padding: 7px 12px;
+      width: auto;
+      min-width: 0;
+      height: auto;
 
-      border: 1px solid var(--gray-300);
+      margin: 0;
+      padding: 8px 13px;
+
+      border: 1px solid var(--gray-500);
       border-radius: 0;
 
       background: var(--white);
-      color: var(--dark-gray);
+      color: var(--gray-900);
 
+      font: inherit;
       font-size: 15px;
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.25;
+
+      cursor: pointer;
 
       transition:
-        background-color 150ms ease,
-        border-color 150ms ease,
-        color 150ms ease;
+        color 140ms ease,
+        border-color 140ms ease,
+        background-color 140ms ease;
     }
 
-    .event-type-button:hover,
-    .event-type-button:focus {
+    .event-type-filter:hover,
+    .event-type-filter:focus {
       border-color: var(--brand-primary);
+
       color: var(--brand-primary);
     }
 
-    .event-type-button.active {
+    .event-type-filter.active {
       border-color: var(--brand-primary);
+
       background: var(--brand-primary);
       color: var(--white);
     }
 
-    .event-type-button.active:hover,
-    .event-type-button.active:focus {
-      border-color: var(--brand-primary-dark);
-      background: var(--brand-primary-dark);
+    .event-type-filter.active:hover,
+    .event-type-filter.active:focus {
+      border-color: var(--brand-primary-active);
+
+      background: var(--brand-primary-active);
       color: var(--white);
     }
 
-    .event-type-button:focus-visible {
+    .event-type-filter:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
 
 
-    /* Instances option */
-
-    .instance-option {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-
-      min-height: 36px;
-
-      color: var(--dark-gray);
-
-      font-size: 15px;
-      line-height: 1.4;
-
-      cursor: pointer;
-    }
-
-    .instance-option input {
-      width: 18px;
-      height: 18px;
-
-      margin: 0;
-
-      accent-color: var(--brand-primary);
-
-      cursor: pointer;
-    }
-
-    .instance-option:hover {
-      color: var(--brand-primary);
-    }
-
-    .instance-option input:focus-visible {
-      outline: 2px solid var(--black);
-      outline-offset: 2px;
-    }
-
-
-    /* Status */
+    /* =====================================================
+       STATUS
+       ===================================================== */
 
     #calendar-status {
-      margin: 0 0 20px;
+      margin: 0 0 18px;
 
-      color: var(--mid-gray);
+      color: var(--gray-700);
 
       font-size: 14px;
     }
@@ -539,128 +617,119 @@
     }
 
 
-    /* Localist */
+    /* =====================================================
+       LOCALIST
+       ===================================================== */
 
     #localist-widget-dpat {
       clear: both;
 
       width: 100%;
+
       margin: 0;
       padding: 0;
-
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
     }
 
 
-    /* Medium */
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
 
-    @media (max-width: 1100px) {
-      #calendar-filters {
+    @media (max-width: 1050px) {
+
+      .calendar-toolbar {
         flex-wrap: wrap;
+
+        gap: 14px 20px;
       }
 
-      #calendar-search-form {
-        flex: 0 0 300px;
+      .calendar-search {
+        flex: 1 1 300px;
+
+        width: auto;
+        max-width: 430px;
       }
 
-      .primary-filters {
-        order: 3;
-        flex: 1 0 100%;
-        width: 100%;
-      }
-
-      #share-url {
+      .share-button {
         margin-left: auto;
       }
-    }
 
-
-    /* Mobile */
-
-    @media (max-width: 700px) {
-      .brand-header-inner {
-        padding: 10px 16px;
-      }
-
-      .brand-header-logo {
-        width: min(100%, 350px);
-      }
-
-      .calendar-page {
-        padding: 20px 16px 36px;
-      }
-
-      #calendar-filters {
-        gap: 14px;
-      }
-
-      #calendar-search-form {
-        flex: 1 0 100%;
-        width: 100%;
-        height: 44px;
-      }
-
-      #calendar-search {
-        height: 44px;
-      }
-
-      #calendar-search-form > button {
-        flex-basis: 44px;
-        width: 44px;
-        height: 44px;
-      }
-
-      #share-url {
-        order: 2;
-        margin-left: 0;
-      }
-
-      .primary-filters {
+      .calendar-filters {
         order: 3;
 
+        flex: 0 0 100%;
+
         width: 100%;
-        gap: 18px;
 
         overflow-x: auto;
         overflow-y: hidden;
 
         scrollbar-width: none;
+
         -webkit-overflow-scrolling: touch;
       }
 
-      .primary-filters::-webkit-scrollbar {
+      .calendar-filters::-webkit-scrollbar {
         display: none;
       }
 
-      .filter-group {
-        display: block;
+    }
+
+
+    @media (max-width: 700px) {
+
+      .brand-header-inner {
+        padding: 20px 16px;
       }
 
-      .filter-group + .filter-group {
-        margin-top: 20px;
+      .brand-header-logo {
+        width: min(100%, 360px);
       }
 
-      .filter-group-title {
-        margin-bottom: 10px;
-        padding: 0;
+      .calendar-page {
+        padding: 22px 16px 40px;
       }
 
-      .event-type-filters {
-        gap: 8px;
+      .calendar-toolbar {
+        gap: 14px;
       }
+
+      .calendar-search {
+        flex: 1 1 calc(100% - 58px);
+
+        width: auto;
+        max-width: none;
+      }
+
+      .calendar-filters {
+        gap: 22px;
+      }
+
+      .filter-button,
+      .more-toggle {
+        font-size: 16px;
+      }
+
+      .more-panel-content {
+        align-items: flex-start;
+      }
+
+      .more-label {
+        flex: 0 0 100%;
+      }
+
     }
 
 
     @media (prefers-reduced-motion: reduce) {
-      .filter-button,
-      #more-button,
-      #filter-indicator,
-      .more-caret,
-      #expanded-filters,
-      .expanded-filters-content,
-      .event-type-button {
+
+      .filter-indicator,
+      .more-panel,
+      .more-panel-content,
+      .more-caret {
         transition: none;
       }
+
     }
   </style>
 </head>
@@ -670,68 +739,97 @@
 
   <header class="brand-header">
     <div class="brand-header-inner">
-      <img
-        src="D_pat_identifier_RGB_mono_white.svg"
-        alt="NC State Department of Performing Arts and Technology"
-        class="brand-header-logo"
+
+      <a
+        href="#"
+        class="logo-as-back-link"
+        id="logo-as-back-link"
+        aria-label="Return to previous page"
       >
+        <img
+          class="brand-header-logo"
+          src="D_pat_identifier_RGB_mono_white.svg"
+          alt="NC State Department of Performing Arts and Technology"
+        >
+      </a>
+
     </div>
   </header>
 
 
   <main class="calendar-page">
 
-    <div id="calendar-filters" aria-label="Search and filter events">
+    <div class="calendar-toolbar">
 
-      <form id="calendar-search-form" role="search">
+      <!-- Search -->
 
-        <label class="sr-only" for="calendar-search">
+      <form
+        class="calendar-search"
+        id="calendar-search-form"
+        role="search"
+      >
+
+        <label
+          for="calendar-search-input"
+          style="
+            position:absolute;
+            width:1px;
+            height:1px;
+            padding:0;
+            margin:-1px;
+            overflow:hidden;
+            clip:rect(0,0,0,0);
+            white-space:nowrap;
+            border:0;
+          "
+        >
           Search events
         </label>
 
         <input
-          id="calendar-search"
           type="search"
+          id="calendar-search-input"
           placeholder="Search events"
           autocomplete="off"
         >
 
-        <button type="submit" aria-label="Search events">
-
+        <button
+          type="submit"
+          aria-label="Search events"
+        >
           <svg
-            class="search-icon"
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
             <circle
               cx="10.5"
               cy="10.5"
-              r="6.5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.4"
+              r="6.25"
+              stroke-width="2.25"
             ></circle>
 
             <path
-              d="M15.5 15.5L21 21"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.4"
-              stroke-linecap="square"
+              d="M15.25 15.25L20.5 20.5"
+              stroke-width="2.25"
             ></path>
           </svg>
-
         </button>
 
       </form>
 
 
-      <div class="primary-filters" id="primary-filters">
+      <!-- Top filters -->
+
+      <div
+        class="calendar-filters"
+        id="calendar-filters"
+      >
 
         <button
           type="button"
-          id="filter-all"
           class="filter-button active"
+          id="filter-all"
+          aria-pressed="true"
         >
           All
         </button>
@@ -740,6 +838,7 @@
           type="button"
           class="filter-button"
           data-area="music"
+          aria-pressed="false"
         >
           Music
         </button>
@@ -748,6 +847,7 @@
           type="button"
           class="filter-button"
           data-area="dance"
+          aria-pressed="false"
         >
           Dance
         </button>
@@ -756,6 +856,7 @@
           type="button"
           class="filter-button"
           data-area="arts"
+          aria-pressed="false"
         >
           Arts Entrepreneurship
         </button>
@@ -764,15 +865,18 @@
           type="button"
           class="filter-button"
           data-area="tech"
+          aria-pressed="false"
         >
           Music Technology
         </button>
 
+
         <button
           type="button"
-          id="more-button"
+          class="more-toggle"
+          id="more-toggle"
           aria-expanded="false"
-          aria-controls="expanded-filters"
+          aria-controls="more-panel"
         >
           More
 
@@ -782,7 +886,19 @@
           ></span>
         </button>
 
+
+        <button
+          type="button"
+          class="clear-filters"
+          id="clear-filters"
+          hidden
+        >
+          Clear filters
+        </button>
+
+
         <span
+          class="filter-indicator"
           id="filter-indicator"
           aria-hidden="true"
         ></span>
@@ -790,97 +906,72 @@
       </div>
 
 
+      <!-- Share -->
+
       <button
         type="button"
-        id="share-url"
+        class="share-button"
+        id="share-button"
+        aria-label="Share calendar"
+        title="Share calendar"
       >
-        Share
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            d="M18 16c-.8 0-1.5.3-2 .8L8.9 12.7c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 9.8C7.5 9.3 6.8 9 6 9c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.1c-.1.2-.1.4-.1.7 0 1.7 1.3 3 3 3s3-1.3 3-3-1.3-3-3-3Z"
+          ></path>
+        </svg>
       </button>
 
     </div>
 
 
+    <!-- More filters -->
+
     <div
-      id="expanded-filters"
+      class="more-panel"
+      id="more-panel"
       aria-hidden="true"
     >
 
-      <div class="expanded-filters-inner">
+      <div class="more-panel-inner">
 
-        <div class="expanded-filters-content">
+        <div class="more-panel-content">
 
-          <div class="filter-group">
+          <p class="more-label">
+            Event Type
+          </p>
 
-            <p class="filter-group-title">
-              Event Type
-            </p>
+          <div class="event-type-filters">
 
-            <div class="event-type-filters">
+            <button
+              type="button"
+              class="event-type-filter"
+              data-type="performances"
+              aria-pressed="false"
+            >
+              Performances
+            </button>
 
-              <button
-                type="button"
-                class="event-type-button"
-                data-event-type="performance"
-                aria-pressed="false"
-              >
-                Performances
-              </button>
+            <button
+              type="button"
+              class="event-type-filter"
+              data-type="master-classes"
+              aria-pressed="false"
+            >
+              Master Classes
+            </button>
 
-              <button
-                type="button"
-                class="event-type-button"
-                data-event-type="masterclass"
-                aria-pressed="false"
-              >
-                Master Classes
-              </button>
-
-              <button
-                type="button"
-                class="event-type-button"
-                data-event-type="audition"
-                aria-pressed="false"
-              >
-                Auditions
-              </button>
-
-              <button
-                type="button"
-                class="event-type-button"
-                data-event-type="workshop"
-                aria-pressed="false"
-              >
-                Workshops &amp; Talks
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div class="filter-group">
-
-            <p class="filter-group-title">
-              Options
-            </p>
-
-            <div>
-
-              <label class="instance-option">
-
-                <input
-                  type="checkbox"
-                  id="show-all-instances"
-                  checked
-                >
-
-                <span>
-                  Show all instances
-                </span>
-
-              </label>
-
-            </div>
+            <button
+              type="button"
+              class="event-type-filter"
+              data-type="auditions"
+              aria-pressed="false"
+            >
+              Auditions
+            </button>
 
           </div>
 
@@ -906,302 +997,245 @@
 
 
   <script>
-    (function () {
+    (() => {
 
-      const BASE =
+      /* ===================================================
+         CONFIGURATION
+         =================================================== */
+
+      const WIDGET_BASE =
         "https://calendar.ncsu.edu/widget/view";
 
+      const GROUP =
+        "department_of_performing_arts_and_technology";
 
-      const AREAS = {
-        music: {
-          tags: ["Music"]
-        },
 
-        dance: {
-          tags: ["Dance"]
-        },
+      /*
+       * Area tags used in Localist.
+       */
 
-        arts: {
-          tags: ["Arts Entrepreneurship"]
-        },
-
-        tech: {
-          tags: ["Music Technology"]
-        }
+      const AREA_FILTERS = {
+        music: "Music",
+        dance: "Dance",
+        arts: "Arts Entrepreneurship",
+        tech: "Music Technology"
       };
 
 
-      const EVENT_TYPES = {
-        performance: {
+      /*
+       * Public labels can differ from the underlying
+       * Localist taxonomy.
+       */
+
+      const EVENT_FILTERS = {
+        "performances": {
           tags: ["Performance"]
         },
 
-        masterclass: {
+        "master-classes": {
           tags: ["Master Class Series"]
         },
 
-        audition: {
+        "auditions": {
           tags: ["Audition"]
-        },
-
-        workshop: {
-          tags: ["Workshop"]
         }
       };
 
 
-      const container =
-        document.getElementById("localist-widget-dpat");
+      /* ===================================================
+         ELEMENTS
+         =================================================== */
 
-      const allButton =
-        document.getElementById("filter-all");
-
-      const primaryFilters =
-        document.getElementById("primary-filters");
-
-      const indicator =
-        document.getElementById("filter-indicator");
-
-      const areaButtons =
-        Array.from(
-          document.querySelectorAll("[data-area]")
+      const widget =
+        document.getElementById(
+          "localist-widget-dpat"
         );
-
-      const eventButtons =
-        Array.from(
-          document.querySelectorAll("[data-event-type]")
-        );
-
-      const moreButton =
-        document.getElementById("more-button");
-
-      const expandedFilters =
-        document.getElementById("expanded-filters");
-
-      const showAllInstancesInput =
-        document.getElementById("show-all-instances");
-
-      const shareButton =
-        document.getElementById("share-url");
 
       const searchForm =
-        document.getElementById("calendar-search-form");
+        document.getElementById(
+          "calendar-search-form"
+        );
 
       const searchInput =
-        document.getElementById("calendar-search");
+        document.getElementById(
+          "calendar-search-input"
+        );
+
+      const allButton =
+        document.getElementById(
+          "filter-all"
+        );
+
+      const areaButtons =
+        [
+          ...document.querySelectorAll(
+            "[data-area]"
+          )
+        ];
+
+      const typeButtons =
+        [
+          ...document.querySelectorAll(
+            "[data-type]"
+          )
+        ];
+
+      const filterBar =
+        document.getElementById(
+          "calendar-filters"
+        );
+
+      const indicator =
+        document.getElementById(
+          "filter-indicator"
+        );
+
+      const moreToggle =
+        document.getElementById(
+          "more-toggle"
+        );
+
+      const morePanel =
+        document.getElementById(
+          "more-panel"
+        );
+
+      const clearFilters =
+        document.getElementById(
+          "clear-filters"
+        );
+
+      const shareButton =
+        document.getElementById(
+          "share-button"
+        );
+
+      const backLink =
+        document.getElementById(
+          "logo-as-back-link"
+        );
 
       const status =
-        document.getElementById("calendar-status");
+        document.getElementById(
+          "calendar-status"
+        );
 
+
+      /* ===================================================
+         STATE
+         =================================================== */
 
       let activeArea = null;
-      let activeEventTypes = [];
 
-      /* All matching instances are shown by default. */
-      let showAllInstances = true;
+      let activeTypes = [];
 
-      let searchQuery = "";
-      let searchTimers = [];
+      let searchTerm = "";
 
-
-      function normalize(value) {
-        return String(value || "")
-          .trim()
-          .toLocaleLowerCase();
-      }
+      let currentLoad = 0;
 
 
-      function findKey(value, config) {
-        if (!value) {
-          return null;
-        }
+      /* ===================================================
+         URL STATE
+         =================================================== */
 
-        const normalized =
-          normalize(value);
+      function readURLState() {
 
-        return (
-          Object.keys(config).find(
-            key => normalize(key) === normalized
-          ) || null
-        );
-      }
-
-
-      function unique(values) {
-        return Array.from(
-          new Set(values)
-        );
-      }
-
-
-      function getActiveTopButton() {
-        if (!activeArea) {
-          return allButton;
-        }
-
-        return (
-          areaButtons.find(
-            button =>
-              button.dataset.area === activeArea
-          ) || allButton
-        );
-      }
-
-
-      function moveFilterIndicator(animate = true) {
-        const button =
-          getActiveTopButton();
-
-        if (!button) {
-          return;
-        }
-
-        if (!animate) {
-          indicator.style.transition = "none";
-        }
-
-        const navRect =
-          primaryFilters.getBoundingClientRect();
-
-        const buttonRect =
-          button.getBoundingClientRect();
-
-        const left =
-          buttonRect.left -
-          navRect.left +
-          primaryFilters.scrollLeft;
-
-        indicator.style.width =
-          buttonRect.width + "px";
-
-        indicator.style.transform =
-          "translateX(" + left + "px)";
-
-        if (!animate) {
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              indicator.style.transition = "";
-            });
-          });
-        }
-      }
-
-
-      function keepActiveFilterVisible() {
-        if (window.innerWidth > 700) {
-          return;
-        }
-
-        const button =
-          getActiveTopButton();
-
-        if (!button) {
-          return;
-        }
-
-        button.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "nearest"
-        });
-      }
-
-
-      function readURL() {
         const params =
           new URLSearchParams(
             window.location.search
           );
 
-        activeArea =
-          findKey(
-            params.get("area"),
-            AREAS
-          );
 
-        activeEventTypes =
-          unique(
-            params
-              .getAll("type")
-              .map(
-                value =>
-                  findKey(
-                    value,
-                    EVENT_TYPES
-                  )
-              )
-              .filter(Boolean)
-          );
+        const requestedArea =
+          params.get("area");
 
 
-        /*
-         * Showing all instances is the default.
-         * Only ?instances=single turns it off.
-         */
+        if (
+          requestedArea &&
+          Object.prototype.hasOwnProperty.call(
+            AREA_FILTERS,
+            requestedArea
+          )
+        ) {
 
-        showAllInstances =
-          params.get("instances") !== "single";
+          activeArea =
+            requestedArea;
+
+        }
 
 
-        searchQuery =
+        activeTypes =
+          params
+            .getAll("type")
+            .filter(
+              type =>
+                Object.prototype.hasOwnProperty.call(
+                  EVENT_FILTERS,
+                  type
+                )
+            );
+
+
+        searchTerm =
           params.get("q") || "";
 
-        searchInput.value =
-          searchQuery;
 
-        showAllInstancesInput.checked =
-          showAllInstances;
+        searchInput.value =
+          searchTerm;
+
       }
 
 
-      function updateURL() {
+      function writeURLState() {
+
         const url =
           new URL(
             window.location.href
           );
 
-        url.searchParams.delete("area");
-        url.searchParams.delete("type");
-        url.searchParams.delete("instances");
-        url.searchParams.delete("q");
+
+        url.searchParams.delete(
+          "area"
+        );
+
+        url.searchParams.delete(
+          "type"
+        );
+
+        url.searchParams.delete(
+          "q"
+        );
 
 
         if (activeArea) {
+
           url.searchParams.set(
             "area",
             activeArea
           );
+
         }
 
 
-        activeEventTypes.forEach(
+        activeTypes.forEach(
           type => {
+
             url.searchParams.append(
               "type",
               type
             );
+
           }
         );
 
 
-        /*
-         * Because all instances is the default,
-         * we only add a URL parameter when it is off.
-         */
+        if (searchTerm) {
 
-        if (!showAllInstances) {
-          url.searchParams.set(
-            "instances",
-            "single"
-          );
-        }
-
-
-        if (searchQuery) {
           url.searchParams.set(
             "q",
-            searchQuery
+            searchTerm
           );
+
         }
 
 
@@ -1210,33 +1244,102 @@
           "",
           url
         );
+
       }
 
 
-      function updateControls(animate = true) {
+      /* ===================================================
+         ACTIVE FILTER UI
+         =================================================== */
 
-        areaButtons.forEach(
-          button => {
+      function activePrimaryButton() {
 
-            const active =
+        if (!activeArea) {
+          return allButton;
+        }
+
+
+        return (
+          areaButtons.find(
+            button =>
               button.dataset.area ===
-              activeArea;
-
-            button.classList.toggle(
-              "active",
-              active
-            );
-
-            button.setAttribute(
-              "aria-pressed",
-              active ? "true" : "false"
-            );
-          }
+              activeArea
+          ) || allButton
         );
 
+      }
+
+
+      function moveIndicator(
+        animate = true
+      ) {
+
+        const button =
+          activePrimaryButton();
+
+
+        if (!button) {
+          return;
+        }
+
+
+        if (!animate) {
+
+          indicator.style.transition =
+            "none";
+
+        }
+
+
+        const barRect =
+          filterBar.getBoundingClientRect();
+
+        const buttonRect =
+          button.getBoundingClientRect();
+
+
+        const x =
+          buttonRect.left -
+          barRect.left +
+          filterBar.scrollLeft;
+
+
+        indicator.style.width =
+          `${buttonRect.width}px`;
+
+        indicator.style.transform =
+          `translateX(${x}px)`;
+
+
+        if (!animate) {
+
+          requestAnimationFrame(
+            () => {
+
+              requestAnimationFrame(
+                () => {
+
+                  indicator.style.transition =
+                    "";
+
+                }
+              );
+
+            }
+          );
+
+        }
+
+      }
+
+
+      function updateFilterUI(
+        animate = true
+      ) {
 
         const allActive =
-          !activeArea;
+          activeArea === null;
+
 
         allButton.classList.toggle(
           "active",
@@ -1245,17 +1348,17 @@
 
         allButton.setAttribute(
           "aria-pressed",
-          allActive ? "true" : "false"
+          String(allActive)
         );
 
 
-        eventButtons.forEach(
+        areaButtons.forEach(
           button => {
 
             const active =
-              activeEventTypes.includes(
-                button.dataset.eventType
-              );
+              button.dataset.area ===
+              activeArea;
+
 
             button.classList.toggle(
               "active",
@@ -1264,66 +1367,138 @@
 
             button.setAttribute(
               "aria-pressed",
-              active ? "true" : "false"
+              String(active)
             );
+
           }
         );
 
 
-        showAllInstancesInput.checked =
-          showAllInstances;
+        typeButtons.forEach(
+          button => {
+
+            const active =
+              activeTypes.includes(
+                button.dataset.type
+              );
+
+
+            button.classList.toggle(
+              "active",
+              active
+            );
+
+            button.setAttribute(
+              "aria-pressed",
+              String(active)
+            );
+
+          }
+        );
+
+
+        moreToggle.classList.toggle(
+          "active",
+          activeTypes.length > 0
+        );
 
 
         /*
-         * More is highlighted only when an additional
-         * event-type filter is selected or the default
-         * instances setting has been changed.
+         * Clear filters sits in the top row immediately
+         * after More. It only appears when a filter is
+         * actually active.
          */
 
-        moreButton.classList.toggle(
-          "active",
-          activeEventTypes.length > 0 ||
-          !showAllInstances
-        );
+        clearFilters.hidden =
+          activeArea === null &&
+          activeTypes.length === 0;
 
 
         requestAnimationFrame(
-          function () {
-            moveFilterIndicator(animate);
-            keepActiveFilterVisible();
-          }
+          () =>
+            moveIndicator(
+              animate
+            )
         );
+
       }
 
 
-      function getAreaTags() {
-        if (
-          !activeArea ||
-          !AREAS[activeArea]
-        ) {
-          return [];
+      /* ===================================================
+         MORE PANEL
+         =================================================== */
+
+      function openMore() {
+
+        morePanel.classList.add(
+          "open"
+        );
+
+        morePanel.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+        moreToggle.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+      }
+
+
+      function closeMore() {
+
+        morePanel.classList.remove(
+          "open"
+        );
+
+        morePanel.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        moreToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+
+      moreToggle.addEventListener(
+        "click",
+        () => {
+
+          if (
+            morePanel.classList.contains(
+              "open"
+            )
+          ) {
+
+            closeMore();
+
+          }
+          else {
+
+            openMore();
+
+          }
+
         }
-
-        return AREAS[activeArea].tags || [];
-      }
+      );
 
 
-      function getEventTypeTags(type) {
-        if (
-          !type ||
-          !EVENT_TYPES[type]
-        ) {
-          return [];
-        }
-
-        return EVENT_TYPES[type].tags || [];
-      }
-
+      /* ===================================================
+         LOCALIST URL
+         =================================================== */
 
       function buildWidgetURL(
-        eventType = null,
-        containerId = "localist-widget-dpat"
+        containerID,
+        area = null,
+        type = null
       ) {
+
         const params =
           new URLSearchParams();
 
@@ -1333,18 +1508,15 @@
           "ncsu"
         );
 
-
         params.set(
           "groups",
-          "department_of_performing_arts_and_technology"
+          GROUP
         );
-
 
         params.set(
           "days",
           "365"
         );
-
 
         params.set(
           "num",
@@ -1353,25 +1525,14 @@
 
 
         /*
-         * DEFAULT:
+         * This is permanent.
          *
-         * all_instances=1
-         *
-         * If the user turns "Show all instances" off,
-         * this parameter is omitted.
+         * Every matching occurrence is always shown.
          */
 
-        if (showAllInstances) {
-          params.set(
-            "all_instances",
-            "1"
-          );
-        }
-
-
         params.set(
-          "match",
-          "all"
+          "all_instances",
+          "1"
         );
 
 
@@ -1380,12 +1541,10 @@
           "inperson"
         );
 
-
         params.set(
           "container",
-          containerId
+          containerID
         );
-
 
         params.set(
           "template",
@@ -1393,77 +1552,237 @@
         );
 
 
-        let tags =
-          getAreaTags();
+        const tags = [];
 
 
-        if (eventType) {
-          tags = tags.concat(
-            getEventTypeTags(eventType)
+        if (
+          area &&
+          AREA_FILTERS[area]
+        ) {
+
+          tags.push(
+            AREA_FILTERS[area]
           );
+
         }
 
 
-        tags =
-          unique(tags);
+        if (
+          type &&
+          EVENT_FILTERS[type]
+        ) {
+
+          tags.push(
+            ...EVENT_FILTERS[type].tags
+          );
+
+        }
 
 
         if (tags.length) {
+
           params.set(
-            "tags",
-            tags.join(",")
+            "match",
+            "all"
           );
+
+
+          tags.forEach(
+            tag => {
+
+              params.append(
+                "tags",
+                tag
+              );
+
+            }
+          );
+
         }
 
 
         return (
-          BASE +
+          WIDGET_BASE +
           "?" +
           params.toString()
         );
+
       }
 
 
-      function clearSearchTimers() {
-        searchTimers.forEach(
-          timer =>
-            clearTimeout(timer)
-        );
+      /* ===================================================
+         LOCALIST LOADING
+         =================================================== */
 
-        searchTimers = [];
-      }
+      function removeExistingScripts() {
 
-
-      function getEventItems(root) {
-        const scope =
-          root || container;
-
-
-        const standard =
-          Array.from(
-            scope.querySelectorAll(
-              "li.lw_event_item"
-            )
+        document
+          .querySelectorAll(
+            'script[data-dpat-localist="true"]'
+          )
+          .forEach(
+            script =>
+              script.remove()
           );
 
+      }
 
-        if (standard.length) {
-          return standard;
+
+      function loadLocalistWidget(
+        area = null,
+        type = null
+      ) {
+
+        return new Promise(
+          resolve => {
+
+            const loadID =
+              "localist-widget-load-" +
+              Date.now() +
+              "-" +
+              Math.random()
+                .toString(36)
+                .slice(2);
+
+
+            const holder =
+              document.createElement(
+                "div"
+              );
+
+
+            holder.id =
+              loadID;
+
+            holder.className =
+              "localist-widget";
+
+            holder.style.position =
+              "absolute";
+
+            holder.style.left =
+              "-99999px";
+
+            holder.style.width =
+              `${Math.max(
+                widget.offsetWidth,
+                900
+              )}px`;
+
+
+            document.body.appendChild(
+              holder
+            );
+
+
+            const script =
+              document.createElement(
+                "script"
+              );
+
+
+            script.defer = true;
+
+            script.dataset.dpatLocalist =
+              "true";
+
+            script.src =
+              buildWidgetURL(
+                loadID,
+                area,
+                type
+              );
+
+
+            document.body.appendChild(
+              script
+            );
+
+
+            let checks = 0;
+
+
+            const timer =
+              window.setInterval(
+                () => {
+
+                  checks += 1;
+
+
+                  const hasContent =
+                    holder.children.length >
+                    0;
+
+
+                  if (
+                    hasContent ||
+                    checks >= 60
+                  ) {
+
+                    window.clearInterval(
+                      timer
+                    );
+
+
+                    resolve(
+                      holder
+                    );
+
+                  }
+
+                },
+                100
+              );
+
+          }
+        );
+
+      }
+
+
+      /* ===================================================
+         EVENT HELPERS
+         =================================================== */
+
+      function getEventItems(
+        root
+      ) {
+
+        let items =
+          [
+            ...root.querySelectorAll(
+              "li.lw_event_item"
+            )
+          ];
+
+
+        if (items.length) {
+          return items;
         }
 
 
-        return Array.from(
-          scope.querySelectorAll("li")
-        ).filter(
-          item =>
-            item.querySelector(
-              'a[href*="/event/"]'
+        items =
+          [
+            ...root.querySelectorAll(
+              "li"
             )
-        );
+          ].filter(
+            item =>
+              item.querySelector(
+                'a[href*="/event/"]'
+              )
+          );
+
+
+        return items;
+
       }
 
 
-      function getEventIdentity(event) {
+      function eventKey(
+        event
+      ) {
+
         const link =
           event.querySelector(
             'a[href*="/event/"]'
@@ -1471,26 +1790,31 @@
 
 
         if (link) {
-          return link.href;
+
+          return (
+            link.href +
+            "|" +
+            event.textContent
+              .replace(/\s+/g, " ")
+              .trim()
+          );
+
         }
 
 
-        return normalize(
-          event.textContent
-        );
+        return event.textContent
+          .replace(/\s+/g, " ")
+          .trim()
+          .toLowerCase();
+
       }
 
 
-      /*
-       * Event pages open in a new tab.
-       */
+      function openEventLinksInNewTab(
+        root
+      ) {
 
-      function makeEventLinksOpenInNewTab(root) {
-        const scope =
-          root || container;
-
-
-        scope
+        root
           .querySelectorAll(
             'a[href*="/event/"]'
           )
@@ -1505,47 +1829,76 @@
 
             }
           );
+
       }
 
 
-      function applySearch() {
-        makeEventLinksOpenInNewTab(
-          container
-        );
+      /* ===================================================
+         SEARCH
+         =================================================== */
 
+      function applySearch() {
 
         const query =
-          normalize(searchQuery);
+          searchTerm
+            .trim()
+            .toLowerCase();
 
 
         const events =
-          getEventItems(container);
+          getEventItems(
+            widget
+          );
 
 
         if (!events.length) {
+
+          if (query) {
+
+            status.textContent =
+              "0 events found";
+
+          }
+          else {
+
+            status.textContent =
+              "";
+
+          }
+
           return;
+
         }
 
 
-        let visible = 0;
+        let visibleCount = 0;
 
 
         events.forEach(
           event => {
 
-            const matches =
+            const text =
+              event.textContent
+                .toLowerCase();
+
+
+            const visible =
               !query ||
-              normalize(
-                event.textContent
-              ).includes(query);
+              text.includes(
+                query
+              );
 
 
             event.style.display =
-              matches ? "" : "none";
+              visible
+                ? ""
+                : "none";
 
 
-            if (matches) {
-              visible++;
+            if (visible) {
+
+              visibleCount += 1;
+
             }
 
           }
@@ -1555,451 +1908,272 @@
         if (query) {
 
           status.textContent =
-            visible === 1
+            visibleCount === 1
               ? "1 event found"
-              : visible + " events found";
+              : `${visibleCount} events found`;
 
         }
-
         else {
 
-          status.textContent = "";
+          status.textContent =
+            "";
 
         }
+
       }
 
 
-      function scheduleSearch() {
-        clearSearchTimers();
+      /* ===================================================
+         RENDER
+         =================================================== */
+
+      async function renderCalendar() {
+
+        const loadNumber =
+          ++currentLoad;
 
 
-        [500, 1000, 1800, 3000].forEach(
-          delay => {
+        status.textContent =
+          "";
 
-            searchTimers.push(
-              setTimeout(
-                function () {
+        widget.innerHTML =
+          "";
 
-                  makeEventLinksOpenInNewTab(
-                    container
-                  );
 
-                  applySearch();
+        removeExistingScripts();
 
-                },
-                delay
-              )
+
+        /*
+         * No secondary type selected:
+         * load Localist normally and preserve the exact
+         * Localist-generated widget structure.
+         */
+
+        if (
+          activeTypes.length === 0
+        ) {
+
+          const holder =
+            await loadLocalistWidget(
+              activeArea,
+              null
+            );
+
+
+          if (
+            loadNumber !==
+            currentLoad
+          ) {
+
+            holder.remove();
+
+            return;
+
+          }
+
+
+          while (
+            holder.firstChild
+          ) {
+
+            widget.appendChild(
+              holder.firstChild
             );
 
           }
-        );
-      }
 
 
-      function clearWidgetScripts() {
-        document
-          .querySelectorAll(
-            "script[data-dpat-widget]"
-          )
-          .forEach(
-            script => script.remove()
+          holder.remove();
+
+
+          openEventLinksInNewTab(
+            widget
           );
-      }
 
+          applySearch();
 
-      function loadSingleWidget() {
-        clearWidgetScripts();
+          return;
 
-        container.innerHTML = "";
+        }
 
 
-        const script =
-          document.createElement("script");
+        /*
+         * Multiple event types are OR selections.
+         *
+         * Each type is requested separately because
+         * Localist's match=all behavior is used to keep
+         * the selected area AND the selected event type
+         * together.
+         */
 
+        const holders =
+          await Promise.all(
+            activeTypes.map(
+              type =>
+                loadLocalistWidget(
+                  activeArea,
+                  type
+                )
+            )
+          );
 
-        script.type =
-          "text/javascript";
 
-        script.async =
-          true;
+        if (
+          loadNumber !==
+          currentLoad
+        ) {
 
+          holders.forEach(
+            holder =>
+              holder.remove()
+          );
 
-        script.setAttribute(
-          "data-dpat-widget",
-          "true"
-        );
+          return;
 
+        }
 
-        script.src =
-          buildWidgetURL();
 
+        /*
+         * Use the first returned Localist widget as the
+         * structural template so its own generated classes
+         * and layout remain intact.
+         */
 
-        container.parentNode.insertBefore(
-          script,
-          container.nextSibling
-        );
+        const firstHolder =
+          holders[0];
 
 
-        scheduleSearch();
-      }
+        while (
+          firstHolder.firstChild
+        ) {
 
+          widget.appendChild(
+            firstHolder.firstChild
+          );
 
-      function loadMultipleWidgets() {
-        clearWidgetScripts();
+        }
 
-        container.innerHTML = "";
 
+        firstHolder.remove();
 
-        const staging =
-          document.createElement("div");
 
+        /*
+         * Find the actual Localist event list that already
+         * exists in the rendered widget.
+         */
 
-        staging.style.display =
-          "none";
+        const targetEvents =
+          getEventItems(
+            widget
+          );
 
 
-        document.body.appendChild(
-          staging
-        );
+        const targetList =
+          targetEvents.length
+            ? targetEvents[0].parentElement
+            : null;
 
 
-        const loads = [];
+        const seen =
+          new Set(
+            targetEvents.map(
+              event =>
+                eventKey(
+                  event
+                )
+            )
+          );
 
 
-        activeEventTypes.forEach(
-          function (type, index) {
+        /*
+         * Add only unique matching events from the other
+         * Localist responses. We do NOT create a replacement
+         * UL or rewrite Localist's outer widget structure.
+         */
 
-            loads.push(
-              new Promise(
-                function (resolve) {
+        holders
+          .slice(1)
+          .forEach(
+            holder => {
 
-                  const id =
-                    "localist-temp-" +
-                    Date.now() +
-                    "-" +
-                    index;
+              const events =
+                getEventItems(
+                  holder
+                );
 
 
-                  const temp =
-                    document.createElement(
-                      "div"
-                    );
+              if (targetList) {
 
-
-                  temp.id =
-                    id;
-
-
-                  staging.appendChild(
-                    temp
-                  );
-
-
-                  const script =
-                    document.createElement(
-                      "script"
-                    );
-
-
-                  script.type =
-                    "text/javascript";
-
-                  script.async =
-                    true;
-
-
-                  script.setAttribute(
-                    "data-dpat-widget",
-                    "true"
-                  );
-
-
-                  script.src =
-                    buildWidgetURL(
-                      type,
-                      id
-                    );
-
-
-                  staging.appendChild(
-                    script
-                  );
-
-
-                  let attempts = 0;
-
-
-                  const check =
-                    setInterval(
-                      function () {
-
-                        attempts++;
-
-
-                        const events =
-                          getEventItems(
-                            temp
-                          );
-
-
-                        if (
-                          events.length ||
-                          attempts >= 30
-                        ) {
-
-                          clearInterval(
-                            check
-                          );
-
-
-                          resolve(
-                            events.map(
-                              event =>
-                                event.cloneNode(
-                                  true
-                                )
-                            )
-                          );
-
-                        }
-
-                      },
-                      150
-                    );
-
-                }
-              )
-            );
-
-          }
-        );
-
-
-        Promise.all(loads)
-          .then(
-            function (groups) {
-
-              const seen =
-                new Set();
-
-
-              const events = [];
-
-
-              groups
-                .flat()
-                .forEach(
+                events.forEach(
                   event => {
 
-                    const identity =
-                      getEventIdentity(
+                    const key =
+                      eventKey(
                         event
                       );
 
 
                     if (
-                      !seen.has(
-                        identity
+                      seen.has(
+                        key
                       )
                     ) {
 
-                      seen.add(
-                        identity
-                      );
-
-                      events.push(
-                        event
-                      );
+                      return;
 
                     }
+
+
+                    seen.add(
+                      key
+                    );
+
+
+                    targetList.appendChild(
+                      event
+                    );
 
                   }
                 );
 
-
-              const list =
-                document.createElement(
-                  "ul"
-                );
-
-
-              const firstSourceList =
-                staging.querySelector(
-                  "ul"
-                );
-
-
-              if (firstSourceList) {
-
-                list.className =
-                  firstSourceList.className;
-
               }
 
 
-              events.forEach(
-                event => {
-
-                  list.appendChild(
-                    event
-                  );
-
-                }
-              );
-
-
-              container.innerHTML =
-                "";
-
-
-              if (events.length) {
-
-                container.appendChild(
-                  list
-                );
-
-              }
-
-
-              staging.remove();
-
-
-              makeEventLinksOpenInNewTab(
-                container
-              );
-
-
-              applySearch();
+              holder.remove();
 
             }
           );
+
+
+        openEventLinksInNewTab(
+          widget
+        );
+
+        applySearch();
+
       }
 
 
-      function loadWidget() {
-        status.textContent = "";
+      /* ===================================================
+         AREA FILTERS
+         =================================================== */
 
-        clearSearchTimers();
+      allButton.addEventListener(
+        "click",
+        () => {
 
-
-        if (
-          activeEventTypes.length <= 1
-        ) {
-
-          if (
-            activeEventTypes.length === 1
-          ) {
-
-            clearWidgetScripts();
-
-            container.innerHTML = "";
+          activeArea =
+            null;
 
 
-            const script =
-              document.createElement(
-                "script"
-              );
+          updateFilterUI();
 
+          writeURLState();
 
-            script.type =
-              "text/javascript";
-
-            script.async =
-              true;
-
-
-            script.setAttribute(
-              "data-dpat-widget",
-              "true"
-            );
-
-
-            script.src =
-              buildWidgetURL(
-                activeEventTypes[0]
-              );
-
-
-            container.parentNode.insertBefore(
-              script,
-              container.nextSibling
-            );
-
-
-            scheduleSearch();
-
-          }
-
-          else {
-
-            loadSingleWidget();
-
-          }
-
-
-          return;
-        }
-
-
-        loadMultipleWidgets();
-      }
-
-
-      function openFilters() {
-        expandedFilters.classList.add(
-          "open"
-        );
-
-
-        expandedFilters.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-
-        moreButton.setAttribute(
-          "aria-expanded",
-          "true"
-        );
-      }
-
-
-      function closeFilters() {
-        expandedFilters.classList.remove(
-          "open"
-        );
-
-
-        expandedFilters.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-
-        moreButton.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-      }
-
-
-      function toggleFilters() {
-        if (
-          expandedFilters.classList.contains(
-            "open"
-          )
-        ) {
-
-          closeFilters();
+          renderCalendar();
 
         }
-
-        else {
-
-          openFilters();
-
-        }
-      }
+      );
 
 
       areaButtons.forEach(
@@ -2007,21 +2181,17 @@
 
           button.addEventListener(
             "click",
-            function () {
+            () => {
 
-              const value =
+              activeArea =
                 button.dataset.area;
 
 
-              activeArea =
-                activeArea === value
-                  ? null
-                  : value;
+              updateFilterUI();
 
+              writeURLState();
 
-              updateControls(true);
-              updateURL();
-              loadWidget();
+              renderCalendar();
 
             }
           );
@@ -2030,58 +2200,48 @@
       );
 
 
-      allButton.addEventListener(
-        "click",
-        function () {
+      /* ===================================================
+         EVENT TYPE FILTERS
+         =================================================== */
 
-          activeArea = null;
-
-          updateControls(true);
-          updateURL();
-          loadWidget();
-
-        }
-      );
-
-
-      eventButtons.forEach(
+      typeButtons.forEach(
         button => {
 
           button.addEventListener(
             "click",
-            function () {
+            () => {
 
-              const value =
-                button.dataset.eventType;
+              const type =
+                button.dataset.type;
 
 
               if (
-                activeEventTypes.includes(
-                  value
+                activeTypes.includes(
+                  type
                 )
               ) {
 
-                activeEventTypes =
-                  activeEventTypes.filter(
-                    type =>
-                      type !== value
+                activeTypes =
+                  activeTypes.filter(
+                    current =>
+                      current !== type
                   );
 
               }
-
               else {
 
-                activeEventTypes =
-                  activeEventTypes.concat(
-                    value
-                  );
+                activeTypes.push(
+                  type
+                );
 
               }
 
 
-              updateControls(true);
-              updateURL();
-              loadWidget();
+              updateFilterUI();
+
+              writeURLState();
+
+              renderCalendar();
 
             }
           );
@@ -2090,52 +2250,49 @@
       );
 
 
-      /*
-       * Show all instances:
-       *
-       * Checked by default.
-       *
-       * Checked:
-       * all_instances=1
-       *
-       * Unchecked:
-       * parameter omitted
-       */
+      /* ===================================================
+         CLEAR FILTERS
+         =================================================== */
 
-      showAllInstancesInput.addEventListener(
-        "change",
-        function () {
+      clearFilters.addEventListener(
+        "click",
+        () => {
 
-          showAllInstances =
-            showAllInstancesInput.checked;
+          activeArea =
+            null;
+
+          activeTypes =
+            [];
 
 
-          updateControls(false);
-          updateURL();
-          loadWidget();
+          updateFilterUI();
+
+          writeURLState();
+
+          renderCalendar();
 
         }
       );
 
 
-      moreButton.addEventListener(
-        "click",
-        toggleFilters
-      );
-
+      /* ===================================================
+         SEARCH
+         =================================================== */
 
       searchForm.addEventListener(
         "submit",
-        function (event) {
+        event => {
 
           event.preventDefault();
 
 
-          searchQuery =
-            searchInput.value.trim();
+          searchTerm =
+            searchInput.value
+              .trim();
 
 
-          updateURL();
+          writeURLState();
+
           applySearch();
 
         }
@@ -2144,28 +2301,35 @@
 
       searchInput.addEventListener(
         "input",
-        function () {
+        () => {
 
-          searchQuery =
-            searchInput.value.trim();
+          searchTerm =
+            searchInput.value
+              .trim();
 
 
-          updateURL();
+          writeURLState();
+
           applySearch();
 
         }
       );
 
 
+      /* ===================================================
+         SHARE
+         =================================================== */
+
       shareButton.addEventListener(
         "click",
-        async function () {
+        async () => {
 
-          searchQuery =
-            searchInput.value.trim();
+          searchTerm =
+            searchInput.value
+              .trim();
 
 
-          updateURL();
+          writeURLState();
 
 
           const url =
@@ -2174,110 +2338,151 @@
 
           try {
 
-            if (navigator.share) {
+            if (
+              navigator.share
+            ) {
 
-              await navigator.share({
-                title:
-                  "NC State Performing Arts and Technology Events",
-                url: url
-              });
+              await navigator.share(
+                {
+                  title:
+                    "NC State Performing Arts and Technology Events",
+
+                  url
+                }
+              );
+
 
               return;
 
             }
 
 
-            await navigator.clipboard.writeText(
-              url
-            );
+            if (
+              navigator.clipboard
+            ) {
+
+              await navigator.clipboard
+                .writeText(
+                  url
+                );
+
+
+              const oldTitle =
+                shareButton.title;
+
+
+              shareButton.title =
+                "Link copied";
+
+
+              window.setTimeout(
+                () => {
+
+                  shareButton.title =
+                    oldTitle;
+
+                },
+                1800
+              );
+
+            }
 
           }
-
           catch (error) {
 
             if (
               error &&
-              error.name === "AbortError"
+              error.name ===
+              "AbortError"
             ) {
+
               return;
-            }
-
-
-            try {
-
-              await navigator.clipboard.writeText(
-                url
-              );
-
-            }
-
-            catch (clipboardError) {
-
-              const field =
-                document.createElement(
-                  "textarea"
-                );
-
-
-              field.value =
-                url;
-
-
-              field.style.position =
-                "fixed";
-
-
-              field.style.opacity =
-                "0";
-
-
-              document.body.appendChild(
-                field
-              );
-
-
-              field.select();
-
-
-              document.execCommand(
-                "copy"
-              );
-
-
-              field.remove();
 
             }
 
           }
-
-
-          shareButton.textContent =
-            "Link copied";
-
-
-          setTimeout(
-            function () {
-
-              shareButton.textContent =
-                "Share";
-
-            },
-            1500
-          );
 
         }
       );
 
 
-      primaryFilters.addEventListener(
+      /* ===================================================
+         LOGO / BACK LINK
+         =================================================== */
+
+      backLink.addEventListener(
+        "click",
+        event => {
+
+          event.preventDefault();
+
+
+          /*
+           * Do not hardcode the parent website because
+           * DPAT may move beneath a different college.
+           */
+
+          if (
+            document.referrer
+          ) {
+
+            try {
+
+              const previous =
+                new URL(
+                  document.referrer
+                );
+
+
+              const current =
+                new URL(
+                  window.location.href
+                );
+
+
+              if (
+                previous.href !==
+                current.href
+              ) {
+
+                window.location.href =
+                  previous.href;
+
+                return;
+
+              }
+
+            }
+            catch (error) {
+              /* Fall through */
+            }
+
+          }
+
+
+          if (
+            window.history.length >
+            1
+          ) {
+
+            window.history.back();
+
+          }
+
+        }
+      );
+
+
+      /* ===================================================
+         POSITIONING
+         =================================================== */
+
+      filterBar.addEventListener(
         "scroll",
-        function () {
-
-          moveFilterIndicator(
+        () =>
+          moveIndicator(
             false
-          );
-
-        },
+          ),
         {
           passive: true
         }
@@ -2286,105 +2491,38 @@
 
       window.addEventListener(
         "resize",
-        function () {
-
-          moveFilterIndicator(
+        () =>
+          moveIndicator(
             false
-          );
-
-        }
+          )
       );
 
 
-      window.addEventListener(
-        "popstate",
-        function () {
+      /* ===================================================
+         INITIALIZE
+         =================================================== */
 
-          readURL();
+      readURLState();
 
-          updateControls(
-            false
-          );
-
-
-          if (
-            activeEventTypes.length ||
-            !showAllInstances
-          ) {
-
-            openFilters();
-
-          }
-
-          else {
-
-            closeFilters();
-
-          }
-
-
-          loadWidget();
-
-        }
-      );
-
-
-      /*
-       * Localist adds its cards asynchronously.
-       * Update event links as soon as they appear.
-       */
-
-      const eventObserver =
-        new MutationObserver(
-          function () {
-
-            makeEventLinksOpenInNewTab(
-              container
-            );
-
-          }
-        );
-
-
-      eventObserver.observe(
-        container,
-        {
-          childList: true,
-          subtree: true
-        }
-      );
-
-
-      /*
-       * Initial page load.
-       */
-
-      readURL();
-
-      updateControls(
+      updateFilterUI(
         false
       );
 
 
-      /*
-       * Do NOT open More simply because "Show all instances"
-       * is checked. That is now the normal/default state.
-       */
-
       if (
-        activeEventTypes.length ||
-        !showAllInstances
+        activeTypes.length
       ) {
 
-        openFilters();
+        openMore();
 
       }
 
 
-      loadWidget();
+      renderCalendar();
 
     })();
   </script>
 
 </body>
+
 </html>
