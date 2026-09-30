@@ -5,31 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>DPAT Calendar</title>
+  <title>Events | Performing Arts and Technology</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet"
   >
 
   <style>
     :root {
       --brand-primary: #cc0000;
-      --brand-primary-active: #990000;
+      --brand-primary-dark: #990000;
+      --brand-primary-extra-dark: #5e0000;
 
-      --black: #000000;
       --white: #ffffff;
+      --black: #000000;
 
-      --gray-900: #333333;
-      --gray-700: #666666;
-      --gray-500: #999999;
-      --gray-300: #cccccc;
-      --gray-100: #e5e5e5;
       --very-light-gray: #f2f2f2;
+      --light-gray: #cccccc;
+      --mid-gray: #666666;
+      --dark-gray: #333333;
+      --gray-100: #e5e5e5;
+      --gray-300: #b2b2b2;
 
-      --page-width: 1200px;
+      --max-width: 1200px;
     }
 
     * {
@@ -40,23 +41,40 @@
     body {
       margin: 0;
       padding: 0;
-    }
-
-    body,
-    input,
-    button {
-      font-family: "Roboto", Arial, sans-serif;
+      background: var(--white);
+      color: var(--black);
     }
 
     body {
-      background: var(--white);
-      color: var(--gray-900);
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
 
-    /* =====================================================
-       HEADER
-       ===================================================== */
+    /* Header */
 
     .brand-header {
       width: 100%;
@@ -65,30 +83,25 @@
 
     .brand-header-inner {
       width: 100%;
-      max-width: var(--page-width);
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px;
+      padding: 0 10px;
     }
 
     .logo-as-back-link {
-      display: inline-block;
-
+      display: block;
+      width: fit-content;
+      max-width: 100%;
       margin: 0;
       padding: 0;
-
       line-height: 0;
       text-decoration: none;
-
-      background: transparent;
     }
 
     .brand-header-logo {
       display: block;
-
       width: min(100%, 400px);
       height: auto;
-
-      transition: opacity 160ms ease;
     }
 
     .logo-as-back-link:hover .brand-header-logo,
@@ -98,88 +111,74 @@
 
     .logo-as-back-link:focus-visible {
       outline: 2px solid var(--white);
-      outline-offset: 5px;
+      outline-offset: 3px;
     }
 
 
-    /* =====================================================
-       PAGE
-       ===================================================== */
+    /* Page */
 
     .calendar-page {
       width: 100%;
-      max-width: var(--page-width);
-
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 30px 24px 50px;
+      padding: 24px 24px 48px;
     }
 
 
-    /* =====================================================
-       TOOLBAR
-       ===================================================== */
+    /* Toolbar */
 
-    .calendar-toolbar {
+    #calendar-filters {
       display: flex;
       align-items: center;
-
-      gap: 24px;
+      gap: 22px;
 
       width: 100%;
-      margin: 0 0 22px;
+      margin: 0 0 18px;
     }
 
 
-    /* =====================================================
-       SEARCH
-       ===================================================== */
+    /* Search */
 
-    .calendar-search {
+    #calendar-search-form {
       display: flex;
-      align-items: stretch;
+      flex: 0 0 300px;
 
-      flex: 0 0 330px;
-
-      width: 330px;
-      height: 46px;
-
+      width: 300px;
+      height: 42px;
       margin: 0;
-      padding: 0;
     }
 
-    .calendar-search input {
-      appearance: none;
-      -webkit-appearance: none;
-
+    #calendar-search {
       flex: 1 1 auto;
-
-      box-sizing: border-box;
 
       width: 100%;
       min-width: 0;
-      height: 46px;
+      height: 42px;
 
       margin: 0;
-      padding: 0 14px;
+      padding: 0 12px;
 
-      border: 1px solid var(--gray-500);
+      border: 1px solid var(--gray-300);
       border-right: 0;
       border-radius: 0;
 
       background: var(--white);
-      color: var(--gray-900);
+      color: var(--black);
 
-      font: inherit;
-      font-size: 16px;
-      line-height: 1;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
-    .calendar-search input::placeholder {
-      color: var(--gray-700);
+    #calendar-search::placeholder {
+      color: var(--mid-gray);
       opacity: 1;
     }
 
-    .calendar-search input:focus {
+    #calendar-search::-webkit-search-cancel-button {
+      cursor: pointer;
+    }
+
+    #calendar-search:focus {
       position: relative;
       z-index: 2;
 
@@ -187,18 +186,14 @@
       outline-offset: -2px;
     }
 
-    .calendar-search button {
-      appearance: none;
-      -webkit-appearance: none;
-
-      display: inline-flex;
+    #calendar-search-form > button {
+      display: flex;
+      flex: 0 0 42px;
       align-items: center;
       justify-content: center;
 
-      flex: 0 0 46px;
-
-      width: 46px;
-      height: 46px;
+      width: 42px;
+      height: 42px;
 
       margin: 0;
       padding: 0;
@@ -208,107 +203,80 @@
 
       background: var(--brand-primary);
       color: var(--white);
-
-      cursor: pointer;
-
-      transition:
-        background-color 150ms ease,
-        border-color 150ms ease;
     }
 
-    .calendar-search button:hover,
-    .calendar-search button:focus {
-      border-color: var(--brand-primary-active);
-      background: var(--brand-primary-active);
+    #calendar-search-form > button:hover,
+    #calendar-search-form > button:focus {
+      border-color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
     }
 
-    .calendar-search button:focus-visible {
+    #calendar-search-form > button:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
 
-    .calendar-search svg {
+    .search-icon {
       display: block;
-
-      width: 21px;
-      height: 21px;
-
-      fill: none;
-      stroke: currentColor;
+      width: 18px;
+      height: 18px;
     }
 
 
-    /* =====================================================
-       TOP FILTERS
-       ===================================================== */
+    /* Area filters */
 
-    .calendar-filters {
+    .primary-filters {
       position: relative;
 
       display: flex;
-      align-items: center;
-
-      gap: 26px;
-
       flex: 1 1 auto;
+      align-items: center;
+      gap: 22px;
 
       min-width: 0;
-      margin: 0;
-      padding: 0;
     }
 
     .filter-button,
-    .more-toggle,
-    .clear-filters {
+    #more-button,
+    #clear-filters {
       appearance: none;
       -webkit-appearance: none;
 
-      position: relative;
-
       flex: 0 0 auto;
 
-      width: auto;
-      min-width: 0;
-      height: auto;
-
       margin: 0;
-      padding: 8px 0 10px;
+      padding: 7px 0 9px;
 
       border: 0;
       border-radius: 0;
 
       background: transparent;
-      color: var(--gray-900);
+      color: var(--dark-gray);
 
-      font: inherit;
       font-size: 16px;
       font-weight: 400;
-      line-height: 1.3;
+      line-height: 1.35;
 
-      text-align: left;
-      text-transform: none;
       white-space: nowrap;
 
-      cursor: pointer;
-
-      transition: color 160ms ease;
+      transition: color 180ms ease;
     }
 
     .filter-button:hover,
     .filter-button:focus,
-    .more-toggle:hover,
-    .more-toggle:focus {
+    #more-button:hover,
+    #more-button:focus {
+      background: transparent;
       color: var(--brand-primary);
     }
 
     .filter-button.active {
       color: var(--brand-primary);
-      font-weight: 500;
     }
 
     .filter-button:focus-visible,
-    .more-toggle:focus-visible,
-    .clear-filters:focus-visible {
+    #more-button:focus-visible,
+    #clear-filters:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 3px;
     }
@@ -316,10 +284,11 @@
 
     /* Sliding underline */
 
-    .filter-indicator {
+    #filter-indicator {
       position: absolute;
+      z-index: 1;
 
-      bottom: 2px;
+      bottom: 3px;
       left: 0;
 
       width: 0;
@@ -327,37 +296,34 @@
 
       background: var(--brand-primary);
 
+      transform: translateX(0);
+      transform-origin: left center;
+
       pointer-events: none;
 
-      transform: translateX(0);
-
       transition:
-        transform 260ms cubic-bezier(.4, 0, .2, 1),
-        width 260ms cubic-bezier(.4, 0, .2, 1);
+        transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        width 280ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
 
-    /* =====================================================
-       MORE
-       ===================================================== */
+    /* More */
 
-    .more-toggle {
+    #more-button {
       display: inline-flex;
       align-items: center;
-
       gap: 8px;
     }
 
-    .more-toggle.active {
+    #more-button.active {
       color: var(--brand-primary);
     }
 
     .more-caret {
       display: block;
 
-      width: 8px;
-      height: 8px;
-
+      width: 7px;
+      height: 7px;
       margin-top: -4px;
 
       border-right: 2px solid currentColor;
@@ -366,59 +332,52 @@
       transform: rotate(45deg);
 
       transition:
-        transform 180ms ease,
-        margin-top 180ms ease;
+        transform 200ms ease,
+        margin 200ms ease;
     }
 
-    .more-toggle[aria-expanded="true"] .more-caret {
+    #more-button[aria-expanded="true"] .more-caret {
       margin-top: 4px;
-
       transform: rotate(225deg);
     }
 
 
-    /* =====================================================
-       CLEAR FILTERS
-       ===================================================== */
+    /* Clear filters */
 
-    .clear-filters {
-      padding-left: 4px;
-
+    #clear-filters {
       color: var(--brand-primary);
 
       font-size: 14px;
-      font-weight: 500;
 
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
-    .clear-filters:hover,
-    .clear-filters:focus {
-      color: var(--brand-primary-active);
+    #clear-filters:hover,
+    #clear-filters:focus {
+      color: var(--brand-primary-dark);
     }
 
-    .clear-filters[hidden] {
-      display: none;
+    #clear-filters:disabled {
+      color: var(--gray-300);
+      text-decoration: none;
+      cursor: default;
     }
 
 
-    /* =====================================================
-       SHARE
-       ===================================================== */
+    /* Share */
 
-    .share-button {
+    #share-url {
       appearance: none;
       -webkit-appearance: none;
 
       display: inline-flex;
+      flex: 0 0 38px;
       align-items: center;
       justify-content: center;
 
-      flex: 0 0 42px;
-
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
 
       margin: 0 0 0 auto;
       padding: 0;
@@ -427,187 +386,164 @@
       border-radius: 0;
 
       background: transparent;
-      color: var(--gray-900);
-
-      cursor: pointer;
+      color: var(--mid-gray);
 
       transition:
         color 150ms ease,
         background-color 150ms ease;
     }
 
-    .share-button:hover,
-    .share-button:focus {
+    #share-url:hover,
+    #share-url:focus {
       background: var(--very-light-gray);
       color: var(--brand-primary);
     }
 
-    .share-button:focus-visible {
+    #share-url:focus-visible {
       outline: 2px solid var(--black);
-      outline-offset: 2px;
+      outline-offset: 3px;
     }
 
-    .share-button svg {
+    .share-icon {
       display: block;
-
-      width: 24px;
-      height: 24px;
-
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
 
-    /* =====================================================
-       MORE FILTER PANEL
-       ===================================================== */
+    /* Expanded filters */
 
-    .more-panel {
+    #expanded-filters {
       display: grid;
-
       grid-template-rows: 0fr;
 
       width: 100%;
-
-      margin: -8px 0 0;
+      margin: 0;
 
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
 
       transition:
-        grid-template-rows 220ms ease,
-        margin 220ms ease,
-        border-color 220ms ease;
+        grid-template-rows 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        margin 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 200ms ease;
     }
 
-    .more-panel.open {
+    #expanded-filters.open {
       grid-template-rows: 1fr;
 
-      margin: -8px 0 28px;
+      margin: 0 0 28px;
 
-      border-top-color: var(--gray-300);
-      border-bottom-color: var(--gray-300);
+      border-top-color: var(--light-gray);
+      border-bottom-color: var(--light-gray);
     }
 
-    .more-panel-inner {
+    .expanded-filters-inner {
       min-height: 0;
       overflow: hidden;
     }
 
-    .more-panel-content {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-
-      gap: 14px 22px;
-
+    .expanded-filters-content {
       padding: 0;
 
       opacity: 0;
-
-      transform: translateY(-4px);
+      transform: translateY(-6px);
 
       transition:
         opacity 180ms ease,
-        transform 220ms ease,
-        padding 220ms ease;
+        transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
+        padding 260ms ease;
     }
 
-    .more-panel.open .more-panel-content {
-      padding: 18px 0;
+    #expanded-filters.open .expanded-filters-content {
+      padding: 22px 0 24px;
 
       opacity: 1;
-
       transform: translateY(0);
     }
 
-    .more-label {
-      flex: 0 0 auto;
 
+    /* Filter group */
+
+    .filter-group {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .filter-group-title {
       margin: 0;
+      padding: 8px 0;
 
-      color: var(--gray-900);
+      color: var(--black);
 
       font-size: 15px;
       font-weight: 700;
+      line-height: 1.35;
     }
 
     .event-type-filters {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
-
-      gap: 10px;
-
-      margin: 0;
-      padding: 0;
+      gap: 8px 10px;
     }
 
-    .event-type-filter {
+    .event-type-button {
       appearance: none;
       -webkit-appearance: none;
 
-      width: auto;
-      min-width: 0;
-      height: auto;
-
       margin: 0;
-      padding: 8px 13px;
+      padding: 7px 12px;
 
-      border: 1px solid var(--gray-500);
+      border: 1px solid var(--gray-300);
       border-radius: 0;
 
       background: var(--white);
-      color: var(--gray-900);
+      color: var(--dark-gray);
 
-      font: inherit;
       font-size: 15px;
       font-weight: 400;
-      line-height: 1.25;
-
-      cursor: pointer;
+      line-height: 1.35;
 
       transition:
-        color 140ms ease,
-        border-color 140ms ease,
-        background-color 140ms ease;
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
     }
 
-    .event-type-filter:hover,
-    .event-type-filter:focus {
+    .event-type-button:hover,
+    .event-type-button:focus {
       border-color: var(--brand-primary);
-
       color: var(--brand-primary);
     }
 
-    .event-type-filter.active {
+    .event-type-button.active {
       border-color: var(--brand-primary);
-
       background: var(--brand-primary);
       color: var(--white);
     }
 
-    .event-type-filter.active:hover,
-    .event-type-filter.active:focus {
-      border-color: var(--brand-primary-active);
-
-      background: var(--brand-primary-active);
+    .event-type-button.active:hover,
+    .event-type-button.active:focus {
+      border-color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
       color: var(--white);
     }
 
-    .event-type-filter:focus-visible {
+    .event-type-button:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
 
 
-    /* =====================================================
-       STATUS
-       ===================================================== */
+    /* Status */
 
     #calendar-status {
-      margin: 0 0 18px;
+      margin: 0 0 20px;
 
-      color: var(--gray-700);
+      color: var(--mid-gray);
 
       font-size: 14px;
     }
@@ -617,119 +553,124 @@
     }
 
 
-    /* =====================================================
-       LOCALIST
-       ===================================================== */
+    /* Localist */
 
     #localist-widget-dpat {
       clear: both;
 
       width: 100%;
-
       margin: 0;
       padding: 0;
+
+      font-family: "Roboto", Arial, Helvetica, sans-serif;
     }
 
 
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
+    /* Medium */
 
-    @media (max-width: 1050px) {
-
-      .calendar-toolbar {
+    @media (max-width: 1100px) {
+      #calendar-filters {
         flex-wrap: wrap;
-
-        gap: 14px 20px;
       }
 
-      .calendar-search {
-        flex: 1 1 300px;
-
-        width: auto;
-        max-width: 430px;
+      #calendar-search-form {
+        flex: 0 0 300px;
       }
 
-      .share-button {
+      .primary-filters {
+        order: 3;
+        flex: 1 0 100%;
+        width: 100%;
+      }
+
+      #share-url {
         margin-left: auto;
       }
+    }
 
-      .calendar-filters {
+
+    /* Mobile */
+
+    @media (max-width: 700px) {
+      .brand-header-inner {
+        padding: 10px 16px;
+      }
+
+      .brand-header-logo {
+        width: min(100%, 350px);
+      }
+
+      .calendar-page {
+        padding: 20px 16px 36px;
+      }
+
+      #calendar-filters {
+        gap: 14px;
+      }
+
+      #calendar-search-form {
+        flex: 1 0 100%;
+        width: 100%;
+        height: 44px;
+      }
+
+      #calendar-search {
+        height: 44px;
+      }
+
+      #calendar-search-form > button {
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
+      }
+
+      #share-url {
+        order: 2;
+        margin-left: 0;
+      }
+
+      .primary-filters {
         order: 3;
 
-        flex: 0 0 100%;
-
         width: 100%;
+        gap: 18px;
 
         overflow-x: auto;
         overflow-y: hidden;
 
         scrollbar-width: none;
-
         -webkit-overflow-scrolling: touch;
       }
 
-      .calendar-filters::-webkit-scrollbar {
+      .primary-filters::-webkit-scrollbar {
         display: none;
       }
 
-    }
-
-
-    @media (max-width: 700px) {
-
-      .brand-header-inner {
-        padding: 20px 16px;
+      .filter-group {
+        display: block;
       }
 
-      .brand-header-logo {
-        width: min(100%, 360px);
+      .filter-group-title {
+        margin-bottom: 10px;
+        padding: 0;
       }
 
-      .calendar-page {
-        padding: 22px 16px 40px;
+      .event-type-filters {
+        gap: 8px;
       }
-
-      .calendar-toolbar {
-        gap: 14px;
-      }
-
-      .calendar-search {
-        flex: 1 1 calc(100% - 58px);
-
-        width: auto;
-        max-width: none;
-      }
-
-      .calendar-filters {
-        gap: 22px;
-      }
-
-      .filter-button,
-      .more-toggle {
-        font-size: 16px;
-      }
-
-      .more-panel-content {
-        align-items: flex-start;
-      }
-
-      .more-label {
-        flex: 0 0 100%;
-      }
-
     }
 
 
     @media (prefers-reduced-motion: reduce) {
-
-      .filter-indicator,
-      .more-panel,
-      .more-panel-content,
-      .more-caret {
+      .filter-button,
+      #more-button,
+      #filter-indicator,
+      .more-caret,
+      #expanded-filters,
+      .expanded-filters-content,
+      .event-type-button {
         transition: none;
       }
-
     }
   </style>
 </head>
@@ -747,9 +688,9 @@
         aria-label="Return to previous page"
       >
         <img
-          class="brand-header-logo"
           src="D_pat_identifier_RGB_mono_white.svg"
           alt="NC State Department of Performing Arts and Technology"
+          class="brand-header-logo"
         >
       </a>
 
@@ -759,77 +700,57 @@
 
   <main class="calendar-page">
 
-    <div class="calendar-toolbar">
+    <div id="calendar-filters" aria-label="Search and filter events">
 
-      <!-- Search -->
+      <form id="calendar-search-form" role="search">
 
-      <form
-        class="calendar-search"
-        id="calendar-search-form"
-        role="search"
-      >
-
-        <label
-          for="calendar-search-input"
-          style="
-            position:absolute;
-            width:1px;
-            height:1px;
-            padding:0;
-            margin:-1px;
-            overflow:hidden;
-            clip:rect(0,0,0,0);
-            white-space:nowrap;
-            border:0;
-          "
-        >
+        <label class="sr-only" for="calendar-search">
           Search events
         </label>
 
         <input
+          id="calendar-search"
           type="search"
-          id="calendar-search-input"
           placeholder="Search events"
           autocomplete="off"
         >
 
-        <button
-          type="submit"
-          aria-label="Search events"
-        >
+        <button type="submit" aria-label="Search events">
+
           <svg
+            class="search-icon"
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
             <circle
               cx="10.5"
               cy="10.5"
-              r="6.25"
-              stroke-width="2.25"
+              r="6.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
             ></circle>
 
             <path
-              d="M15.25 15.25L20.5 20.5"
-              stroke-width="2.25"
+              d="M15.5 15.5L21 21"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="square"
             ></path>
           </svg>
+
         </button>
 
       </form>
 
 
-      <!-- Top filters -->
-
-      <div
-        class="calendar-filters"
-        id="calendar-filters"
-      >
+      <div class="primary-filters" id="primary-filters">
 
         <button
           type="button"
-          class="filter-button active"
           id="filter-all"
-          aria-pressed="true"
+          class="filter-button active"
         >
           All
         </button>
@@ -838,7 +759,6 @@
           type="button"
           class="filter-button"
           data-area="music"
-          aria-pressed="false"
         >
           Music
         </button>
@@ -847,7 +767,6 @@
           type="button"
           class="filter-button"
           data-area="dance"
-          aria-pressed="false"
         >
           Dance
         </button>
@@ -856,7 +775,6 @@
           type="button"
           class="filter-button"
           data-area="arts"
-          aria-pressed="false"
         >
           Arts Entrepreneurship
         </button>
@@ -865,18 +783,15 @@
           type="button"
           class="filter-button"
           data-area="tech"
-          aria-pressed="false"
         >
           Music Technology
         </button>
 
-
         <button
           type="button"
-          class="more-toggle"
-          id="more-toggle"
+          id="more-button"
           aria-expanded="false"
-          aria-controls="more-panel"
+          aria-controls="expanded-filters"
         >
           More
 
@@ -886,19 +801,15 @@
           ></span>
         </button>
 
-
         <button
           type="button"
-          class="clear-filters"
           id="clear-filters"
-          hidden
+          disabled
         >
           Clear filters
         </button>
 
-
         <span
-          class="filter-indicator"
           id="filter-indicator"
           aria-hidden="true"
         ></span>
@@ -906,16 +817,14 @@
       </div>
 
 
-      <!-- Share -->
-
       <button
         type="button"
-        class="share-button"
-        id="share-button"
+        id="share-url"
         aria-label="Share calendar"
         title="Share calendar"
       >
         <svg
+          class="share-icon"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
@@ -928,50 +837,51 @@
     </div>
 
 
-    <!-- More filters -->
-
     <div
-      class="more-panel"
-      id="more-panel"
+      id="expanded-filters"
       aria-hidden="true"
     >
 
-      <div class="more-panel-inner">
+      <div class="expanded-filters-inner">
 
-        <div class="more-panel-content">
+        <div class="expanded-filters-content">
 
-          <p class="more-label">
-            Event Type
-          </p>
+          <div class="filter-group">
 
-          <div class="event-type-filters">
+            <p class="filter-group-title">
+              Event Type
+            </p>
 
-            <button
-              type="button"
-              class="event-type-filter"
-              data-type="performances"
-              aria-pressed="false"
-            >
-              Performances
-            </button>
+            <div class="event-type-filters">
 
-            <button
-              type="button"
-              class="event-type-filter"
-              data-type="master-classes"
-              aria-pressed="false"
-            >
-              Master Classes
-            </button>
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="performance"
+                aria-pressed="false"
+              >
+                Performances
+              </button>
 
-            <button
-              type="button"
-              class="event-type-filter"
-              data-type="auditions"
-              aria-pressed="false"
-            >
-              Auditions
-            </button>
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="masterclass"
+                aria-pressed="false"
+              >
+                Master Classes
+              </button>
+
+              <button
+                type="button"
+                class="event-type-button"
+                data-event-type="audition"
+                aria-pressed="false"
+              >
+                Auditions
+              </button>
+
+            </div>
 
           </div>
 
@@ -997,58 +907,98 @@
 
 
   <script>
-    (() => {
+    (function () {
 
-      /* ===================================================
-         CONFIGURATION
-         =================================================== */
-
-      const WIDGET_BASE =
+      const BASE =
         "https://calendar.ncsu.edu/widget/view";
 
-      const GROUP =
-        "department_of_performing_arts_and_technology";
 
+      const AREAS = {
+        music: {
+          tags: ["Music"]
+        },
 
-      /*
-       * Area tags used in Localist.
-       */
+        dance: {
+          tags: ["Dance"]
+        },
 
-      const AREA_FILTERS = {
-        music: "Music",
-        dance: "Dance",
-        arts: "Arts Entrepreneurship",
-        tech: "Music Technology"
+        arts: {
+          tags: ["Arts Entrepreneurship"]
+        },
+
+        tech: {
+          tags: ["Music Technology"]
+        }
       };
 
 
-      /*
-       * Public labels can differ from the underlying
-       * Localist taxonomy.
-       */
-
-      const EVENT_FILTERS = {
-        "performances": {
+      const EVENT_TYPES = {
+        performance: {
           tags: ["Performance"]
         },
 
-        "master-classes": {
+        masterclass: {
           tags: ["Master Class Series"]
         },
 
-        "auditions": {
+        audition: {
           tags: ["Audition"]
         }
       };
 
 
-      /* ===================================================
-         ELEMENTS
-         =================================================== */
-
-      const widget =
+      const container =
         document.getElementById(
           "localist-widget-dpat"
+        );
+
+      const allButton =
+        document.getElementById(
+          "filter-all"
+        );
+
+      const primaryFilters =
+        document.getElementById(
+          "primary-filters"
+        );
+
+      const indicator =
+        document.getElementById(
+          "filter-indicator"
+        );
+
+      const areaButtons =
+        Array.from(
+          document.querySelectorAll(
+            "[data-area]"
+          )
+        );
+
+      const eventButtons =
+        Array.from(
+          document.querySelectorAll(
+            "[data-event-type]"
+          )
+        );
+
+      const moreButton =
+        document.getElementById(
+          "more-button"
+        );
+
+      const expandedFilters =
+        document.getElementById(
+          "expanded-filters"
+        );
+
+      const clearFiltersButton =
+        document.getElementById(
+          "clear-filters"
+        );
+
+      const shareButton =
+        document.getElementById(
+          "share-url"
         );
 
       const searchForm =
@@ -1058,61 +1008,7 @@
 
       const searchInput =
         document.getElementById(
-          "calendar-search-input"
-        );
-
-      const allButton =
-        document.getElementById(
-          "filter-all"
-        );
-
-      const areaButtons =
-        [
-          ...document.querySelectorAll(
-            "[data-area]"
-          )
-        ];
-
-      const typeButtons =
-        [
-          ...document.querySelectorAll(
-            "[data-type]"
-          )
-        ];
-
-      const filterBar =
-        document.getElementById(
-          "calendar-filters"
-        );
-
-      const indicator =
-        document.getElementById(
-          "filter-indicator"
-        );
-
-      const moreToggle =
-        document.getElementById(
-          "more-toggle"
-        );
-
-      const morePanel =
-        document.getElementById(
-          "more-panel"
-        );
-
-      const clearFilters =
-        document.getElementById(
-          "clear-filters"
-        );
-
-      const shareButton =
-        document.getElementById(
-          "share-button"
-        );
-
-      const backLink =
-        document.getElementById(
-          "logo-as-back-link"
+          "calendar-search"
         );
 
       const status =
@@ -1120,79 +1016,179 @@
           "calendar-status"
         );
 
+      const backLink =
+        document.getElementById(
+          "logo-as-back-link"
+        );
 
-      /* ===================================================
-         STATE
-         =================================================== */
 
       let activeArea = null;
+      let activeEventTypes = [];
 
-      let activeTypes = [];
-
-      let searchTerm = "";
-
-      let currentLoad = 0;
+      let searchQuery = "";
+      let searchTimers = [];
 
 
-      /* ===================================================
-         URL STATE
-         =================================================== */
+      function normalize(value) {
+        return String(value || "")
+          .trim()
+          .toLocaleLowerCase();
+      }
 
-      function readURLState() {
+
+      function findKey(value, config) {
+        if (!value) {
+          return null;
+        }
+
+        const normalized =
+          normalize(value);
+
+        return (
+          Object.keys(config).find(
+            key =>
+              normalize(key) ===
+              normalized
+          ) || null
+        );
+      }
+
+
+      function unique(values) {
+        return Array.from(
+          new Set(values)
+        );
+      }
+
+
+      function getActiveTopButton() {
+        if (!activeArea) {
+          return allButton;
+        }
+
+        return (
+          areaButtons.find(
+            button =>
+              button.dataset.area ===
+              activeArea
+          ) || allButton
+        );
+      }
+
+
+      function moveFilterIndicator(
+        animate = true
+      ) {
+
+        const button =
+          getActiveTopButton();
+
+        if (!button) {
+          return;
+        }
+
+        if (!animate) {
+          indicator.style.transition =
+            "none";
+        }
+
+        const navRect =
+          primaryFilters
+            .getBoundingClientRect();
+
+        const buttonRect =
+          button
+            .getBoundingClientRect();
+
+        const left =
+          buttonRect.left -
+          navRect.left +
+          primaryFilters.scrollLeft;
+
+        indicator.style.width =
+          buttonRect.width + "px";
+
+        indicator.style.transform =
+          "translateX(" +
+          left +
+          "px)";
+
+        if (!animate) {
+          requestAnimationFrame(
+            function () {
+              requestAnimationFrame(
+                function () {
+                  indicator.style.transition =
+                    "";
+                }
+              );
+            }
+          );
+        }
+      }
+
+
+      function keepActiveFilterVisible() {
+        if (window.innerWidth > 700) {
+          return;
+        }
+
+        const button =
+          getActiveTopButton();
+
+        if (!button) {
+          return;
+        }
+
+        button.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
+
+
+      function readURL() {
 
         const params =
           new URLSearchParams(
             window.location.search
           );
 
+        activeArea =
+          findKey(
+            params.get("area"),
+            AREAS
+          );
 
-        const requestedArea =
-          params.get("area");
+        activeEventTypes =
+          unique(
+            params
+              .getAll("type")
+              .map(
+                value =>
+                  findKey(
+                    value,
+                    EVENT_TYPES
+                  )
+              )
+              .filter(Boolean)
+          );
 
-
-        if (
-          requestedArea &&
-          Object.prototype.hasOwnProperty.call(
-            AREA_FILTERS,
-            requestedArea
-          )
-        ) {
-
-          activeArea =
-            requestedArea;
-
-        }
-
-
-        activeTypes =
-          params
-            .getAll("type")
-            .filter(
-              type =>
-                Object.prototype.hasOwnProperty.call(
-                  EVENT_FILTERS,
-                  type
-                )
-            );
-
-
-        searchTerm =
+        searchQuery =
           params.get("q") || "";
 
-
         searchInput.value =
-          searchTerm;
-
+          searchQuery;
       }
 
 
-      function writeURLState() {
+      function updateURL() {
 
         const url =
           new URL(
             window.location.href
           );
-
 
         url.searchParams.delete(
           "area"
@@ -1203,154 +1199,47 @@
         );
 
         url.searchParams.delete(
+          "instances"
+        );
+
+        url.searchParams.delete(
           "q"
         );
 
-
         if (activeArea) {
-
           url.searchParams.set(
             "area",
             activeArea
           );
-
         }
 
-
-        activeTypes.forEach(
+        activeEventTypes.forEach(
           type => {
-
             url.searchParams.append(
               "type",
               type
             );
-
           }
         );
 
-
-        if (searchTerm) {
-
+        if (searchQuery) {
           url.searchParams.set(
             "q",
-            searchTerm
+            searchQuery
           );
-
         }
-
 
         history.replaceState(
           null,
           "",
           url
         );
-
       }
 
 
-      /* ===================================================
-         ACTIVE FILTER UI
-         =================================================== */
-
-      function activePrimaryButton() {
-
-        if (!activeArea) {
-          return allButton;
-        }
-
-
-        return (
-          areaButtons.find(
-            button =>
-              button.dataset.area ===
-              activeArea
-          ) || allButton
-        );
-
-      }
-
-
-      function moveIndicator(
+      function updateControls(
         animate = true
       ) {
-
-        const button =
-          activePrimaryButton();
-
-
-        if (!button) {
-          return;
-        }
-
-
-        if (!animate) {
-
-          indicator.style.transition =
-            "none";
-
-        }
-
-
-        const barRect =
-          filterBar.getBoundingClientRect();
-
-        const buttonRect =
-          button.getBoundingClientRect();
-
-
-        const x =
-          buttonRect.left -
-          barRect.left +
-          filterBar.scrollLeft;
-
-
-        indicator.style.width =
-          `${buttonRect.width}px`;
-
-        indicator.style.transform =
-          `translateX(${x}px)`;
-
-
-        if (!animate) {
-
-          requestAnimationFrame(
-            () => {
-
-              requestAnimationFrame(
-                () => {
-
-                  indicator.style.transition =
-                    "";
-
-                }
-              );
-
-            }
-          );
-
-        }
-
-      }
-
-
-      function updateFilterUI(
-        animate = true
-      ) {
-
-        const allActive =
-          activeArea === null;
-
-
-        allButton.classList.toggle(
-          "active",
-          allActive
-        );
-
-        allButton.setAttribute(
-          "aria-pressed",
-          String(allActive)
-        );
-
 
         areaButtons.forEach(
           button => {
@@ -1359,7 +1248,6 @@
               button.dataset.area ===
               activeArea;
 
-
             button.classList.toggle(
               "active",
               active
@@ -1367,21 +1255,37 @@
 
             button.setAttribute(
               "aria-pressed",
-              String(active)
+              active
+                ? "true"
+                : "false"
             );
-
           }
         );
 
 
-        typeButtons.forEach(
+        const allActive =
+          !activeArea;
+
+        allButton.classList.toggle(
+          "active",
+          allActive
+        );
+
+        allButton.setAttribute(
+          "aria-pressed",
+          allActive
+            ? "true"
+            : "false"
+        );
+
+
+        eventButtons.forEach(
           button => {
 
             const active =
-              activeTypes.includes(
-                button.dataset.type
+              activeEventTypes.includes(
+                button.dataset.eventType
               );
-
 
             button.classList.toggle(
               "active",
@@ -1390,113 +1294,75 @@
 
             button.setAttribute(
               "aria-pressed",
-              String(active)
+              active
+                ? "true"
+                : "false"
             );
-
           }
         );
 
 
-        moreToggle.classList.toggle(
+        moreButton.classList.toggle(
           "active",
-          activeTypes.length > 0
+          activeEventTypes.length > 0
         );
 
 
-        /*
-         * Clear filters sits in the top row immediately
-         * after More. It only appears when a filter is
-         * actually active.
-         */
-
-        clearFilters.hidden =
-          activeArea === null &&
-          activeTypes.length === 0;
+        clearFiltersButton.disabled =
+          !activeArea &&
+          activeEventTypes.length === 0;
 
 
         requestAnimationFrame(
-          () =>
-            moveIndicator(
+          function () {
+
+            moveFilterIndicator(
               animate
-            )
-        );
+            );
 
-      }
-
-
-      /* ===================================================
-         MORE PANEL
-         =================================================== */
-
-      function openMore() {
-
-        morePanel.classList.add(
-          "open"
-        );
-
-        morePanel.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-        moreToggle.setAttribute(
-          "aria-expanded",
-          "true"
-        );
-
-      }
-
-
-      function closeMore() {
-
-        morePanel.classList.remove(
-          "open"
-        );
-
-        morePanel.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-        moreToggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-
-      }
-
-
-      moreToggle.addEventListener(
-        "click",
-        () => {
-
-          if (
-            morePanel.classList.contains(
-              "open"
-            )
-          ) {
-
-            closeMore();
+            keepActiveFilterVisible();
 
           }
-          else {
+        );
+      }
 
-            openMore();
 
-          }
+      function getAreaTags() {
 
+        if (
+          !activeArea ||
+          !AREAS[activeArea]
+        ) {
+          return [];
         }
-      );
+
+        return (
+          AREAS[activeArea].tags ||
+          []
+        );
+      }
 
 
-      /* ===================================================
-         LOCALIST URL
-         =================================================== */
+      function getEventTypeTags(type) {
+
+        if (
+          !type ||
+          !EVENT_TYPES[type]
+        ) {
+          return [];
+        }
+
+        return (
+          EVENT_TYPES[type].tags ||
+          []
+        );
+      }
+
 
       function buildWidgetURL(
-        containerID,
-        area = null,
-        type = null
+        eventType = null,
+        containerId =
+          "localist-widget-dpat"
       ) {
 
         const params =
@@ -1510,7 +1376,7 @@
 
         params.set(
           "groups",
-          GROUP
+          "department_of_performing_arts_and_technology"
         );
 
         params.set(
@@ -1525,9 +1391,7 @@
 
 
         /*
-         * This is permanent.
-         *
-         * Every matching occurrence is always shown.
+         * Always show all matching instances.
          */
 
         params.set(
@@ -1537,13 +1401,18 @@
 
 
         params.set(
+          "match",
+          "all"
+        );
+
+        params.set(
           "experience",
           "inperson"
         );
 
         params.set(
           "container",
-          containerID
+          containerId
         );
 
         params.set(
@@ -1552,236 +1421,82 @@
         );
 
 
-        const tags = [];
+        let tags =
+          getAreaTags();
 
 
-        if (
-          area &&
-          AREA_FILTERS[area]
-        ) {
-
-          tags.push(
-            AREA_FILTERS[area]
-          );
-
+        if (eventType) {
+          tags =
+            tags.concat(
+              getEventTypeTags(
+                eventType
+              )
+            );
         }
 
 
-        if (
-          type &&
-          EVENT_FILTERS[type]
-        ) {
-
-          tags.push(
-            ...EVENT_FILTERS[type].tags
-          );
-
-        }
+        tags =
+          unique(tags);
 
 
         if (tags.length) {
-
           params.set(
-            "match",
-            "all"
+            "tags",
+            tags.join(",")
           );
-
-
-          tags.forEach(
-            tag => {
-
-              params.append(
-                "tags",
-                tag
-              );
-
-            }
-          );
-
         }
 
 
         return (
-          WIDGET_BASE +
+          BASE +
           "?" +
           params.toString()
         );
-
       }
 
 
-      /* ===================================================
-         LOCALIST LOADING
-         =================================================== */
+      function clearSearchTimers() {
 
-      function removeExistingScripts() {
-
-        document
-          .querySelectorAll(
-            'script[data-dpat-localist="true"]'
-          )
-          .forEach(
-            script =>
-              script.remove()
-          );
-
-      }
-
-
-      function loadLocalistWidget(
-        area = null,
-        type = null
-      ) {
-
-        return new Promise(
-          resolve => {
-
-            const loadID =
-              "localist-widget-load-" +
-              Date.now() +
-              "-" +
-              Math.random()
-                .toString(36)
-                .slice(2);
-
-
-            const holder =
-              document.createElement(
-                "div"
-              );
-
-
-            holder.id =
-              loadID;
-
-            holder.className =
-              "localist-widget";
-
-            holder.style.position =
-              "absolute";
-
-            holder.style.left =
-              "-99999px";
-
-            holder.style.width =
-              `${Math.max(
-                widget.offsetWidth,
-                900
-              )}px`;
-
-
-            document.body.appendChild(
-              holder
-            );
-
-
-            const script =
-              document.createElement(
-                "script"
-              );
-
-
-            script.defer = true;
-
-            script.dataset.dpatLocalist =
-              "true";
-
-            script.src =
-              buildWidgetURL(
-                loadID,
-                area,
-                type
-              );
-
-
-            document.body.appendChild(
-              script
-            );
-
-
-            let checks = 0;
-
-
-            const timer =
-              window.setInterval(
-                () => {
-
-                  checks += 1;
-
-
-                  const hasContent =
-                    holder.children.length >
-                    0;
-
-
-                  if (
-                    hasContent ||
-                    checks >= 60
-                  ) {
-
-                    window.clearInterval(
-                      timer
-                    );
-
-
-                    resolve(
-                      holder
-                    );
-
-                  }
-
-                },
-                100
-              );
-
-          }
+        searchTimers.forEach(
+          timer =>
+            clearTimeout(timer)
         );
 
+        searchTimers = [];
       }
 
 
-      /* ===================================================
-         EVENT HELPERS
-         =================================================== */
+      function getEventItems(root) {
 
-      function getEventItems(
-        root
-      ) {
+        const scope =
+          root || container;
 
-        let items =
-          [
-            ...root.querySelectorAll(
+
+        const standard =
+          Array.from(
+            scope.querySelectorAll(
               "li.lw_event_item"
             )
-          ];
+          );
 
 
-        if (items.length) {
-          return items;
+        if (standard.length) {
+          return standard;
         }
 
 
-        items =
-          [
-            ...root.querySelectorAll(
-              "li"
+        return Array.from(
+          scope.querySelectorAll("li")
+        ).filter(
+          item =>
+            item.querySelector(
+              'a[href*="/event/"]'
             )
-          ].filter(
-            item =>
-              item.querySelector(
-                'a[href*="/event/"]'
-              )
-          );
-
-
-        return items;
-
+        );
       }
 
 
-      function eventKey(
-        event
-      ) {
+      function getEventIdentity(event) {
 
         const link =
           event.querySelector(
@@ -1790,31 +1505,25 @@
 
 
         if (link) {
-
-          return (
-            link.href +
-            "|" +
-            event.textContent
-              .replace(/\s+/g, " ")
-              .trim()
-          );
-
+          return link.href;
         }
 
 
-        return event.textContent
-          .replace(/\s+/g, " ")
-          .trim()
-          .toLowerCase();
-
+        return normalize(
+          event.textContent
+        );
       }
 
 
-      function openEventLinksInNewTab(
+      function makeEventLinksOpenInNewTab(
         root
       ) {
 
-        root
+        const scope =
+          root || container;
+
+
+        scope
           .querySelectorAll(
             'a[href*="/event/"]'
           )
@@ -1829,76 +1538,52 @@
 
             }
           );
-
       }
 
 
-      /* ===================================================
-         SEARCH
-         =================================================== */
-
       function applySearch() {
 
+        makeEventLinksOpenInNewTab(
+          container
+        );
+
+
         const query =
-          searchTerm
-            .trim()
-            .toLowerCase();
+          normalize(searchQuery);
 
 
         const events =
           getEventItems(
-            widget
+            container
           );
 
 
         if (!events.length) {
-
-          if (query) {
-
-            status.textContent =
-              "0 events found";
-
-          }
-          else {
-
-            status.textContent =
-              "";
-
-          }
-
           return;
-
         }
 
 
-        let visibleCount = 0;
+        let visible = 0;
 
 
         events.forEach(
           event => {
 
-            const text =
-              event.textContent
-                .toLowerCase();
-
-
-            const visible =
+            const matches =
               !query ||
-              text.includes(
-                query
-              );
+              normalize(
+                event.textContent
+              ).includes(query);
 
 
             event.style.display =
-              visible
+              matches
                 ? ""
                 : "none";
 
 
-            if (visible) {
-
-              visibleCount += 1;
-
+            if (matches) {
+              visible++;
             }
 
           }
@@ -1908,272 +1593,464 @@
         if (query) {
 
           status.textContent =
-            visibleCount === 1
+            visible === 1
               ? "1 event found"
-              : `${visibleCount} events found`;
+              : visible +
+                " events found";
 
         }
+
         else {
 
           status.textContent =
             "";
 
         }
-
       }
 
 
-      /* ===================================================
-         RENDER
-         =================================================== */
+      function scheduleSearch() {
 
-      async function renderCalendar() {
-
-        const loadNumber =
-          ++currentLoad;
+        clearSearchTimers();
 
 
-        status.textContent =
-          "";
-
-        widget.innerHTML =
-          "";
-
-
-        removeExistingScripts();
-
-
-        /*
-         * No secondary type selected:
-         * load Localist normally and preserve the exact
-         * Localist-generated widget structure.
-         */
-
-        if (
-          activeTypes.length === 0
-        ) {
-
-          const holder =
-            await loadLocalistWidget(
-              activeArea,
-              null
-            );
-
-
-          if (
-            loadNumber !==
-            currentLoad
-          ) {
-
-            holder.remove();
-
-            return;
-
-          }
-
-
-          while (
-            holder.firstChild
-          ) {
-
-            widget.appendChild(
-              holder.firstChild
-            );
-
-          }
-
-
-          holder.remove();
-
-
-          openEventLinksInNewTab(
-            widget
-          );
-
-          applySearch();
-
-          return;
-
-        }
-
-
-        /*
-         * Multiple event types are OR selections.
-         *
-         * Each type is requested separately because
-         * Localist's match=all behavior is used to keep
-         * the selected area AND the selected event type
-         * together.
-         */
-
-        const holders =
-          await Promise.all(
-            activeTypes.map(
-              type =>
-                loadLocalistWidget(
-                  activeArea,
-                  type
-                )
-            )
-          );
-
-
-        if (
-          loadNumber !==
-          currentLoad
-        ) {
-
-          holders.forEach(
-            holder =>
-              holder.remove()
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * Use the first returned Localist widget as the
-         * structural template so its own generated classes
-         * and layout remain intact.
-         */
-
-        const firstHolder =
-          holders[0];
-
-
-        while (
-          firstHolder.firstChild
-        ) {
-
-          widget.appendChild(
-            firstHolder.firstChild
-          );
-
-        }
-
-
-        firstHolder.remove();
-
-
-        /*
-         * Find the actual Localist event list that already
-         * exists in the rendered widget.
-         */
-
-        const targetEvents =
-          getEventItems(
-            widget
-          );
-
-
-        const targetList =
-          targetEvents.length
-            ? targetEvents[0].parentElement
-            : null;
-
-
-        const seen =
-          new Set(
-            targetEvents.map(
-              event =>
-                eventKey(
-                  event
-                )
-            )
-          );
-
-
-        /*
-         * Add only unique matching events from the other
-         * Localist responses. We do NOT create a replacement
-         * UL or rewrite Localist's outer widget structure.
-         */
-
-        holders
-          .slice(1)
+        [500, 1000, 1800, 3000]
           .forEach(
-            holder => {
+            delay => {
 
-              const events =
-                getEventItems(
-                  holder
-                );
+              searchTimers.push(
+                setTimeout(
+                  function () {
 
-
-              if (targetList) {
-
-                events.forEach(
-                  event => {
-
-                    const key =
-                      eventKey(
-                        event
-                      );
-
-
-                    if (
-                      seen.has(
-                        key
-                      )
-                    ) {
-
-                      return;
-
-                    }
-
-
-                    seen.add(
-                      key
+                    makeEventLinksOpenInNewTab(
+                      container
                     );
 
+                    applySearch();
 
-                    targetList.appendChild(
-                      event
+                  },
+                  delay
+                )
+              );
+
+            }
+          );
+      }
+
+
+      function clearWidgetScripts() {
+
+        document
+          .querySelectorAll(
+            "script[data-dpat-widget]"
+          )
+          .forEach(
+            script =>
+              script.remove()
+          );
+      }
+
+
+      function loadSingleWidget(
+        eventType = null
+      ) {
+
+        clearWidgetScripts();
+
+        container.innerHTML =
+          "";
+
+
+        const script =
+          document.createElement(
+            "script"
+          );
+
+
+        script.type =
+          "text/javascript";
+
+        script.async =
+          true;
+
+        script.setAttribute(
+          "data-dpat-widget",
+          "true"
+        );
+
+        script.src =
+          buildWidgetURL(
+            eventType
+          );
+
+
+        container.parentNode
+          .insertBefore(
+            script,
+            container.nextSibling
+          );
+
+
+        scheduleSearch();
+      }
+
+
+      /*
+       * Multiple event types use OR logic.
+       *
+       * The first Localist response is kept as the
+       * structural widget. Additional unique events
+       * are inserted into its existing event list
+       * rather than constructing a replacement list.
+       */
+
+      function loadMultipleWidgets() {
+
+        clearWidgetScripts();
+
+        container.innerHTML =
+          "";
+
+
+        const staging =
+          document.createElement(
+            "div"
+          );
+
+        staging.style.display =
+          "none";
+
+        document.body.appendChild(
+          staging
+        );
+
+
+        const loads = [];
+
+
+        activeEventTypes.forEach(
+          function (type, index) {
+
+            loads.push(
+              new Promise(
+                function (resolve) {
+
+                  const id =
+                    "localist-temp-" +
+                    Date.now() +
+                    "-" +
+                    index;
+
+
+                  const temp =
+                    document.createElement(
+                      "div"
                     );
 
-                  }
+                  temp.id =
+                    id;
+
+                  staging.appendChild(
+                    temp
+                  );
+
+
+                  const script =
+                    document.createElement(
+                      "script"
+                    );
+
+                  script.type =
+                    "text/javascript";
+
+                  script.async =
+                    true;
+
+                  script.setAttribute(
+                    "data-dpat-widget",
+                    "true"
+                  );
+
+                  script.src =
+                    buildWidgetURL(
+                      type,
+                      id
+                    );
+
+                  staging.appendChild(
+                    script
+                  );
+
+
+                  let attempts =
+                    0;
+
+
+                  const check =
+                    setInterval(
+                      function () {
+
+                        attempts++;
+
+
+                        const events =
+                          getEventItems(
+                            temp
+                          );
+
+
+                        if (
+                          events.length ||
+                          attempts >= 30
+                        ) {
+
+                          clearInterval(
+                            check
+                          );
+
+                          resolve({
+                            temp: temp,
+                            events: events
+                          });
+
+                        }
+
+                      },
+                      150
+                    );
+
+                }
+              )
+            );
+
+          }
+        );
+
+
+        Promise.all(loads)
+          .then(
+            function (groups) {
+
+              if (!groups.length) {
+
+                staging.remove();
+
+                return;
+
+              }
+
+
+              /*
+               * Keep the complete first Localist
+               * response, including its native
+               * wrapper and list structure.
+               */
+
+              const first =
+                groups[0].temp;
+
+
+              while (
+                first.firstChild
+              ) {
+
+                container.appendChild(
+                  first.firstChild
                 );
 
               }
 
 
-              holder.remove();
+              const existingEvents =
+                getEventItems(
+                  container
+                );
+
+
+              const targetList =
+                existingEvents.length
+                  ? existingEvents[0]
+                      .parentElement
+                  : null;
+
+
+              const seen =
+                new Set(
+                  existingEvents.map(
+                    event =>
+                      getEventIdentity(
+                        event
+                      )
+                  )
+                );
+
+
+              /*
+               * Add only unique event items from
+               * the other responses.
+               */
+
+              if (targetList) {
+
+                groups
+                  .slice(1)
+                  .forEach(
+                    group => {
+
+                      group.events
+                        .forEach(
+                          event => {
+
+                            const identity =
+                              getEventIdentity(
+                                event
+                              );
+
+
+                            if (
+                              seen.has(
+                                identity
+                              )
+                            ) {
+                              return;
+                            }
+
+
+                            seen.add(
+                              identity
+                            );
+
+
+                            targetList.appendChild(
+                              event
+                            );
+
+                          }
+                        );
+
+                    }
+                  );
+
+              }
+
+
+              staging.remove();
+
+
+              makeEventLinksOpenInNewTab(
+                container
+              );
+
+              applySearch();
 
             }
           );
-
-
-        openEventLinksInNewTab(
-          widget
-        );
-
-        applySearch();
-
       }
 
 
-      /* ===================================================
-         AREA FILTERS
-         =================================================== */
+      function loadWidget() {
 
-      allButton.addEventListener(
-        "click",
-        () => {
+        status.textContent =
+          "";
 
-          activeArea =
-            null;
+        clearSearchTimers();
 
 
-          updateFilterUI();
+        if (
+          activeEventTypes.length ===
+          0
+        ) {
 
-          writeURLState();
+          loadSingleWidget();
 
-          renderCalendar();
+          return;
 
         }
-      );
+
+
+        if (
+          activeEventTypes.length ===
+          1
+        ) {
+
+          loadSingleWidget(
+            activeEventTypes[0]
+          );
+
+          return;
+
+        }
+
+
+        loadMultipleWidgets();
+      }
+
+
+      function openFilters() {
+
+        expandedFilters
+          .classList.add(
+            "open"
+          );
+
+
+        expandedFilters
+          .setAttribute(
+            "aria-hidden",
+            "false"
+          );
+
+
+        moreButton
+          .setAttribute(
+            "aria-expanded",
+            "true"
+          );
+      }
+
+
+      function closeFilters() {
+
+        expandedFilters
+          .classList.remove(
+            "open"
+          );
+
+
+        expandedFilters
+          .setAttribute(
+            "aria-hidden",
+            "true"
+          );
+
+
+        moreButton
+          .setAttribute(
+            "aria-expanded",
+            "false"
+          );
+      }
+
+
+      function toggleFilters() {
+
+        if (
+          expandedFilters
+            .classList.contains(
+              "open"
+            )
+        ) {
+
+          closeFilters();
+
+        }
+
+        else {
+
+          openFilters();
+
+        }
+      }
 
 
       areaButtons.forEach(
@@ -2181,67 +2058,25 @@
 
           button.addEventListener(
             "click",
-            () => {
+            function () {
 
-              activeArea =
+              const value =
                 button.dataset.area;
 
 
-              updateFilterUI();
-
-              writeURLState();
-
-              renderCalendar();
-
-            }
-          );
-
-        }
-      );
+              activeArea =
+                activeArea === value
+                  ? null
+                  : value;
 
 
-      /* ===================================================
-         EVENT TYPE FILTERS
-         =================================================== */
+              updateControls(
+                true
+              );
 
-      typeButtons.forEach(
-        button => {
+              updateURL();
 
-          button.addEventListener(
-            "click",
-            () => {
-
-              const type =
-                button.dataset.type;
-
-
-              if (
-                activeTypes.includes(
-                  type
-                )
-              ) {
-
-                activeTypes =
-                  activeTypes.filter(
-                    current =>
-                      current !== type
-                  );
-
-              }
-              else {
-
-                activeTypes.push(
-                  type
-                );
-
-              }
-
-
-              updateFilterUI();
-
-              writeURLState();
-
-              renderCalendar();
+              loadWidget();
 
             }
           );
@@ -2250,48 +2085,116 @@
       );
 
 
-      /* ===================================================
-         CLEAR FILTERS
-         =================================================== */
-
-      clearFilters.addEventListener(
+      allButton.addEventListener(
         "click",
-        () => {
+        function () {
 
           activeArea =
             null;
 
-          activeTypes =
-            [];
 
+          updateControls(
+            true
+          );
 
-          updateFilterUI();
+          updateURL();
 
-          writeURLState();
-
-          renderCalendar();
+          loadWidget();
 
         }
       );
 
 
-      /* ===================================================
-         SEARCH
-         =================================================== */
+      eventButtons.forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const value =
+                button.dataset.eventType;
+
+
+              if (
+                activeEventTypes
+                  .includes(value)
+              ) {
+
+                activeEventTypes =
+                  activeEventTypes
+                    .filter(
+                      type =>
+                        type !== value
+                    );
+
+              }
+
+              else {
+
+                activeEventTypes =
+                  activeEventTypes
+                    .concat(value);
+
+              }
+
+
+              updateControls(
+                true
+              );
+
+              updateURL();
+
+              loadWidget();
+
+            }
+          );
+
+        }
+      );
+
+
+      clearFiltersButton.addEventListener(
+        "click",
+        function () {
+
+          activeArea =
+            null;
+
+          activeEventTypes =
+            [];
+
+
+          updateControls(
+            true
+          );
+
+          updateURL();
+
+          loadWidget();
+
+        }
+      );
+
+
+      moreButton.addEventListener(
+        "click",
+        toggleFilters
+      );
+
 
       searchForm.addEventListener(
         "submit",
-        event => {
+        function (event) {
 
           event.preventDefault();
 
 
-          searchTerm =
-            searchInput.value
-              .trim();
+          searchQuery =
+            searchInput.value.trim();
 
 
-          writeURLState();
+          updateURL();
 
           applySearch();
 
@@ -2301,14 +2204,13 @@
 
       searchInput.addEventListener(
         "input",
-        () => {
+        function () {
 
-          searchTerm =
-            searchInput.value
-              .trim();
+          searchQuery =
+            searchInput.value.trim();
 
 
-          writeURLState();
+          updateURL();
 
           applySearch();
 
@@ -2316,20 +2218,14 @@
       );
 
 
-      /* ===================================================
-         SHARE
-         =================================================== */
-
       shareButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
-          searchTerm =
-            searchInput.value
-              .trim();
+          searchQuery =
+            searchInput.value.trim();
 
-
-          writeURLState();
+          updateURL();
 
 
           const url =
@@ -2338,89 +2234,109 @@
 
           try {
 
-            if (
-              navigator.share
-            ) {
+            if (navigator.share) {
 
-              await navigator.share(
-                {
-                  title:
-                    "NC State Performing Arts and Technology Events",
-
-                  url
-                }
-              );
-
+              await navigator.share({
+                title:
+                  "NC State Performing Arts and Technology Events",
+                url: url
+              });
 
               return;
 
             }
 
 
-            if (
-              navigator.clipboard
-            ) {
-
-              await navigator.clipboard
-                .writeText(
-                  url
-                );
-
-
-              const oldTitle =
-                shareButton.title;
-
-
-              shareButton.title =
-                "Link copied";
-
-
-              window.setTimeout(
-                () => {
-
-                  shareButton.title =
-                    oldTitle;
-
-                },
-                1800
-              );
-
-            }
+            await navigator.clipboard
+              .writeText(url);
 
           }
+
           catch (error) {
 
             if (
               error &&
               error.name ===
-              "AbortError"
+                "AbortError"
             ) {
-
               return;
+            }
+
+
+            try {
+
+              await navigator.clipboard
+                .writeText(url);
 
             }
 
+            catch (
+              clipboardError
+            ) {
+
+              const field =
+                document.createElement(
+                  "textarea"
+                );
+
+              field.value =
+                url;
+
+              field.style.position =
+                "fixed";
+
+              field.style.opacity =
+                "0";
+
+              document.body
+                .appendChild(
+                  field
+                );
+
+              field.select();
+
+              document.execCommand(
+                "copy"
+              );
+
+              field.remove();
+
+            }
           }
 
+
+          const oldTitle =
+            shareButton.title;
+
+          shareButton.title =
+            "Link copied";
+
+          setTimeout(
+            function () {
+
+              shareButton.title =
+                oldTitle;
+
+            },
+            1500
+          );
         }
       );
 
 
-      /* ===================================================
-         LOGO / BACK LINK
-         =================================================== */
+      /*
+       * Department identifier:
+       * return to the page that opened the
+       * calendar rather than hardcoding the
+       * department's future parent site.
+       */
 
       backLink.addEventListener(
         "click",
-        event => {
+        function (event) {
 
           event.preventDefault();
 
-
-          /*
-           * Do not hardcode the parent website because
-           * DPAT may move beneath a different college.
-           */
 
           if (
             document.referrer
@@ -2432,7 +2348,6 @@
                 new URL(
                   document.referrer
                 );
-
 
               const current =
                 new URL(
@@ -2453,10 +2368,10 @@
               }
 
             }
-            catch (error) {
-              /* Fall through */
-            }
 
+            catch (error) {
+              /* use history fallback */
+            }
           }
 
 
@@ -2468,21 +2383,19 @@
             window.history.back();
 
           }
-
         }
       );
 
 
-      /* ===================================================
-         POSITIONING
-         =================================================== */
-
-      filterBar.addEventListener(
+      primaryFilters.addEventListener(
         "scroll",
-        () =>
-          moveIndicator(
+        function () {
+
+          moveFilterIndicator(
             false
-          ),
+          );
+
+        },
         {
           passive: true
         }
@@ -2491,38 +2404,97 @@
 
       window.addEventListener(
         "resize",
-        () =>
-          moveIndicator(
+        function () {
+
+          moveFilterIndicator(
             false
-          )
+          );
+
+        }
       );
 
 
-      /* ===================================================
-         INITIALIZE
-         =================================================== */
+      window.addEventListener(
+        "popstate",
+        function () {
 
-      readURLState();
+          readURL();
 
-      updateFilterUI(
+          updateControls(
+            false
+          );
+
+
+          if (
+            activeEventTypes.length
+          ) {
+
+            openFilters();
+
+          }
+
+          else {
+
+            closeFilters();
+
+          }
+
+
+          loadWidget();
+
+        }
+      );
+
+
+      /*
+       * Localist adds cards asynchronously.
+       */
+
+      const eventObserver =
+        new MutationObserver(
+          function () {
+
+            makeEventLinksOpenInNewTab(
+              container
+            );
+
+          }
+        );
+
+
+      eventObserver.observe(
+        container,
+        {
+          childList: true,
+          subtree: true
+        }
+      );
+
+
+      /*
+       * Initial load
+       */
+
+      readURL();
+
+      updateControls(
         false
       );
 
 
       if (
-        activeTypes.length
+        activeEventTypes.length
       ) {
 
-        openMore();
+        openFilters();
 
       }
 
 
-      renderCalendar();
+      loadWidget();
 
     })();
   </script>
 
 </body>
-
 </html>
