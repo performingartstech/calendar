@@ -145,9 +145,6 @@
       background: var(--white);
       color: var(--black);
 
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
-      font-size: 16px;
-
       appearance: none;
       -webkit-appearance: none;
     }
@@ -235,7 +232,6 @@
       background: transparent;
       color: var(--dark-gray);
 
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 1.35;
@@ -341,7 +337,6 @@
       background: transparent;
       color: var(--mid-gray);
 
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 15px;
       font-weight: 400;
 
@@ -413,13 +408,17 @@
     }
 
 
-    /* Filter group */
+    /* Filter groups */
 
     .filter-group {
       display: grid;
       grid-template-columns: 130px 1fr;
       gap: 28px;
       align-items: start;
+    }
+
+    .filter-group + .filter-group {
+      margin-top: 18px;
     }
 
     .filter-group-title {
@@ -452,7 +451,6 @@
       background: var(--white);
       color: var(--dark-gray);
 
-      font-family: "Roboto", Arial, Helvetica, sans-serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 1.35;
@@ -483,6 +481,44 @@
     }
 
     .event-type-button:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+    }
+
+
+    /* Show all instances */
+
+    .instance-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      min-height: 36px;
+
+      color: var(--dark-gray);
+
+      font-size: 15px;
+      line-height: 1.4;
+
+      cursor: pointer;
+    }
+
+    .instance-option input {
+      width: 18px;
+      height: 18px;
+
+      margin: 0;
+
+      accent-color: var(--brand-primary);
+
+      cursor: pointer;
+    }
+
+    .instance-option:hover {
+      color: var(--brand-primary);
+    }
+
+    .instance-option input:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 2px;
     }
@@ -598,6 +634,10 @@
 
       .filter-group {
         display: block;
+      }
+
+      .filter-group + .filter-group {
+        margin-top: 20px;
       }
 
       .filter-group-title {
@@ -743,7 +783,6 @@
           Music Technology
         </button>
 
-
         <button
           type="button"
           id="more-button"
@@ -757,7 +796,6 @@
             aria-hidden="true"
           ></span>
         </button>
-
 
         <span
           id="filter-indicator"
@@ -829,6 +867,32 @@
               >
                 Workshops &amp; Talks
               </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="filter-group">
+
+            <p class="filter-group-title">
+              Options
+            </p>
+
+            <div>
+
+              <label class="instance-option">
+
+                <input
+                  type="checkbox"
+                  id="show-all-instances"
+                >
+
+                <span>
+                  Show all instances
+                </span>
+
+              </label>
 
             </div>
 
@@ -928,6 +992,9 @@
       const expandedFilters =
         document.getElementById("expanded-filters");
 
+      const showAllInstancesInput =
+        document.getElementById("show-all-instances");
+
       const shareButton =
         document.getElementById("share-url");
 
@@ -943,6 +1010,7 @@
 
       let activeArea = null;
       let activeEventTypes = [];
+      let showAllInstances = false;
       let searchQuery = "";
       let searchTimers = [];
 
@@ -1076,11 +1144,17 @@
               .filter(Boolean)
           );
 
+        showAllInstances =
+          params.get("instances") === "all";
+
         searchQuery =
           params.get("q") || "";
 
         searchInput.value =
           searchQuery;
+
+        showAllInstancesInput.checked =
+          showAllInstances;
       }
 
 
@@ -1092,6 +1166,7 @@
 
         url.searchParams.delete("area");
         url.searchParams.delete("type");
+        url.searchParams.delete("instances");
         url.searchParams.delete("q");
 
         if (activeArea) {
@@ -1109,6 +1184,13 @@
             );
           }
         );
+
+        if (showAllInstances) {
+          url.searchParams.set(
+            "instances",
+            "all"
+          );
+        }
 
         if (searchQuery) {
           url.searchParams.set(
@@ -1131,8 +1213,7 @@
           button => {
 
             const active =
-              button.dataset.area ===
-              activeArea;
+              button.dataset.area === activeArea;
 
             button.classList.toggle(
               "active",
@@ -1182,9 +1263,14 @@
         );
 
 
+        showAllInstancesInput.checked =
+          showAllInstances;
+
+
         moreButton.classList.toggle(
           "active",
-          activeEventTypes.length > 0
+          activeEventTypes.length > 0 ||
+          showAllInstances
         );
 
 
@@ -1247,6 +1333,20 @@
           "num",
           "50"
         );
+
+
+        /*
+         * Localist's all_instances option.
+         * The parameter is omitted entirely when the option is off.
+         */
+
+        if (showAllInstances) {
+          params.set(
+            "all_instances",
+            "1"
+          );
+        }
+
 
         params.set(
           "match",
@@ -1351,8 +1451,6 @@
         );
       }
 
-
-      /* Make Localist event links open in a new tab */
 
       function makeEventLinksOpenInNewTab(root) {
         const scope =
@@ -1536,7 +1634,6 @@
                       type,
                       id
                     );
-
 
                   staging.appendChild(
                     script
@@ -1837,6 +1934,27 @@
       );
 
 
+      /*
+       * Show all recurring instances.
+       * ON  = Localist receives all_instances=1.
+       * OFF = the parameter is omitted.
+       */
+
+      showAllInstancesInput.addEventListener(
+        "change",
+        function () {
+
+          showAllInstances =
+            showAllInstancesInput.checked;
+
+          updateControls(false);
+          updateURL();
+          loadWidget();
+
+        }
+      );
+
+
       moreButton.addEventListener(
         "click",
         toggleFilters
@@ -1888,9 +2006,7 @@
 
           try {
 
-            if (
-              navigator.share
-            ) {
+            if (navigator.share) {
 
               await navigator.share({
                 title:
@@ -2001,6 +2117,14 @@
 
           readURL();
           updateControls(false);
+
+          if (
+            activeEventTypes.length ||
+            showAllInstances
+          ) {
+            openFilters();
+          }
+
           loadWidget();
 
         }
@@ -2008,17 +2132,20 @@
 
 
       /*
-        Localist adds event cards asynchronously.
-        This catches links immediately when they appear,
-        rather than relying only on the timed checks.
-      */
+       * Localist inserts the cards asynchronously.
+       * Watch the widget so event links can be updated
+       * as soon as they appear.
+       */
 
       const eventObserver =
         new MutationObserver(
           function () {
-            makeEventLinksOpenInNewTab(container);
+            makeEventLinksOpenInNewTab(
+              container
+            );
           }
         );
+
 
       eventObserver.observe(
         container,
@@ -2032,11 +2159,14 @@
       readURL();
       updateControls(false);
 
+
       if (
-        activeEventTypes.length
+        activeEventTypes.length ||
+        showAllInstances
       ) {
         openFilters();
       }
+
 
       loadWidget();
 
