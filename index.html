@@ -237,8 +237,7 @@
     }
 
     .filter-button,
-    #more-button,
-    #clear-filters {
+    #more-button {
       appearance: none;
       -webkit-appearance: none;
 
@@ -275,8 +274,7 @@
     }
 
     .filter-button:focus-visible,
-    #more-button:focus-visible,
-    #clear-filters:focus-visible {
+    #more-button:focus-visible {
       outline: 2px solid var(--black);
       outline-offset: 3px;
     }
@@ -345,23 +343,49 @@
     /* Clear filters */
 
     #clear-filters {
-      color: var(--brand-primary);
+      appearance: none;
+      -webkit-appearance: none;
+
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 5px;
+
+      margin: 0;
+      padding: 7px 0 9px;
+
+      border: 0;
+      border-radius: 0;
+
+      background: transparent;
+      color: var(--mid-gray);
 
       font-size: 14px;
+      font-weight: 400;
+      line-height: 1.35;
 
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      white-space: nowrap;
+
+      transition: color 150ms ease;
+    }
+
+    #clear-filters span {
+      font-size: 18px;
+      line-height: 1;
     }
 
     #clear-filters:hover,
     #clear-filters:focus {
-      color: var(--brand-primary-dark);
+      color: var(--brand-primary);
     }
 
-    #clear-filters:disabled {
-      color: var(--gray-300);
-      text-decoration: none;
-      cursor: default;
+    #clear-filters:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
+    }
+
+    #clear-filters[hidden] {
+      display: none;
     }
 
 
@@ -804,9 +828,10 @@
         <button
           type="button"
           id="clear-filters"
-          disabled
+          hidden
         >
-          Clear filters
+          <span aria-hidden="true">×</span>
+          Clear
         </button>
 
         <span
@@ -1308,7 +1333,7 @@
         );
 
 
-        clearFiltersButton.disabled =
+        clearFiltersButton.hidden =
           !activeArea &&
           activeEventTypes.length === 0;
 
@@ -1695,15 +1720,6 @@
       }
 
 
-      /*
-       * Multiple event types use OR logic.
-       *
-       * The first Localist response is kept as the
-       * structural widget. Additional unique events
-       * are inserted into its existing event list
-       * rather than constructing a replacement list.
-       */
-
       function loadMultipleWidgets() {
 
         clearWidgetScripts();
@@ -1840,12 +1856,6 @@
               }
 
 
-              /*
-               * Keep the complete first Localist
-               * response, including its native
-               * wrapper and list structure.
-               */
-
               const first =
                 groups[0].temp;
 
@@ -1884,11 +1894,6 @@
                   )
                 );
 
-
-              /*
-               * Add only unique event items from
-               * the other responses.
-               */
 
               if (targetList) {
 
@@ -2324,13 +2329,6 @@
       );
 
 
-      /*
-       * Department identifier:
-       * return to the page that opened the
-       * calendar rather than hardcoding the
-       * department's future parent site.
-       */
-
       backLink.addEventListener(
         "click",
         function (event) {
@@ -2446,10 +2444,6 @@
       );
 
 
-      /*
-       * Localist adds cards asynchronously.
-       */
-
       const eventObserver =
         new MutationObserver(
           function () {
@@ -2470,10 +2464,6 @@
         }
       );
 
-
-      /*
-       * Initial load
-       */
 
       readURL();
 
